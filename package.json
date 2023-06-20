@@ -11,7 +11,6 @@
         "ios-build:prod": "ng build -c=production && npx cap sync ios && npx cap open ios",
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
     },
