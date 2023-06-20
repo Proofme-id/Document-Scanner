@@ -81,11 +81,18 @@ export class AppComponent {
         this.nfcEnabled = false;
     }
 
+    /**
+     * Gets called once whenever the NFC reading starts
+     */
     onPassportReadStart(): void {
         this.nfcProgressValue = 0;
         console.log("onPassportReadStart");
     }
 
+    /**
+     * Gets called everytime the NFC progresses to the next step
+     * @param event 
+     */
     onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
         const nfcStep = event.step;
         const nfcTotalSteps = 7;
@@ -95,17 +102,24 @@ export class AppComponent {
         });
     }
 
+    /**
+     * Gets called whenever there is an error reading the document
+     * @param event 
+     */
     onPassportReadError(event: IPassportNfcProgressErrorEvent): void {
         console.error("onPassportReadError event:", event);
         // this.nfcEnabled = false;
         // When the MRZ is faulty
         if (event.error === "ConnectionLost") {
             console.error("Connection lost");
-        } else if (event.exception && event.exception.includes("onPACEException") && event.message && event.message.includes("SW = 0x6300: Unknown")) {
+        } else if (event.exception?.includes("onPACEException") && event.message?.includes("SW = 0x6300: Unknown")) {
             console.error("Incorrect MRZ credentials for NFC chip");
         }
     }
 
+    /**
+     * Gets called whenever the MRZ is invalid for specifically ios (android mrz error is handled inside onPassportReadError)
+     */
     async iosMrzInvalidError(): Promise<void> {
         this.nfcEnabled = false;
         await EpassReader.stopNfc();

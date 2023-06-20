@@ -1,0 +1,10 @@
+"nfc_start_message" = "Put your phone on your ID document";
+"nfc_authenticating" = "Chip found, authenticating...";
+"nfc_reading" = "Reading...";
+"nfc_invalid_tag" = "This chip is not supported";
+"nfc_multiple_tags_found" = "Multiple tags found";
+"nfc_connection_lost" = "Connection lost";
+"nfc_mrz_invalid" = "Please check your information";
+"nfc_unknown_error" = "Scanning failed";
+"nfc_general_error" = "Something went wrong";
+"nfc_success" = "Success!";
