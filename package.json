@@ -1,5 +1,5 @@
 {
-    "name": "test",
+    "name": "example-sdk",
     "version": "0.0.0",
     "scripts": {
         "build:prod": "ng build -c=production",
