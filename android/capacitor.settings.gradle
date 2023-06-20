@@ -3,4 +3,4 @@ include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/android/capacitor')
 
 include ':proofme-id-sdk'
-project(':proofme-id-sdk').projectDir = new File('../../../../Proofme-id/ProofMe.ID-SDK/./web/reader/android')
+project(':proofme-id-sdk').projectDir = new File('../node_modules/@proofme-id/sdk/./web/reader/android')
