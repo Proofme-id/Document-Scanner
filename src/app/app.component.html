@@ -1,63 +1,32 @@
-<div class="mrz-div">
-    <div>
-        <div *ngIf="mrzCredentials" class="mrz-information">
-            <div class="key-value-div">
-                <p class="key">First names</p>
-                <p class="value">{{ mrzCredentials.firstNames.split(",").join(" ") }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Lastname</p>
-                <p class="value">{{ mrzCredentials.lastName }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Birthdate</p>
-                <p class="value">{{ mrzCredentials.birthDate }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Expiry date</p>
-                <p class="value">{{ mrzCredentials.expiryDate }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Document number</p>
-                <p class="value">{{ mrzCredentials.documentNumber }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Gender</p>
-                <p class="value">{{ mrzCredentials.gender }}</p>
-            </div>
-            <div class="key-value-div">
-                <p class="key">Document type</p>
-                <p class="value">{{ mrzCredentials.documentType }}</p>
-            </div>
-        </div>
+<div class="card">
+    <div class="status">
+        <h3>Status</h3>
+        <h4 [ngClass]="initialized ? 'green' : 'red'">{{ initialized ? "Active" : "Inactive" }}</h4>
     </div>
-    <div class="button-div">
-        <button (click)="initializeSdk()">
-            <h4>Initialize</h4>
-        </button>
-    </div>
-    <div class="button-div">
-        <button (click)="mrz()">
-            <h4>MRZ</h4>
-        </button>
-    </div>
+    <button (click)="initializeSdk()">Initialize</button>
 </div>
-<div class="nfc-div">
-    <div>
-        <ng-container *ngIf="datagroups">
-            <div *ngFor="let group of objectKeys(datagroups)">
-                <div class="key-value-div">
-                    <p class="key">{{ group }}</p>
-                    <p class="value">{{ datagroups[group] }}</p>
-                </div>
-            </div>
-        </ng-container>
+
+<div class="card credentials-wrapper">
+    <h3>EPASS</h3>
+    <div class="img-wrapper">
+        <img *ngIf="!passportPhoto" src="/assets/img/passport.png" class="photo" alt="passport-photo-placeholder">
+        <img *ngIf="passportPhoto" [src]="passportPhoto" class="photo" alt="passport-photo">
     </div>
-    <div *ngIf="nfcProgressValue !== 100" [style.width.%]="nfcProgressValue" class="nfc-progress-div"></div>
-    <div class="button-div">
-        <button [disabled]="nfcEnabled" (click)="nfc()">
-            <div *ngIf="nfcEnabled" class="loader"></div>
-            <h4 *ngIf="!nfcEnabled">NFC</h4>
-        </button>
+    <div class="credentials">
+        <p>First names:</p> <p>{{ mrzCredentials?.firstNames.split(",").join(" ") }}</p>
+        <p>Lastname:</p> <p>{{ mrzCredentials?.lastName }}</p>
+        <p>Birthdate:</p> <p>{{ mrzCredentials?.birthDate }}</p>
+        <p>Gender:</p> <p>{{ mrzCredentials?.gender }}</p>
+        <p>Expiry date:</p> <p>{{ mrzCredentials?.expiryDate }}</p>
+        <p>Document number:</p> <p>{{ mrzCredentials?.documentNumber }}</p>
+        <p>Document type:</p> <p>{{ mrzCredentials?.documentType }}</p>
+    </div>
+    <div class="button-wrapper">
+        <button [disabled]="nfcEnabled" (click)="mrz()">Scan MRZ</button>
+        <button *ngIf="!nfcEnabled" (click)="nfc()">Scan NFC</button>
+        <div *ngIf="nfcEnabled" class="progress-bar">
+            Scanning..
+            <div [style.width.%]="progress" class="progress"></div>
+        </div>
     </div>
 </div>

@@ -1,66 +1,96 @@
+@use "sass-rem" as *;
 :host {
-    justify-content: center;
-	padding: 0 24px;
-	margin-top: 32px;
-	margin-bottom: 32px;
+    padding: rem(16px 32px);
+    display: flex;
+    flex-direction: column;
+    gap: rem(16px);
 
-    button {
-        background-color: #1b89c4;
-        outline: none;
-        border: none;
-        color: white;
+    .card {
+        box-shadow: 0rem 0.3750rem 0.750rem rgb(0 0 0 / 16%);
+        border-radius: rem(8px);
+        padding: rem(16px);
+        height: fit-content;
     }
 
-	p {
-		font-size: 16px;
-        margin-bottom: 0;
-        margin-top: 0;
-	}
-
-	.button-div {
-		width: 100%;
-	}
-
-	button {
-		width: 100%;
-	}
-
-	.mrz-div {
-		height: 50%;
+    .status {
         display: flex;
-		flex-direction: column;
-		justify-content: space-between;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-		margin-bottom: 32px;
-		padding-bottom: 32px;
-		border-bottom: 4px solid #b4b0b0;
-	}
+    button, .progress-bar {
+        width: 100%;
+        padding: rem(6px 18px);
+        border-radius: rem(4px);
+        font-size: rem(18px);
+        background-color: #1B89C4;
+        border: rem(1px) solid #1B89C4;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: center;
 
-	.nfc-div {
-		height: 50%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
 
-	.key-value-div {
-		display: flex;
-		justify-content: space-between;
+    .progress-bar {
+        color: #28283C;
+        background-color: transparent;
+        position: relative;
 
-		.key {
-			font-weight: normal !important;
-		}
-	
-		.value {
-			max-width: 50%;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			text-align: right;
-		}
-	}
+        .progress {
+            transition: width 0.3s ease-in-out;
+            background-color: #1B89C4;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+    }
 
-	.nfc-progress-div {
-		height: 16px;
-		background: rgb(144, 0, 255);
-	}
+    .green {
+        color: #9CC66C;
+    }
+
+    .red {
+        color: #FF3333;
+    }
+
+    .img-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        img {
+            width: 50%;
+        }
+    }
+
+    .credentials {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: rem(12px 0);
+        gap: rem(12px);
+
+        p {
+            margin: 0;
+            align-self: center;
+        }
+
+        :nth-child(odd) {
+            font-weight: bold;
+        }
+
+        :nth-child(even) {
+            text-align: right;
+        }
+    }
+
+    .button-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: rem(8px);
+    }
 }

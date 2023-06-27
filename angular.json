@@ -30,7 +30,12 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            {
+                                "glob": "openjpegjs.js.mem",
+                                "input": "node_modules/@proofme-id/sdk/node_modules/@cornerstonejs/codec-openjpeg/dist",
+                                "output": "/"
+                            }
                         ],
                         "styles": [
                             "src/styles.scss"
