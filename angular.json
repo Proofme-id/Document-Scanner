@@ -33,7 +33,7 @@
                             "src/assets",
                             {
                                 "glob": "openjpegjs.js.mem",
-                                "input": "node_modules/@proofme-id/sdk/node_modules/@cornerstonejs/codec-openjpeg/dist",
+                                "input": "node_modules/@proofme-id/sdk/web/jp2",
                                 "output": "/"
                             }
                         ],

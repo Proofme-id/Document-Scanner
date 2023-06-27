@@ -1,3 +1,5 @@
+<img src="/assets/img/logo.png" class="logo" alt="Proofme">
+
 <div class="card">
     <div class="status">
         <h3>Status</h3>
@@ -7,7 +9,10 @@
 </div>
 
 <div class="card credentials-wrapper">
-    <h3>EPASS</h3>
+    <div class="status">
+        <h3>EPASS</h3>
+        <h4 [ngClass]="verified ? 'green' : 'gray'">{{ verified ? "Verified" : "Unverified" }}</h4>
+    </div>
     <div class="img-wrapper">
         <img *ngIf="!passportPhoto" src="/assets/img/passport.png" class="photo" alt="passport-photo-placeholder">
         <img *ngIf="passportPhoto" [src]="passportPhoto" class="photo" alt="passport-photo">

@@ -4,7 +4,7 @@ import { ReaderHelper } from "@proofme-id/sdk/web/reader/helpers";
 import { EDataGroup } from "@proofme-id/sdk/web/reader/enums";
 import { Toast } from '@capacitor/toast';
 import { IMrzCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions } from "@proofme-id/sdk/web/reader/interfaces";
-import { JP2000toBase64 } from "@proofme-id/sdk/web/reader";
+import { jp2 } from "@proofme-id/sdk/web";
 
 @Component({
     selector: 'app-root',
@@ -31,6 +31,7 @@ export class AppComponent {
     passportPhoto: string;
 
     initialized = false;
+    verified = false;
 
     toastTimeout: NodeJS.Timeout;
     previousToast = "";
@@ -72,6 +73,7 @@ export class AppComponent {
 
         try {
             this.mrzCredentials = await EpassReader.scanMrz();
+            this.verified = false;
 
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
@@ -103,11 +105,12 @@ export class AppComponent {
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
             delete this.datagroups.success;
-            console.log("NFC Data groups:", this.datagroups);
 
             const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
-            const jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
-            this.passportPhoto = await JP2000toBase64(jp2);
+            const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
+            this.passportPhoto = await jp2.JP2000toJPEG(base64jp2);
+            this.verified = true;
+            this.passportPhoto = "";
 
             console.log("Basic information:", dg1Data.fields);
             console.log("Document image:", this.passportPhoto);
