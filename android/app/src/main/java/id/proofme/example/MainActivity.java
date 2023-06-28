@@ -1,4 +1,4 @@
-package com.example.app;
+package id.proofme.example;
 
 import com.getcapacitor.BridgeActivity;
 
