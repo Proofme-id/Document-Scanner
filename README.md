@@ -17,7 +17,7 @@ npm install
 
 Build the project
 ```
-npm run android-build
+npm run build:android
 ```
 
 ## Open in Android Studio
