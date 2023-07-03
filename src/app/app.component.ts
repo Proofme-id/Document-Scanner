@@ -116,16 +116,13 @@ export class AppComponent {
             const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
             const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
 
-            if (Capacitor.getPlatform() === "android") {
-                try {
-                    const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
-                    this.passportPhoto = imageObject.image;
-                } catch (e) {
-                    await this.showToast("Could not parse jp2 image")
-                    this.passportPhoto = "";
-                }
-            } else {
-                this.passportPhoto = base64jp2;
+            console.log("AppComponent - base64jp2:", base64jp2);
+            try {
+                const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
+                this.passportPhoto = imageObject.image;
+            } catch (e) {
+                await this.showToast("Could not parse jp2 image")
+                this.passportPhoto = "";
             }
 
             this.verified = true;
