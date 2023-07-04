@@ -1,5 +1,4 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { Capacitor } from "@capacitor/core";
 import { Toast } from '@capacitor/toast';
 import { EpassReader, JP2Decoder } from "@proofme-id/sdk/web/reader";
 import { EDataGroup } from "@proofme-id/sdk/web/reader/enums";
@@ -116,18 +115,26 @@ export class AppComponent {
             const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
             const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
 
+            console.log("Basic information:", dg1Data.fields);
             console.log("AppComponent - base64jp2:", base64jp2);
+
+            this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
+            this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
+            this.mrzCredentials.expiryDate = dg1Data.fields["expirationDate"];
+            this.mrzCredentials.gender = dg1Data.fields["sex"];
+            this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
+            this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
+            this.mrzCredentials.lastName = dg1Data.fields["lastName"];
             try {
                 const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                 this.passportPhoto = imageObject.image;
-            } catch (e) {
+            } catch (error) {
+                console.error(error);
                 await this.showToast("Could not parse jp2 image")
                 this.passportPhoto = "";
             }
 
             this.verified = true;
-
-            console.log("Basic information:", dg1Data.fields);
             console.log("Document image:", this.passportPhoto);
         } catch (error) {
             console.error(error);
