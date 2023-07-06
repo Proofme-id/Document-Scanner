@@ -17,10 +17,22 @@ npm install
 
 Build the project
 ```
+# Build the project
 npm run build:android
+
+# Open android studio
+npx cap open android
+
+# Connect your phone/simulator and run the installer
 ```
 
-## Open in Android Studio
+## Build for iOS
+
+Build the project
 ```
-npx cap open android
+# Build the project
+npm run build:ios
+
+# Xcode opens by default.
+# Connect your phone/simulator and run the installer
 ```

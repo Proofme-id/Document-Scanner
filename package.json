@@ -28,7 +28,7 @@
         "@capacitor/core": "latest",
         "@capacitor/ios": "5.0.5",
         "@capacitor/toast": "5.0.4",
-        "@proofme-id/sdk": "../Proofme-SDK",
+        "@proofme-id/sdk": "0.9.9",
         "rxjs": "7.5.0",
         "sass-rem": "3.0.0",
         "tslib": "2.3.0",
