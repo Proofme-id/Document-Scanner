@@ -7,7 +7,7 @@
         "build:android": "npm run build && npx cap sync android",
         "build:ios": "npm run build && npx cap sync ios && npx cap open ios",
         "build:android:prod": "npm run build:prod && npx cap sync android",
-        "build:ios:prod": "npm run build:prod && npx cap sync ios && npx cap open ios",
+        "build:ios:prod": "npm run build:prod && npx cap sync ios && npx cap open ios"
     },
     "private": true,
     "dependencies": {
