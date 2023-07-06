@@ -1,17 +1,11 @@
 {
     "name": "example-sdk",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "scripts": {
-        "build": "ng build -c=development",
-        "build:prod": "ng build -c=production",
         "build:android": "npm run build && npx cap sync android",
         "build:ios": "npm run build && npx cap sync ios && npx cap open ios",
         "build:android:prod": "npm run build:prod && npx cap sync android",
-        "build:ios:prod": "npm run build:prod && npx cap sync ios && npx cap open ios",
-        "ng": "ng",
-        "start": "ng serve",
-        "watch": "ng build --watch --configuration development",
-        "test": "ng test"
+        "build:ios:prod": "npm run build:prod && npx cap sync ios && npx cap open ios"
     },
     "private": true,
     "dependencies": {
