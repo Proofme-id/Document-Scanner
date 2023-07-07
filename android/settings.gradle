@@ -3,7 +3,6 @@ include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
 include ':sdk'
-//project(':sdk').projectDir = new File('../../sdk/web/reader/android/sdk')
 project(':sdk').projectDir = new File('../node_modules/@proofme-id/sdk/web/reader/android/sdk')
 
 apply from: 'capacitor.settings.gradle'
