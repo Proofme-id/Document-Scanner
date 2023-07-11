@@ -5,7 +5,7 @@ PODS:
   - Capacitor (5.0.5):
     - CapacitorCordova
   - CapacitorCordova (5.0.5)
-  - CapacitorPluginEpassReader (0.9.9):
+  - CapacitorPluginEpassReader (0.9.10):
     - Capacitor
     - GoogleMLKit/TextRecognition
     - OpenSSL-Universal
@@ -137,7 +137,7 @@ SPEC CHECKSUMS:
   BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
   Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
   CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
-  CapacitorPluginEpassReader: 9d313e1c09a38314feccd54aa1dd170a7ef7381b
+  CapacitorPluginEpassReader: b82bba9cd2570c887f1556c1e48acccdb588b067
   CapacitorToast: fcc4329f01d06cf02f190f8f5ce7f16509a2263c
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -160,6 +160,6 @@ SPEC CHECKSUMS:
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
 
-PODFILE CHECKSUM: dc501ccc2c632a759448d2613b45b322acb35d0f
+PODFILE CHECKSUM: 4339496daf17f817ff2a9436747bc82cbd998efb
 
 COCOAPODS: 1.12.1
