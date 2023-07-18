@@ -38,6 +38,14 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
 
+        <!-- Activity: Camera for Passphoto -->
+        <activity android:name="io.didux.plugin.passphoto.CameraActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
