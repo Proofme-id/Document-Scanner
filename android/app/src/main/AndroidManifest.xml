@@ -30,7 +30,7 @@
 
         </activity>
 
-        <!-- Activity: Camera for MRZ -->
+        <!-- Activity: Camera for MRZ / Passphoto scanner-->
         <activity android:name="io.didux.plugin.mrz.CameraActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"

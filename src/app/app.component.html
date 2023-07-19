@@ -33,5 +33,6 @@
             Scanning..
             <div [style.width.%]="progress" class="progress"></div>
         </div>
+        <button [disabled]="nfcEnabled" (click)="passphoto()">Scan photo</button>
     </div>
 </div>
