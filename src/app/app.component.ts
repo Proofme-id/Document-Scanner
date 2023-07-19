@@ -1,6 +1,6 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Toast } from '@capacitor/toast';
-import { EpassReader, JP2Decoder } from "@proofme-id/sdk/web/reader";
+import { EpassReader, JP2Decoder, PassphotoScanner, Configuration } from "@proofme-id/sdk/web/reader";
 import { EDataGroup } from "@proofme-id/sdk/web/reader/enums";
 import { ReaderHelper } from "@proofme-id/sdk/web/reader/helpers";
 import {
@@ -17,12 +17,9 @@ import {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    @ViewChild("canvas") canvas: HTMLCanvasElement;
-
     readonly TEST_JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJ0ZXN0OjB4MjRBNDFlREVENDRCMDdBYzBBNTYyMzJkMjE1NURiOGQ5Mzk2NjY1NCIsInZlcnNpb24iOiIxLjAuMCIsInNjb3BlIjpbIk5GQyIsIk1SWiIsIkxJVkVORVNTIl0sImlhdCI6MTY4OTE1ODk2MSwiZXhwIjoxNzIwNzgxMzYxLCJhdWQiOiJTREsgTGljZW5zZSJ9.M44xHpLNXOA18rEjeEpnv3ykL_he6aiT42QcbopaLN8hEgKFWa-4qW42Y2rlt0GKOR4b31tGJqKxAvfhL8H2aSoatHUstKZAbYSMo04q2tc7uXlrq8lPuzLO5jkJkcPPZXngFG39E8aAOxkYEOP7mEibC17le9PdakX3WeEW3EIk4EKwPb-cERTewsEDrDfZVHcX7fFHrNyYtU-x3BS-JYPxHo3ATH-I3xMSCPScYMgrtHHL9rj3r3Aj8h1Qu1kiwEaG6NHb0hmaf_SnLJLyGHdwSfZjX9b4JNlsfJ6TfLwkWnEkzquuRgd9vAfxTiqjNEP9KWJGVO8_qtCqEiBgx-4_8aA-jb84BVX6Ds3nK_HuO91DS7N4ojhyG9sMS1_nWkcOErXmPZfl46YbIoh1-xhs09dMJXZoVI17hdmry8585bZOgjCeSjvuImVVy2UqHO7FLCs7qaE316ypbjYKqgYgKs5ta-KA8Ul7q1_qkcej-ncjMr5vaEXEyAZO00y7sWyfYF7H6K6fiEZ-s-QO2ajk7aSvcGAVBI0W_-102eYAjhm1EnRh8QhSnSLsfgvgE1OB-qbNtuZFDSAEkCT9ZjEzoM3ePbMQDChe7ccmAnR3xAETzy_7ie5rq4oSJ5ipREtFAkA_TDjbM2U07q0kYBCPpv5G8lo_bX_jsQdk55A";
     readonly TOAST_DURATION_IN_MS = 3500;
 
-    objectKeys = Object.keys
     iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
     onPassportReadErrorReference = this.onPassportReadError.bind(this);
     onPassportReadNfcProgressReference = this.onPassportNfcProgress.bind(this);
@@ -40,8 +37,6 @@ export class AppComponent {
     toastTimeout: NodeJS.Timeout;
     previousToast = "";
 
-    uncompressedImageFrame: Uint8Array;
-
     constructor(
         private ngZone: NgZone
     ) { }
@@ -58,7 +53,7 @@ export class AppComponent {
         }
 
         try {
-            const result = await EpassReader.initialize({ jwt: this.TEST_JWT });
+            const result = await Configuration.initialize({ jwt: this.TEST_JWT });
 
             if (result) {
                 this.initialized = true;
@@ -143,6 +138,20 @@ export class AppComponent {
 
         this.removeNfcListeners();
         this.nfcEnabled = false;
+    }
+
+    async passphoto(): Promise<void> {
+        if (!this.initialized) {
+            await this.showToast("SDK not initialized");
+            return;
+        }
+
+        try {
+            this.passportPhoto = (await PassphotoScanner.scan()).face;
+        } catch (error) {
+            console.error(error);
+            this.showToast(error);
+        }
     }
 
     /**
