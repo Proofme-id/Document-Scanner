@@ -6,16 +6,6 @@ const config: CapacitorConfig = {
     webDir: 'dist/sdk-example',
     server: {
         androidScheme: 'https'
-    },
-    plugins: {
-        EpassReader: {
-            android: {
-                src: "./node_modules/@proofme-id/web/reader/android"
-            },
-            ios: {
-                src: "./node_modules/@proofme-id/web/reader/ios"
-            }
-        }
     }
 };
 
