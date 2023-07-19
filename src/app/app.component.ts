@@ -141,10 +141,10 @@ export class AppComponent {
     }
 
     async passphoto(): Promise<void> {
-        if (!this.initialized) {
-            await this.showToast("SDK not initialized");
-            return;
-        }
+        // if (!this.initialized) {
+        //     await this.showToast("SDK not initialized");
+        //     return;
+        // }
 
         try {
             this.passportPhoto = (await PassphotoScanner.scan()).face;
