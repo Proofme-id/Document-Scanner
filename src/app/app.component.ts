@@ -148,6 +148,7 @@ export class AppComponent {
 
         try {
             this.passportPhoto = (await PassphotoScanner.scan()).face;
+            console.log("this.passportPhoto:", this.passportPhoto);
         } catch (error) {
             console.error(error);
             this.showToast(error);

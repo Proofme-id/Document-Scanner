@@ -11,6 +11,9 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMLKit/FaceDetection (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitFaceDetection (~> 3.0.0)
   - GoogleMLKit/MLKitCore (4.0.0):
     - MLKitCommon (~> 9.0.0)
   - GoogleMLKit/TextRecognition (4.0.0):
@@ -51,6 +54,9 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.0)
     - GoogleUtilitiesComponents (~> 1.0)
     - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - MLKitFaceDetection (3.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitVision (~> 5.0)
   - MLKitTextRecognition (2.0.0):
     - MLKitCommon (~> 9.0)
     - MLKitTextRecognitionCommon (= 1.0.0)
@@ -73,6 +79,7 @@ PODS:
   - PromisesObjC (2.2.0)
   - ProofmeIdSdk (0.9.11):
     - Capacitor
+    - GoogleMLKit/FaceDetection
     - GoogleMLKit/TextRecognition
     - OpenSSL-Universal
     - QKMRZParser
@@ -111,6 +118,7 @@ SPEC REPOS:
     - Logging
     - MLImage
     - MLKitCommon
+    - MLKitFaceDetection
     - MLKitTextRecognition
     - MLKitTextRecognitionCommon
     - MLKitVision
@@ -149,13 +157,14 @@ SPEC CHECKSUMS:
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
+  MLKitFaceDetection: 4981488f71ea8ed718cda692a29ab562637d9ae5
   MLKitTextRecognition: 9ff0c843f2723d31d4bdd0c0d17a0a18382ed23e
   MLKitTextRecognitionCommon: 0d48930fee25cce9d52d0ba217490d4797061aa2
   MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OpenSSL-Universal: 96db2ea04174c0e3d50d93b74f0e198f980e2aa9
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  ProofmeIdSdk: 95c684b651585919ea590ef0f036b4a1050d71bf
+  ProofmeIdSdk: fb82501102c9416090339412a5b17db094695d78
   QKMRZParser: 6b419b6f07d6bff6b50429b97de10846dc902c29
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
