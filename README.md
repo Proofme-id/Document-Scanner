@@ -1,16 +1,34 @@
 # Proofme SDK Example project
 
+## Prerequisites
+Before you can build this application, you need to have the following access tokens.
+- Java 17 (android build)
+- Organisation token for package registry
+- Organisation JWT License (Test or Production)
+
 ## Install SDK
 
-Before installing the SDK, you need to have access to the [Proofme SDK NPM registry](https://github.com/orgs/Proofme-id/packages/npm/package/sdk) and [create a github Personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic)  
+Before installing the SDK, you need to have access to the `Proofme package registry`. 
 Add the following to ~/.npmrc to be able to download the package:
 ```
-//npm.pkg.github.com/:_authToken=<YOUR PERSONAL ACCESS TOKEN>
-@proofme-id:registry=https://npm.pkg.github.com
+@proofme-id:registry=https://packages.didux.network/
+//packages.didux.network/:_authToken="YOUR_ORGANISATION_TOKEN"
 ```
-Then install the sdk in your project:
+
+Then install the NPM packages
 ```
 npm install
+```
+
+## Add the License key
+
+The license key should be installed in the environment file:
+`src/environments/environment.ts`
+
+```
+export const environment = {
+    license: "YOUR_JWT_LICENSE"
+};
 ```
 
 ## Build for Android
