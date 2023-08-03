@@ -17,7 +17,7 @@ import {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    readonly TEST_JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJ0ZXN0OjB4MjRBNDFlREVENDRCMDdBYzBBNTYyMzJkMjE1NURiOGQ5Mzk2NjY1NCIsInZlcnNpb24iOiIxLjAuMCIsInNjb3BlIjpbIk5GQyIsIk1SWiIsIkxJVkVORVNTIl0sImlhdCI6MTY4OTE1ODk2MSwiZXhwIjoxNzIwNzgxMzYxLCJhdWQiOiJTREsgTGljZW5zZSJ9.M44xHpLNXOA18rEjeEpnv3ykL_he6aiT42QcbopaLN8hEgKFWa-4qW42Y2rlt0GKOR4b31tGJqKxAvfhL8H2aSoatHUstKZAbYSMo04q2tc7uXlrq8lPuzLO5jkJkcPPZXngFG39E8aAOxkYEOP7mEibC17le9PdakX3WeEW3EIk4EKwPb-cERTewsEDrDfZVHcX7fFHrNyYtU-x3BS-JYPxHo3ATH-I3xMSCPScYMgrtHHL9rj3r3Aj8h1Qu1kiwEaG6NHb0hmaf_SnLJLyGHdwSfZjX9b4JNlsfJ6TfLwkWnEkzquuRgd9vAfxTiqjNEP9KWJGVO8_qtCqEiBgx-4_8aA-jb84BVX6Ds3nK_HuO91DS7N4ojhyG9sMS1_nWkcOErXmPZfl46YbIoh1-xhs09dMJXZoVI17hdmry8585bZOgjCeSjvuImVVy2UqHO7FLCs7qaE316ypbjYKqgYgKs5ta-KA8Ul7q1_qkcej-ncjMr5vaEXEyAZO00y7sWyfYF7H6K6fiEZ-s-QO2ajk7aSvcGAVBI0W_-102eYAjhm1EnRh8QhSnSLsfgvgE1OB-qbNtuZFDSAEkCT9ZjEzoM3ePbMQDChe7ccmAnR3xAETzy_7ie5rq4oSJ5ipREtFAkA_TDjbM2U07q0kYBCPpv5G8lo_bX_jsQdk55A";
+    readonly TEST_JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJ0ZXN0OjB4MjRBNDFlREVENDRCMDdBYzBBNTYyMzJkMjE1NURiOGQ5Mzk2NjY1NCIsInZlcnNpb24iOiIxLjAuMCIsInNjb3BlIjpbIk5GQyIsIk1SWiIsIkxJVkVORVNTIiwiUEFTU1BIT1RPIl0sImlhdCI6MTY5MDgwMjQ4OSwiZXhwIjoxNzIyNDI0ODg5LCJhdWQiOiJTREsgTGljZW5zZSJ9.ZdA5JRl3wVfTa1Jf1_88gBXlqMC0jxYXm5xFDxAyM3WzQyeW7U0NtttXsbl2qceGCCdMGADwreHyGftllsnGUl46w1HgBKS1HdDhnJh-lw4Np4QqTwSQnRomqbFQlbLzK4rkledOmONmfptJmhg1rxgOVoz59QIV0ZoAtwnu9yg4tAbPOfqc0X3FAN6Kwy1aY_Tb84jN7gQ7Z41QXwbInBEfdqYQ8rObkGFapTida_BbEtOcSmNPMgGQNzhJ5ggCUTkfIc2FPiMVXG5cEJy3wvMKVcjwS0-0ocTIcdkzWz2F4RTCDzGt8_GnmOjAjLHqFLKbl4DfpVpwkbWWFLQEAn2Cl2kmQTHVKDWT3RuKDI89NOoWc6WLhxMmh0hrK-9Tx7RI6tRlLzI2J6vGm9aUSjnjGxQ2CSi5JRPHwUK_oNnZ5WU7TsT6SopUt2n0DalVxT8B_v8s43qjT5hhvwOQQxOs0IpFbF4rZd3VmLajJ8QeuB4x796Fpc_nsdxgZEkLJuBcKHyWNiDm7tHTRNbB9ktog6qgpk9X8N0vFGX6M78zCce0KGYoURQ-x8bI9LfgoTC8ET7b7VYDE856RZnntpFi-aLV85t4gCs-mwAs0db1984wbVe3OUlbx4StSHXahZVQVlVnZWx6kN9ou_M9C2EeGY-Nn1331gfTpKxUzd0";
     readonly TOAST_DURATION_IN_MS = 3500;
 
     iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
@@ -95,7 +95,6 @@ export class AppComponent {
             this.progress = 0;
             this.datagroups = null;
             this.nfcEnabled = true;
-            this.passportPhoto = "";
             this.addNfcListeners();
 
             const scanOptions: IScanOptions = {
@@ -105,35 +104,37 @@ export class AppComponent {
                 dataGroups: [EDataGroup.DG1, EDataGroup.DG2]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
-            delete this.datagroups.success;
-
-            const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
-            const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
-
-            console.log("Basic information:", dg1Data.fields);
-            console.log("AppComponent - base64jp2:", base64jp2);
-
-            this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
-            this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
-            this.mrzCredentials.expiryDate = dg1Data.fields["expirationDate"];
-            this.mrzCredentials.gender = dg1Data.fields["sex"];
-            this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
-            this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
-            this.mrzCredentials.lastName = dg1Data.fields["lastName"];
-            try {
-                const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
-                this.passportPhoto = imageObject.image;
-            } catch (error) {
-                console.error(error);
-                await this.showToast("Could not parse jp2 image")
-                this.passportPhoto = "";
+            if (this.datagroups) {
+                console.log("this.datagroups:", this.datagroups);
+                delete this.datagroups.success;
+    
+                const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
+                const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
+    
+                console.log("Basic information:", dg1Data.fields);
+                console.log("AppComponent - base64jp2:", base64jp2);
+    
+                this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
+                this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
+                this.mrzCredentials.expiryDate = dg1Data.fields["expirationDate"];
+                this.mrzCredentials.gender = dg1Data.fields["sex"];
+                this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
+                this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
+                this.mrzCredentials.lastName = dg1Data.fields["lastName"];
+                try {
+                    const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
+                    this.passportPhoto = imageObject.image;
+                } catch (error) {
+                    console.error(error);
+                    await this.showToast("Could not parse jp2 image")
+                    this.passportPhoto = "";
+                }
+    
+                this.verified = true;
+                console.log("Document image:", this.passportPhoto);
             }
-
-            this.verified = true;
-            console.log("Document image:", this.passportPhoto);
         } catch (error) {
             console.error(error);
-            await this.showToast("Failed to scan NFC");
         }
 
         this.removeNfcListeners();
@@ -147,11 +148,15 @@ export class AppComponent {
         }
 
         try {
-            this.passportPhoto = (await PassphotoScanner.scan()).face;
-            console.log("this.passportPhoto:", this.passportPhoto);
+            const photoScannerResult = await PassphotoScanner.scan();
+            if (photoScannerResult) {
+                this.passportPhoto = photoScannerResult.face;
+                console.log("this.passportPhoto:", this.passportPhoto);
+            }
         } catch (error) {
             console.error(error);
-            this.showToast(error);
+            console.log("typeof error:", typeof error)
+            this.showToast(error.toString());
         }
     }
 
@@ -175,17 +180,27 @@ export class AppComponent {
         console.error("onPassportReadError event:", event);
         // this.nfcEnabled = false;
         // When the MRZ is faulty
-        if (event.error === "ConnectionLost") {
-            console.error("Connection lost");
-        } else if (event.exception?.includes("onPACEException") && event.message?.includes("SW = 0x6300: Unknown")) {
+        if (event.exception?.includes("onPACEException") && event.message?.includes("SW = 0x6300: Unknown")) {
             console.error("Incorrect MRZ credentials for NFC chip");
+            this.showToast("Incorrect MRZ credentials for NFC chip");
+        } else {
+            console.error(event);
+            this.showToast("Connection lost");
         }
+        this.nfcEnabled = false;
+        EpassReader.stopNfc();
     }
 
     /**
      * Gets called whenever the MRZ is invalid for specifically ios (android mrz error is handled inside onPassportReadError)
      */
     async iosMrzInvalidError(): Promise<void> {
+        console.error("Incorrect MRZ credentials for NFC chip");
+        this.showToast("Incorrect MRZ credentials for NFC chip");
+        this.stopNfc();
+    }
+
+    async stopNfc(): Promise<void> {
         this.nfcEnabled = false;
         await EpassReader.stopNfc();
     }
@@ -203,21 +218,25 @@ export class AppComponent {
     }
 
     async showToast(text: string): Promise<void> {
-        if (this.previousToast === text) {
-            return;
+        try {
+            if (this.previousToast === text) {
+                return;
+            }
+
+            await Toast.show({
+                text,
+                duration: "long",
+                position: "center"
+            });
+
+            this.previousToast = text;
+            clearTimeout(this.toastTimeout);
+
+            this.toastTimeout = setTimeout(() => {
+                this.previousToast = "";
+            }, this.TOAST_DURATION_IN_MS);
+        } catch (error) {
+            console.error(error);
         }
-
-        await Toast.show({
-            text,
-            duration: "long",
-            position: "center"
-        });
-
-        this.previousToast = text;
-        clearTimeout(this.toastTimeout);
-
-        this.toastTimeout = setTimeout(() => {
-            this.previousToast = "";
-        }, this.TOAST_DURATION_IN_MS);
     }
 }
