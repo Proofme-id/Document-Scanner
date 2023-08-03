@@ -155,7 +155,6 @@ export class AppComponent {
             }
         } catch (error) {
             console.error(error);
-            console.log("typeof error:", typeof error)
             this.showToast(error.toString());
         }
     }
