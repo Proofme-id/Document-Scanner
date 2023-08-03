@@ -3,6 +3,9 @@
 ## Prerequisites
 Before you can build this application, you need to have the following access tokens.
 - Java 17 (android build)
+- Node 18
+- Xcode 14.3
+- Android Studio Flamingo 2022.2.1 Patch 1
 - Organisation token for package registry
 - Organisation JWT License (Test or Production)
 
