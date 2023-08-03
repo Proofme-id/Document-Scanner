@@ -1,6 +1,6 @@
 {
     "name": "example-sdk",
-    "version": "0.9.10",
+    "version": "0.9.12",
     "scripts": {
         "build": "ng build -c=development",
         "build:prod": "ng build -c=production",
@@ -19,6 +19,9 @@
         "@angular/platform-browser": "15.0.0",
         "@angular/platform-browser-dynamic": "15.0.0",
         "@angular/router": "15.0.0",
+        "@babel/generator": "7.22.5",
+        "@babel/parser": "7.22.5",
+        "@babel/traverse": "7.22.5",
         "@capacitor/android": "5.0.5",
         "@capacitor/angular": "2.0.3",
         "@capacitor/core": "5.0.5",
@@ -28,10 +31,7 @@
         "rxjs": "7.5.0",
         "sass-rem": "3.0.0",
         "tslib": "2.3.0",
-        "zone.js": "0.12.0",
-        "@babel/generator": "7.22.5",
-        "@babel/parser": "7.22.5",
-        "@babel/traverse": "7.22.5"
+        "zone.js": "0.12.0"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "15.0.2",

@@ -10,6 +10,7 @@ import {
     IPassportNfcProgressEvent,
     IScanOptions
 } from "@proofme-id/sdk/web/reader/interfaces";
+import { environment } from "../environments/environment";
 
 @Component({
     selector: 'app-root',
@@ -17,7 +18,6 @@ import {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    readonly TEST_JWT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOiJ0ZXN0OjB4MjRBNDFlREVENDRCMDdBYzBBNTYyMzJkMjE1NURiOGQ5Mzk2NjY1NCIsInZlcnNpb24iOiIxLjAuMCIsInNjb3BlIjpbIk5GQyIsIk1SWiIsIkxJVkVORVNTIiwiUEFTU1BIT1RPIl0sImlhdCI6MTY5MDgwMjQ4OSwiZXhwIjoxNzIyNDI0ODg5LCJhdWQiOiJTREsgTGljZW5zZSJ9.ZdA5JRl3wVfTa1Jf1_88gBXlqMC0jxYXm5xFDxAyM3WzQyeW7U0NtttXsbl2qceGCCdMGADwreHyGftllsnGUl46w1HgBKS1HdDhnJh-lw4Np4QqTwSQnRomqbFQlbLzK4rkledOmONmfptJmhg1rxgOVoz59QIV0ZoAtwnu9yg4tAbPOfqc0X3FAN6Kwy1aY_Tb84jN7gQ7Z41QXwbInBEfdqYQ8rObkGFapTida_BbEtOcSmNPMgGQNzhJ5ggCUTkfIc2FPiMVXG5cEJy3wvMKVcjwS0-0ocTIcdkzWz2F4RTCDzGt8_GnmOjAjLHqFLKbl4DfpVpwkbWWFLQEAn2Cl2kmQTHVKDWT3RuKDI89NOoWc6WLhxMmh0hrK-9Tx7RI6tRlLzI2J6vGm9aUSjnjGxQ2CSi5JRPHwUK_oNnZ5WU7TsT6SopUt2n0DalVxT8B_v8s43qjT5hhvwOQQxOs0IpFbF4rZd3VmLajJ8QeuB4x796Fpc_nsdxgZEkLJuBcKHyWNiDm7tHTRNbB9ktog6qgpk9X8N0vFGX6M78zCce0KGYoURQ-x8bI9LfgoTC8ET7b7VYDE856RZnntpFi-aLV85t4gCs-mwAs0db1984wbVe3OUlbx4StSHXahZVQVlVnZWx6kN9ou_M9C2EeGY-Nn1331gfTpKxUzd0";
     readonly TOAST_DURATION_IN_MS = 3500;
 
     iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
@@ -53,7 +53,7 @@ export class AppComponent {
         }
 
         try {
-            const result = await Configuration.initialize({ jwt: this.TEST_JWT });
+            const result = await Configuration.initialize({ jwt: environment.license });
 
             if (result) {
                 this.initialized = true;
@@ -107,13 +107,13 @@ export class AppComponent {
             if (this.datagroups) {
                 console.log("this.datagroups:", this.datagroups);
                 delete this.datagroups.success;
-    
+
                 const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
                 const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
-    
+
                 console.log("Basic information:", dg1Data.fields);
                 console.log("AppComponent - base64jp2:", base64jp2);
-    
+
                 this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
                 this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
                 this.mrzCredentials.expiryDate = dg1Data.fields["expirationDate"];
@@ -129,7 +129,7 @@ export class AppComponent {
                     await this.showToast("Could not parse jp2 image")
                     this.passportPhoto = "";
                 }
-    
+
                 this.verified = true;
                 console.log("Document image:", this.passportPhoto);
             }

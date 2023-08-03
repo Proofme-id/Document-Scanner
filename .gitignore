@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 
 android/app/release
+/src/environments/environment.ts
 
 # IDEs and editors
 .idea/
@@ -42,3 +43,4 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+.npmrc
