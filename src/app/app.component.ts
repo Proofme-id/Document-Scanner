@@ -71,7 +71,7 @@ export class AppComponent {
         }
 
         try {
-            this.mrzCredentials = await EpassReader.scanMrz();
+            this.mrzCredentials = await EpassReader.scanMrz({ closeText: "Close" });
             this.verified = false;
             this.passportPhoto = "";
 
@@ -121,6 +121,9 @@ export class AppComponent {
                 this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
                 this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
                 this.mrzCredentials.lastName = dg1Data.fields["lastName"];
+                this.mrzCredentials.nationality = dg1Data.fields["nationality"];
+                this.mrzCredentials.issuer = dg1Data.fields["issuingState"];
+                
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                     this.passportPhoto = imageObject.image;
