@@ -71,7 +71,7 @@ export class AppComponent {
         }
 
         try {
-            this.mrzCredentials = await EpassReader.scanMrz();
+            this.mrzCredentials = await EpassReader.scanMrz({ closeText: "Close" });
             this.verified = false;
             this.passportPhoto = "";
 
