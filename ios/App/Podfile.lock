@@ -2,10 +2,10 @@ PODS:
   - BlueCryptor (1.0.32)
   - BlueECC (1.2.5)
   - BlueRSA (1.0.200)
-  - Capacitor (5.0.5):
+  - Capacitor (5.2.3):
     - CapacitorCordova
-  - CapacitorCordova (5.0.5)
-  - CapacitorToast (5.0.4):
+  - CapacitorCordova (5.2.3)
+  - CapacitorToast (5.0.6):
     - Capacitor
   - GoogleDataTransport (9.2.5):
     - GoogleUtilities/Environment (~> 7.7)
@@ -103,7 +103,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - KituraContracts
-  - "ProofmeIdSdk (from `../../node_modules/@proofme-id/sdk`)"
+  - ProofmeIdSdk (from `../../../Proofme-SDK`)
   - QKMRZParser
   - SwiftyRSA
 
@@ -142,15 +142,15 @@ EXTERNAL SOURCES:
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   ProofmeIdSdk:
-    :path: "../../node_modules/@proofme-id/sdk"
+    :path: "../../../Proofme-SDK"
 
 SPEC CHECKSUMS:
   BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
   BlueECC: 0d18e93347d3ec6d41416de21c1ffa4d4cd3c2cc
   BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
-  Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
-  CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
-  CapacitorToast: fcc4329f01d06cf02f190f8f5ce7f16509a2263c
+  Capacitor: 6f44cbc33839b8a4202b8eac97041fe584083417
+  CapacitorCordova: 35def3ebfdef491f0a7b652816eb873ff4b20bbf
+  CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
@@ -174,6 +174,6 @@ SPEC CHECKSUMS:
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
 
-PODFILE CHECKSUM: 9b433415747ebb2074cd23b717029fa0b68bf54d
+PODFILE CHECKSUM: 6f5fd6c2da51c2957eee370f3259555ab1e87bb7
 
 COCOAPODS: 1.12.1
