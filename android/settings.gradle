@@ -5,4 +5,7 @@ project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor
 include ':sdk'
 project(':sdk').projectDir = new File('../node_modules/@proofme-id/sdk/web/reader/android/sdk')
 
+include ':jp2'
+project(':jp2').projectDir = new File('../node_modules/@proofme-id/sdk/web/reader/android/jp2')
+
 apply from: 'capacitor.settings.gradle'
