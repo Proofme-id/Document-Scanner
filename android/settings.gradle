@@ -1,4 +1,5 @@
 include ':app'
+
 include ':capacitor-cordova-android-plugins'
 project(':capacitor-cordova-android-plugins').projectDir = new File('./capacitor-cordova-android-plugins/')
 
@@ -7,5 +8,8 @@ project(':sdk').projectDir = new File('../node_modules/@proofme-id/sdk/web/reade
 
 include ':jp2'
 project(':jp2').projectDir = new File('../node_modules/@proofme-id/sdk/web/reader/android/jp2')
+
+include ':opencv'
+project(':opencv').projectDir = new File('../node_modules/@proofme-id/sdk/web/reader/android/opencv')
 
 apply from: 'capacitor.settings.gradle'
