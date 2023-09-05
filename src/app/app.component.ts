@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Toast } from '@capacitor/toast';
 import { EpassReader, JP2Decoder, PassphotoScanner, Configuration } from "@proofme-id/sdk/web/reader";
 import { EDataGroup } from "@proofme-id/sdk/web/reader/enums";
@@ -17,7 +17,7 @@ import { environment } from "../environments/environment";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
     readonly TOAST_DURATION_IN_MS = 3500;
 
     iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
@@ -41,6 +41,10 @@ export class AppComponent {
         private ngZone: NgZone
     ) { }
 
+    async ngOnInit(): Promise<void> {
+        await this.initializeSdk();
+    }
+
     async ngOnDestroy(): Promise<void> {
         this.removeNfcListeners();
         await EpassReader.stopNfc();
@@ -48,8 +52,7 @@ export class AppComponent {
 
     async initializeSdk(): Promise<void> {
         if (this.initialized) {
-            await this.showToast("SDK already initialized");
-            return;
+            return await this.showToast("SDK already initialized");
         }
 
         try {
@@ -66,8 +69,7 @@ export class AppComponent {
 
     async mrz(): Promise<void> {
         if (!this.initialized) {
-            await this.showToast("SDK not initialized");
-            return;
+            return await this.showToast("SDK not initialized");
         }
 
         try {
@@ -84,11 +86,9 @@ export class AppComponent {
 
     async nfc(): Promise<void> {
         if (!this.initialized) {
-            await this.showToast("SDK not initialized");
-            return;
+            return await this.showToast("SDK not initialized");
         } else if (!this.mrzCredentials) {
-            await this.showToast("Scan MRZ first");
-            return;
+            return await this.showToast("Scan MRZ first");
         }
 
         try {
@@ -123,7 +123,7 @@ export class AppComponent {
                 this.mrzCredentials.lastName = dg1Data.fields["lastName"];
                 this.mrzCredentials.nationality = dg1Data.fields["nationality"];
                 this.mrzCredentials.issuer = dg1Data.fields["issuingState"];
-                
+
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                     this.passportPhoto = imageObject.image;
@@ -146,19 +146,36 @@ export class AppComponent {
 
     async passphoto(): Promise<void> {
         if (!this.initialized) {
-            await this.showToast("SDK not initialized");
-            return;
+            return await this.showToast("SDK not initialized");
+        } else if (!this.mrzCredentials) {
+            return await this.showToast("Scan MRZ first");
         }
 
         try {
             const photoScannerResult = await PassphotoScanner.scan();
             if (photoScannerResult) {
                 this.passportPhoto = photoScannerResult.face;
-                console.log("this.passportPhoto:", this.passportPhoto);
             }
         } catch (error) {
             console.error(error);
-            this.showToast(error.toString());
+            await this.showToast(error.toString());
+        }
+    }
+
+    async document(): Promise<void> {
+        if (!this.initialized) {
+            return await this.showToast("SDK not initialized");
+        }
+
+        try {
+            const documentInfo = await EpassReader.scanDocument({
+                document: true
+            });
+
+            console.log("documentInfo:", documentInfo);
+        } catch (error) {
+            console.error(error);
+            await this.showToast(error.toString());
         }
     }
 

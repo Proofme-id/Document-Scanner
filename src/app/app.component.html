@@ -35,11 +35,11 @@
         <svg-icon class="result-icon" *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === true" src="/assets/svg/success.svg"></svg-icon>
         <svg-icon class="result-icon" *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === false" src="/assets/svg/error.svg"></svg-icon>
 
-        <p>Document number check digit:</p> 
+        <p>Document number check digit:</p>
         <p *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === null"></p>
         <svg-icon class="result-icon" *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === true" src="/assets/svg/success.svg"></svg-icon>
         <svg-icon class="result-icon" *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === false" src="/assets/svg/error.svg"></svg-icon>
-        
+
         <p>Expiry date check digit:</p>
         <p *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect === null"></p>
         <svg-icon class="result-icon" *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect === true" src="/assets/svg/success.svg"></svg-icon>
@@ -54,5 +54,6 @@
         </div>
         <button [disabled]="!nfcEnabled" (click)="stopNfc()">Stop NFC</button>
         <button [disabled]="nfcEnabled" (click)="passphoto()">Scan photo</button>
+        <button [disabled]="nfcEnabled" (click)="document()">Scan document</button>
     </div>
 </div>
