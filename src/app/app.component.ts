@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Toast } from '@capacitor/toast';
 import { EpassReader, JP2Decoder, PassphotoScanner, Configuration } from "@proofme-id/sdk/web/reader";
 import { EDataGroup } from "@proofme-id/sdk/web/reader/enums";
@@ -17,7 +17,7 @@ import { environment } from "../environments/environment";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     readonly TOAST_DURATION_IN_MS = 3500;
 
     iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
@@ -40,6 +40,10 @@ export class AppComponent {
     constructor(
         private ngZone: NgZone
     ) { }
+
+    ngOnInit(): void {
+        this.initializeSdk();
+    }
 
     async ngOnDestroy(): Promise<void> {
         this.removeNfcListeners();
