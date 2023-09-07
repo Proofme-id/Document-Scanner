@@ -40,9 +40,9 @@ export class AppComponent implements OnInit {
     constructor(
         private ngZone: NgZone
     ) { }
-    
+
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+        this.initializeSdk();
     }
 
     async ngOnDestroy(): Promise<void> {
