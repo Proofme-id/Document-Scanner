@@ -168,9 +168,7 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         try {
-            const documentInfo = await EpassReader.scanDocument({
-                document: true
-            });
+            const documentInfo = await EpassReader.scanDocument();
 
             console.log("documentInfo:", documentInfo);
         } catch (error) {
