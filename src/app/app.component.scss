@@ -67,27 +67,39 @@
         justify-content: center;
 
         img {
-            width: 50%;
+            max-height: 150px;
+        }
+
+        .img-roulette {
+            display: flex;
+            gap: rem(24px);
+            overflow-x: scroll;
         }
     }
 
-    .credentials {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        margin: rem(12px 0);
-        gap: rem(12px);
+    .credentials-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: rem(8px);
 
-        p {
-            margin: 0;
-            align-self: center;
-        }
+        .credentials {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: rem(12px 0);
+            gap: rem(8px);
 
-        :nth-child(odd) {
-            font-weight: bold;
-        }
+            p {
+                margin: 0;
+                align-self: center;
+            }
 
-        :nth-child(even) {
-            text-align: right;
+            :nth-child(odd) {
+                font-weight: bold;
+            }
+
+            :nth-child(even) {
+                text-align: right;
+            }
         }
     }
 
@@ -104,11 +116,10 @@
     }
 
     .result-icon {
-        width: rem(30px);
         height: rem(30px);
-
         display: flex;
         width: 100%;
         justify-content: flex-end;
+        align-self: center;
     }
 }

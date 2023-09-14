@@ -37,6 +37,9 @@ export class AppComponent implements OnInit, OnDestroy {
     toastTimeout: NodeJS.Timeout;
     previousToast = "";
 
+    images = [];
+    imageIndex = 0;
+
     constructor(
         private ngZone: NgZone
     ) { }
@@ -73,9 +76,8 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         try {
+            this.resetCredentials();
             this.mrzCredentials = await EpassReader.scanMrz({ closeText: "Close" });
-            this.verified = false;
-            this.passportPhoto = "";
 
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
@@ -99,13 +101,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
             const scanOptions: IScanOptions = {
                 documentNumber: this.mrzCredentials.documentNumber,
-                birthDate: this.mrzCredentials.birthDate,
-                expiryDate: this.mrzCredentials.expiryDate,
+                birthDate: this.mrzCredentials.birthDateDigits,
+                expiryDate: this.mrzCredentials.expiryDateDigits,
                 dataGroups: [EDataGroup.DG1, EDataGroup.DG2]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
             if (this.datagroups) {
-                console.log("this.datagroups:", this.datagroups);
                 delete this.datagroups.success;
 
                 const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
@@ -115,8 +116,6 @@ export class AppComponent implements OnInit, OnDestroy {
                 console.log("AppComponent - base64jp2:", base64jp2);
 
                 this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
-                this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
-                this.mrzCredentials.expiryDate = dg1Data.fields["expirationDate"];
                 this.mrzCredentials.gender = dg1Data.fields["sex"];
                 this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
                 this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
@@ -126,6 +125,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
+                    this.images.unshift(imageObject.image);
                     this.passportPhoto = imageObject.image;
                 } catch (error) {
                     console.error(error);
@@ -168,12 +168,37 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         try {
+            this.resetCredentials();
             const documentInfo = await EpassReader.scanDocument();
-            console.log("documentInfo:", documentInfo);
+
+            if (documentInfo) {
+                this.passportPhoto = documentInfo.face;
+                this.mrzCredentials = documentInfo.mrz;
+
+                if (documentInfo.face) {
+                    this.images.push(documentInfo.face);
+                }
+
+                if (documentInfo.frontPhoto) {
+                    this.images.push(documentInfo.frontPhoto);
+                }
+
+                if (documentInfo.backPhoto) {
+                    this.images.push(documentInfo.backPhoto);
+                }
+            }
+
+            console.log("Document info:", documentInfo);
         } catch (error) {
             console.error(error);
             await this.showToast(error.toString());
         }
+    }
+
+    resetCredentials(): void {
+        this.verified = false;
+        this.passportPhoto = "";
+        this.images = [];
     }
 
     /**
