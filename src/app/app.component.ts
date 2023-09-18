@@ -191,6 +191,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     resetCredentials(): void {
+        this.mrzCredentials = null;
         this.verified = false;
         this.images = [];
     }
