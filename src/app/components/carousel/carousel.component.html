@@ -1,0 +1,9 @@
+<div #carousel class="carousel-container">
+    <div *ngFor="let image of images" class="carousel-slide">
+        <img [src]="image" alt="Image">
+    </div>
+</div>
+
+<div class="pagination">
+    <div *ngFor="let dot of images; index as i" [ngClass]="{'active': slideIndex === i}" class="dot"></div>
+</div>

@@ -6,4 +6,8 @@ include ':capacitor-toast'
 project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')
 
 include ':proofme-id-sdk'
+<<<<<<< HEAD
 project(':proofme-id-sdk').projectDir = new File('../../Proofme-SDK/modules/reader/android-src')
+=======
+project(':proofme-id-sdk').projectDir = new File('../node_modules/@proofme-id/sdk/./web/reader/android')
+>>>>>>> 9f54bf92b6e83010d303874365200c627fb35066
