@@ -29,7 +29,6 @@ export class AppComponent implements OnInit, OnDestroy {
     progress = 0;
     datagroups: INfcResult;
     readerHelper = new ReaderHelper();
-    passportPhoto: string;
 
     initialized = false;
     verified = false;
@@ -126,15 +125,13 @@ export class AppComponent implements OnInit, OnDestroy {
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                     this.images.unshift(imageObject.image);
-                    this.passportPhoto = imageObject.image;
+                    console.log("Document image:", imageObject.image);
                 } catch (error) {
                     console.error(error);
                     await this.showToast("Could not parse jp2 image")
-                    this.passportPhoto = "";
                 }
 
                 this.verified = true;
-                console.log("Document image:", this.passportPhoto);
             }
         } catch (error) {
             console.error(error);
@@ -154,7 +151,7 @@ export class AppComponent implements OnInit, OnDestroy {
         try {
             const photoScannerResult = await PassphotoScanner.scan();
             if (photoScannerResult) {
-                this.passportPhoto = photoScannerResult.face;
+                this.images.push(photoScannerResult.face);
             }
         } catch (error) {
             console.error(error);
@@ -172,7 +169,6 @@ export class AppComponent implements OnInit, OnDestroy {
             const documentInfo = await EpassReader.scanDocument();
 
             if (documentInfo) {
-                this.passportPhoto = documentInfo.face;
                 this.mrzCredentials = documentInfo.mrz;
 
                 if (documentInfo.face) {
@@ -196,8 +192,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     resetCredentials(): void {
+        this.mrzCredentials = null;
         this.verified = false;
-        this.passportPhoto = "";
         this.images = [];
     }
 
