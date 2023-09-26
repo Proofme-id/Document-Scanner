@@ -103,8 +103,8 @@ export class AppComponent implements OnInit {
 
             const scanOptions: IScanOptions = {
                 documentNumber: this.mrzCredentials.documentNumber,
-                birthDate: this.mrzCredentials.birthDate,
-                expiryDate: this.mrzCredentials.expiryDate,
+                birthDate: this.mrzCredentials.birthDateDigits,
+                expiryDate: this.mrzCredentials.expiryDateDigits,
                 dataGroups: [EDataGroup.DG1, EDataGroup.DG2]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
