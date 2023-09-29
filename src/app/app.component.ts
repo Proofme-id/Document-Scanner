@@ -103,8 +103,8 @@ export class AppComponent implements OnInit {
 
             const scanOptions: IScanOptions = {
                 documentNumber: this.mrzCredentials.documentNumber,
-                birthDate: this.mrzCredentials.birthDateDigits,
-                expiryDate: this.mrzCredentials.expiryDateDigits,
+                birthDate: this.mrzCredentials.birthDate,
+                expiryDate: this.mrzCredentials.expiryDate,
                 dataGroups: [EDataGroup.DG1, EDataGroup.DG2]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
@@ -127,7 +127,7 @@ export class AppComponent implements OnInit {
                 this.mrzCredentials.lastName = dg1Data.fields["lastName"];
                 this.mrzCredentials.nationality = dg1Data.fields["nationality"];
                 this.mrzCredentials.issuer = dg1Data.fields["issuingState"];
-                
+
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                     this.passportPhoto = imageObject.image;
