@@ -1,6 +1,6 @@
 {
     "name": "example-sdk",
-    "version": "0.9.15",
+    "version": "0.9.17",
     "scripts": {
         "build": "ng build -c=development",
         "build:prod": "ng build -c=production",
