@@ -1,0 +1,48 @@
+@use "sass-rem" as *;
+:host {
+    overflow: hidden;
+    width: 100%;
+
+    .carousel-container {
+        display: flex;
+        max-height: rem(200px);
+        max-width: 100%;
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            align-self: center;
+            transition: transform 0.5s ease-in-out;
+            padding: rem(2px);
+            height: inherit;
+            max-height: inherit;
+            max-width: inherit;
+            text-align: center;
+
+            img {
+                height: 100%;
+                max-height: inherit;
+                max-width: inherit;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .pagination {
+        width: 100%;
+        display: flex;
+        gap: rem(8px);
+        margin-top: rem(8px);
+        justify-content: center;
+
+        .dot {
+            background-color: #8D8CA0;
+            width: rem(8px);
+            height: rem(8px);
+            border-radius: 50%;
+
+            &.active {
+                background-color: #1B89C4;
+            }
+        }
+    }
+}
