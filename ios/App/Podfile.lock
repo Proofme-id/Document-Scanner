@@ -77,7 +77,7 @@ PODS:
   - nanopb/encode (2.30909.0)
   - OpenSSL-Universal (1.1.2100)
   - PromisesObjC (2.3.1)
-  - ProofmeIdSdk (0.9.15):
+  - ProofmeIdSdk (0.9.16):
     - Capacitor
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/TextRecognition
@@ -169,7 +169,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OpenSSL-Universal: 96db2ea04174c0e3d50d93b74f0e198f980e2aa9
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  ProofmeIdSdk: 4dc29121a9146ee83a1ee9a0f779cedf9fe2b85d
+  ProofmeIdSdk: 5465df6bf57f0e2d3ef55b6544709b9f50426522
   QKMRZParser: 6b419b6f07d6bff6b50429b97de10846dc902c29
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
