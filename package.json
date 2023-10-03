@@ -1,5 +1,5 @@
 {
-    "name": "example-sdk",
+    "name": "document-scanner",
     "version": "0.9.17",
     "scripts": {
         "build": "ng build -c=development",

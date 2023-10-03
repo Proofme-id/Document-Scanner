@@ -46,17 +46,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths"/>
         </provider>
-
-        <!-- Required: set your sentry.io project identifier (DSN) -->
-        <meta-data android:name="io.sentry.dsn" android:value="https://8a4e4e1e5c46e2ecb4624bf129a9fe8f@o4505832851636224.ingest.sentry.io/4505832857141248" />
-        <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
-        <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
-        <!-- enable screenshot for crashes -->
-        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
-        <!-- enable view hierarchy for crashes -->
-        <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
     </application>
 
     <!-- Permissions -->

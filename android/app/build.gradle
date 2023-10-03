@@ -1,20 +1,16 @@
-plugins {
-    id "io.sentry.android.gradle" version "3.12.0"
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    namespace "id.proofme.example"
+    namespace "id.proofme.document.scanner"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "id.proofme.example"
+        applicationId "id.proofme.document.scanner"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "0.9.17"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.

@@ -430,7 +430,7 @@
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal\"",
 				);
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Proofme Example";
+				INFOPLIST_KEY_CFBundleDisplayName = "Document Scanner by Proofme";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -529,7 +529,7 @@
 					"\"CoreNFC\"",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
-				PRODUCT_BUNDLE_IDENTIFIER = id.proofme.sdk.example;
+				PRODUCT_BUNDLE_IDENTIFIER = id.proofme.document.scanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -579,7 +579,7 @@
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal\"",
 				);
 				INFOPLIST_FILE = App/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Proofme Example";
+				INFOPLIST_KEY_CFBundleDisplayName = "Document Scanner by Proofme";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -677,7 +677,7 @@
 					"-weak_framework",
 					"\"CoreNFC\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = id.proofme.sdk.example;
+				PRODUCT_BUNDLE_IDENTIFIER = id.proofme.document.scanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
