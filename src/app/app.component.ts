@@ -60,7 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         try {
-            console.log("environment.license:", environment.license);
             const result = await Configuration.initialize({ jwt: environment.license });
 
             if (result) {
