@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Proofme Example</string>
-    <string name="title_activity_main">Proofme Example</string>
-    <string name="package_name">id.proofme.example</string>
-    <string name="custom_url_scheme">id.proofme.example</string>
+    <string name="app_name">Document Scanner by Proofme</string>
+    <string name="title_activity_main">Document Scanner</string>
+    <string name="package_name">id.proofme.document.scanner</string>
+    <string name="custom_url_scheme">id.proofme.document.scanner</string>
 </resources>
