@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, NgZone, Output, ViewChild } from '@angular/core';
+import { IImage } from "src/app/interfaces/image.interface";
 
 @Component({
     selector: 'carousel',
@@ -6,7 +7,7 @@ import { AfterViewInit, Component, EventEmitter, Input, NgZone, Output, ViewChil
     styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements AfterViewInit {
-    @Input() images: string[];
+    @Input() images: IImage[];
 
     @Output() indexChanged = new EventEmitter<number>();
 
