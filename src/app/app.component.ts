@@ -11,6 +11,8 @@ import {
     IScanOptions
 } from "@proofme-id/sdk/web/reader/interfaces";
 import { environment } from "../environments/environment";
+import { IImage } from "./interfaces/image.interface";
+import { EImageType } from "./enums/imageType.enum";
 
 @Component({
     selector: 'app-root',
@@ -36,7 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
     toastTimeout: NodeJS.Timeout;
     previousToast = "";
 
-    images = [];
+    images: IImage[] = [];
     imageIndex = 0;
 
     constructor(
@@ -124,7 +126,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
-                    this.images.unshift(imageObject.image);
+                    this.images = this.images.filter(x => x.type !== EImageType.VERIFIED_FACE);
+                    this.images.unshift({ 
+                        base64Source: imageObject.image,
+                        type: EImageType.VERIFIED_FACE
+                    });
                     console.log("Document image:", imageObject.image);
                 } catch (error) {
                     console.error(error);
@@ -151,7 +157,11 @@ export class AppComponent implements OnInit, OnDestroy {
         try {
             const photoScannerResult = await PassphotoScanner.scan();
             if (photoScannerResult) {
-                this.images.push(photoScannerResult.face);
+                this.images = this.images.filter(x => x.type !== EImageType.UNVERIFIED_FACE);
+                this.images.push({
+                    base64Source: photoScannerResult.face,
+                    type: EImageType.UNVERIFIED_FACE  
+                });
             }
         } catch (error) {
             console.error(error);
@@ -179,15 +189,24 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.mrzCredentials = documentInfo.mrz;
 
                 if (documentInfo.face) {
-                    this.images.push(documentInfo.face);
+                    this.images.push({
+                        base64Source: documentInfo.face,
+                        type: EImageType.UNVERIFIED_FACE  
+                    });
                 }
 
                 if (documentInfo.frontPhoto) {
-                    this.images.push(documentInfo.frontPhoto);
+                    this.images.push({
+                        base64Source: documentInfo.frontPhoto,
+                        type: EImageType.FRONT  
+                    });
                 }
 
                 if (documentInfo.backPhoto) {
-                    this.images.push(documentInfo.backPhoto);
+                    this.images.push({
+                        base64Source: documentInfo.backPhoto,
+                        type: EImageType.BACK  
+                    });
                 }
             }
 

@@ -1,4 +1,4 @@
-# Proofme SDK Example project
+# Document Scanner by Proofme
 
 ## Prerequisites
 Before you can build this application, you need to have the following access tokens.

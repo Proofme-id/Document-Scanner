@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "sdk-example": {
+        "document-scanner": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/sdk-example",
+                        "outputPath": "dist/document-scanner",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": [
@@ -68,10 +68,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "sdk-example:build:production"
+                            "browserTarget": "document-scanner:build:production"
                         },
                         "development": {
-                            "browserTarget": "sdk-example:build:development"
+                            "browserTarget": "document-scanner:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -79,10 +79,10 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "sdk-example:build"
+                        "browserTarget": "document-scanner:build"
                     }
                 },
-                "sdk-example": {
+                "document-scanner": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
                         "polyfills": [

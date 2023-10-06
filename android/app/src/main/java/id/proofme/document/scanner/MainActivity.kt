@@ -1,4 +1,4 @@
-package id.proofme.example
+package id.proofme.document.scanner
 
 import android.os.Bundle
 import com.getcapacitor.BridgeActivity

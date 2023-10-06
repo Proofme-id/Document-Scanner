@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-    appId: 'id.proofme.sdk.example',
-    appName: 'Proofme Example',
-    webDir: 'dist/sdk-example',
+    appId: 'id.proofme.document.scanner',
+    appName: 'Document Scanner by Proofme',
+    webDir: 'dist/document-scanner',
     server: {
         androidScheme: 'https'
     }

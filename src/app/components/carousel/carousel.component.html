@@ -1,6 +1,6 @@
 <div #carousel class="carousel-container">
     <div *ngFor="let image of images" class="carousel-slide">
-        <img [src]="image" alt="Image">
+        <img [src]="image.base64Source" alt="Image">
     </div>
 </div>
 
