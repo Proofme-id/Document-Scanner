@@ -83,7 +83,11 @@ export class AppComponent implements OnInit, OnDestroy {
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
             console.error(error);
-            await this.showToast("Failed to scan MRZ");
+            if (error.toString().includes("CAMERA_PERMISSION_DENIED")) {
+                await this.showToast("Camera permission denied");
+            } else {
+                await this.showToast("Failed to scan MRZ");
+            }
         }
     }
 
@@ -213,7 +217,11 @@ export class AppComponent implements OnInit, OnDestroy {
             console.log("Document info:", documentInfo);
         } catch (error) {
             console.error(error);
-            await this.showToast(error.toString());
+            if (error.toString().includes("CAMERA_PERMISSION_DENIED")) {
+                await this.showToast("Camera permission denied");
+            } else {
+                await this.showToast(error.toString());
+            }
         }
     }
 
