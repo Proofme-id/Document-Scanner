@@ -78,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         try {
             this.resetCredentials();
-            this.mrzCredentials = await EpassReader.scanMrz({ closeText: "Close" });
+            this.mrzCredentials = await EpassReader.scanMrz();
 
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
@@ -160,7 +160,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
         try {
             const photoScannerResult = await PassphotoScanner.scan();
-            if (photoScannerResult) {
+            console.log("photoScannerResult:", photoScannerResult);
+            if (photoScannerResult?.face) {
                 this.images = this.images.filter(x => x.type !== EImageType.UNVERIFIED_FACE);
                 this.images.push({
                     base64Source: photoScannerResult.face,
@@ -185,7 +186,9 @@ export class AppComponent implements OnInit, OnDestroy {
                     frontScan: "Scan front",
                     backScan: "Scan back",
                     processing: "Processing...",
-                    rotate: "Please rotate the document"
+                    rotate: "Please rotate the document",
+                    tryAgain: "Try again",
+                    success: "Success"
                 }
             });
 
