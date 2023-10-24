@@ -138,13 +138,21 @@ export class AppComponent implements OnInit, OnDestroy {
                     console.log("Document image:", imageObject.image);
                 } catch (error) {
                     console.error(error);
-                    await this.showToast("Could not parse jp2 image")
+                    await this.showToast("Could not parse jp2 image");
                 }
 
                 this.verified = true;
             }
         } catch (error) {
-            console.error(error);
+            if (error.toString().includes("USER_CANCELED")) {
+                console.error("User canceled");
+                this.showToast("User canceled");
+            } else if (error.toString().includes("SYSTEM_RESOURCE_UNAVAILABLE")) {
+                console.error("System resource unavailable");
+                this.showToast("System resource unavailable");
+            } else {
+                console.error(error);
+            }
         }
 
         this.removeNfcListeners();
@@ -258,7 +266,6 @@ export class AppComponent implements OnInit, OnDestroy {
             console.error("Incorrect MRZ credentials for NFC chip");
             this.showToast("Incorrect MRZ credentials for NFC chip");
         } else {
-            console.error(event);
             this.showToast("Connection lost");
         }
         this.nfcEnabled = false;

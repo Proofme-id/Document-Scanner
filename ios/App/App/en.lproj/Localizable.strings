@@ -1,4 +1,5 @@
 "nfc_start_message" = "Put your phone on your ID document";
+"nfc_stop_nfc_message" = "Scanning NFC canceled...";
 "nfc_authenticating" = "Chip found, authenticating...";
 "nfc_reading" = "Reading...";
 "nfc_invalid_tag" = "This chip is not supported";
