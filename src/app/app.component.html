@@ -19,7 +19,7 @@
 
     <div class="credentials-wrapper">
         <div class="credentials">
-            <p>First names:</p> <p>{{ mrzCredentials?.firstNames.split(",").join(" ") }}</p>
+            <p>First names:</p> <p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
             <p>Lastname:</p> <p>{{ mrzCredentials?.lastName }}</p>
             <p>Birthdate:</p> <p>{{ mrzCredentials?.birthDate }}</p>
             <p>Nationality:</p> <p>{{ mrzCredentials?.nationality }}</p>
@@ -35,16 +35,16 @@
 
         <div class="credentials">
             <p>Birth date check digit:</p>
-            <p *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === null"></p>
-            <svg-icon *ngIf="mrzCredentials?.birthDateCheckDigitCorrect !== null" class="result-icon" src="/assets/svg/{{ mrzCredentials?.birthDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
+            <p *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === null || mrzCredentials?.birthDateCheckDigitCorrect === undefined"></p>
+            <svg-icon *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === true || mrzCredentials?.birthDateCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ mrzCredentials?.birthDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
 
             <p>Document number check digit:</p>
-            <p *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === null"></p>
-            <svg-icon *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect !== null" class="result-icon" src="/assets/svg/{{ mrzCredentials?.documentNumberCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
+            <p *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === null || mrzCredentials?.documentNumberCheckDigitCorrect === undefined"></p>
+            <svg-icon *ngIf="mrzCredentials?.documentNumberCheckDigitCorrect === true || mrzCredentials?.documentNumberCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ mrzCredentials?.documentNumberCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
 
             <p>Expiry date check digit:</p>
-            <p *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect === null"></p>
-            <svg-icon *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect !== null" class="result-icon" src="/assets/svg/{{ mrzCredentials?.expiryDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
+            <p *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect === null || mrzCredentials?.expiryDateCheckDigitCorrect === undefined"></p>
+            <svg-icon *ngIf="mrzCredentials?.expiryDateCheckDigitCorrect === true || mrzCredentials?.expiryDateCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ mrzCredentials?.expiryDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
         </div>
     </div>
 

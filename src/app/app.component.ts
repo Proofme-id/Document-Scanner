@@ -78,12 +78,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
         try {
             this.resetCredentials();
-            this.mrzCredentials = await EpassReader.scanMrz({ closeText: "Close" });
+            this.mrzCredentials = await EpassReader.scanMrz();
 
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
             console.error(error);
-            await this.showToast("Failed to scan MRZ");
+            if (error.toString().includes("CAMERA_PERMISSION_DENIED")) {
+                await this.showToast("Camera permission denied");
+            } else {
+                await this.showToast("Failed to scan MRZ");
+            }
         }
     }
 
@@ -134,13 +138,21 @@ export class AppComponent implements OnInit, OnDestroy {
                     console.log("Document image:", imageObject.image);
                 } catch (error) {
                     console.error(error);
-                    await this.showToast("Could not parse jp2 image")
+                    await this.showToast("Could not parse jp2 image");
                 }
 
                 this.verified = true;
             }
         } catch (error) {
-            console.error(error);
+            if (error.toString().includes("USER_CANCELED")) {
+                console.error("User canceled");
+                this.showToast("User canceled");
+            } else if (error.toString().includes("SYSTEM_RESOURCE_UNAVAILABLE")) {
+                console.error("System resource unavailable");
+                this.showToast("System resource unavailable");
+            } else {
+                console.error(error);
+            }
         }
 
         this.removeNfcListeners();
@@ -156,7 +168,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
         try {
             const photoScannerResult = await PassphotoScanner.scan();
-            if (photoScannerResult) {
+            console.log("photoScannerResult:", photoScannerResult);
+            if (photoScannerResult?.face) {
                 this.images = this.images.filter(x => x.type !== EImageType.UNVERIFIED_FACE);
                 this.images.push({
                     base64Source: photoScannerResult.face,
@@ -181,7 +194,9 @@ export class AppComponent implements OnInit, OnDestroy {
                     frontScan: "Scan front",
                     backScan: "Scan back",
                     processing: "Processing...",
-                    rotate: "Please rotate the document"
+                    rotate: "Please rotate the document",
+                    tryAgain: "Try again",
+                    success: "Success"
                 }
             });
 
@@ -213,7 +228,11 @@ export class AppComponent implements OnInit, OnDestroy {
             console.log("Document info:", documentInfo);
         } catch (error) {
             console.error(error);
-            await this.showToast(error.toString());
+            if (error.toString().includes("CAMERA_PERMISSION_DENIED")) {
+                await this.showToast("Camera permission denied");
+            } else {
+                await this.showToast(error.toString());
+            }
         }
     }
 
@@ -247,7 +266,6 @@ export class AppComponent implements OnInit, OnDestroy {
             console.error("Incorrect MRZ credentials for NFC chip");
             this.showToast("Incorrect MRZ credentials for NFC chip");
         } else {
-            console.error(event);
             this.showToast("Connection lost");
         }
         this.nfcEnabled = false;
