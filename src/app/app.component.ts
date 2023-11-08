@@ -13,6 +13,7 @@ import {
 import { environment } from "../environments/environment";
 import { IImage } from "./interfaces/image.interface";
 import { EImageType } from "./enums/imageType.enum";
+import { IVehicleCategory } from "@proofme-id/sdk/web/interfaces/vehicleCategory.interface";
 
 @Component({
     selector: 'app-root',
@@ -47,6 +48,24 @@ export class AppComponent implements OnInit, OnDestroy {
 
     async ngOnInit(): Promise<void> {
         await this.initializeSdk();
+
+        this.mrzCredentials = {
+            "documentType": "P",
+            "documentNumber": "NXC8RPRB6",
+            "birthDateDigits": "030129",
+            "birthDate": "29-01-2003",
+            "expiryDateDigits": "310602",
+            "expiryDate": "02-06-2031",
+            "firstNames": "MARTEN",
+            "gender": "MALE",
+            "lastName": "SCHELFHORST",
+            "issuer": "NLD",
+            "nationality": "NLD",
+            "documentNumberCheckDigitCorrect": true,
+            "expiryDateCheckDigitCorrect": true,
+            "birthDateCheckDigitCorrect": true
+        };
+
     }
 
     async ngOnDestroy(): Promise<void> {
@@ -71,14 +90,14 @@ export class AppComponent implements OnInit, OnDestroy {
         }
     }
 
-    async mrz(): Promise<void> {
+    async mrz(driverLicense?: boolean): Promise<void> {
         if (!this.initialized) {
             return await this.showToast("SDK not initialized");
         }
 
         try {
             this.resetCredentials();
-            this.mrzCredentials = await EpassReader.scanMrz();
+            this.mrzCredentials = await EpassReader.scanMrz({ driverLicense });
 
             console.log("MRZ credentials:", this.mrzCredentials);
         } catch (error) {
@@ -111,37 +130,108 @@ export class AppComponent implements OnInit, OnDestroy {
                 dataGroups: [EDataGroup.DG1, EDataGroup.DG2]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
+            console.log("this.datagroups:", this.datagroups);
+
+            console.log("DG1:", JSON.stringify(this.datagroups.DG1))
+            // console.log("DG2:", JSON.stringify(this.datagroups.DG2))
+            console.log("DG11:", JSON.stringify(this.datagroups.DG11))
+            console.log("DG14:", JSON.stringify(this.datagroups.DG14))
+
             if (this.datagroups) {
                 delete this.datagroups.success;
 
-                const dg1Data = this.readerHelper.extractMRZFromDG1(new Uint8Array(this.datagroups.DG1));
-                const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG2));
+                const dg1Data = this.readerHelper.extractDG1Data(new Uint8Array(this.datagroups.DG1));
+                // this.readerHelper.extractDataFromDG2(new Uint8Array(this.datagroups.DG6));
+                // const isDriverLicense = dg1Data.fields.documentType == "D";
+                const isDriverLicense = true
+                if (this.datagroups.DG6) {
+                    const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(this.datagroups.DG6), isDriverLicense);
+                    console.log("AppComponent - base64jp2:", base64jp2);
 
-                console.log("Basic information:", dg1Data.fields);
-                console.log("AppComponent - base64jp2:", base64jp2);
+                    try {
+                        let image = base64jp2;
+                        if (!isDriverLicense) {
+                            const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
+                            image = imageObject.image
+                        }
 
-                this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
-                this.mrzCredentials.gender = dg1Data.fields["sex"];
-                this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
-                this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
-                this.mrzCredentials.lastName = dg1Data.fields["lastName"];
-                this.mrzCredentials.nationality = dg1Data.fields["nationality"];
-                this.mrzCredentials.issuer = dg1Data.fields["issuingState"];
+                        this.images = this.images.filter(x => x.type !== EImageType.VERIFIED_FACE);
+                        this.images.unshift({ 
+                            base64Source: image,
+                            type: EImageType.VERIFIED_FACE
+                        });
+                        console.log("Document image:", image);
+                    } catch (error) {
+                        console.error(error);
+                        await this.showToast("Could not parse jp2 image");
+                    }
+                }
 
-                try {
-                    const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
-                    this.images = this.images.filter(x => x.type !== EImageType.VERIFIED_FACE);
-                    this.images.unshift({ 
-                        base64Source: imageObject.image,
-                        type: EImageType.VERIFIED_FACE
-                    });
-                    console.log("Document image:", imageObject.image);
-                } catch (error) {
-                    console.error(error);
-                    await this.showToast("Could not parse jp2 image");
+                if (isDriverLicense) {
+                    console.log("Basic information:", dg1Data.fields);
+                    this.mrzCredentials = {
+                        "documentType": "",
+                        "documentNumber": "",
+                        "birthDateDigits": "",
+                        "birthDate": "",
+                        "expiryDateDigits": "",
+                        "expiryDate": "",
+                        "firstNames": "",
+                        "gender": "",
+                        "lastName": "",
+                        "issuer": "",
+                        "nationality": "",
+                        "documentNumberCheckDigitCorrect": false,
+                        "expiryDateCheckDigitCorrect": false,
+                        "birthDateCheckDigitCorrect": false
+                    };
+
+                    this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
+                    this.mrzCredentials.gender = null;
+                    this.mrzCredentials.documentType = dg1Data.fields["documentType"];
+                    this.mrzCredentials.city = dg1Data.fields["city"];
+                    this.mrzCredentials.firstNames = dg1Data.fields["secondaryIdentifier"];
+                    this.mrzCredentials.lastName = dg1Data.fields["primaryIdentifier"];
+                    this.mrzCredentials.nationality = dg1Data.fields["nationality"];
+                    this.mrzCredentials.issuer = dg1Data.fields["localAuthority"];
+                    this.mrzCredentials.birthDate = dg1Data.fields["birthDate"];
+                    this.mrzCredentials.issueDate = dg1Data.fields["issueDate"];
+                    this.mrzCredentials.expiryDate = dg1Data.fields["expiryDate"];
+                    this.mrzCredentials.vehicleCategories = dg1Data.fields.vehicleCategories as IVehicleCategory[];
+                } else {
+                    console.log("Basic information:", dg1Data.fields);
+
+                    this.mrzCredentials.documentNumber = dg1Data.fields["documentNumber"];
+                    this.mrzCredentials.gender = dg1Data.fields["sex"];
+                    this.mrzCredentials.documentType = dg1Data.fields["documentCode"];
+                    this.mrzCredentials.firstNames = dg1Data.fields["firstName"];
+                    this.mrzCredentials.lastName = dg1Data.fields["lastName"];
+                    this.mrzCredentials.nationality = dg1Data.fields["nationality"];
+                    this.mrzCredentials.issuer = dg1Data.fields["issuingState"];
                 }
 
                 this.verified = true;
+
+                const dg11Data = this.readerHelper.extractDataFromDG11(new Uint8Array(this.datagroups.DG11));
+                this.mrzCredentials.personalNumber = dg11Data.fields.personalNumber;
+                // this.mrzCredentials.city = dg11Data.fields.city
+
+                const dg12Data = this.readerHelper.extractDataFromDG12(new Uint8Array(this.datagroups.DG12));
+                this.mrzCredentials.mrz = dg12Data.fields.mrz
+
+                if (this.datagroups.DG5) {
+                    const signatureBase64 = this.readerHelper.extractImageFromDG7(new Uint8Array(this.datagroups.DG5), isDriverLicense);
+                    console.log("AppComponent - signatureBase64:", signatureBase64);
+                    this.mrzCredentials.signatureBase64 = signatureBase64
+                }
+
+                if (this.datagroups.DG13) {
+                    this.readerHelper.extractDataFromDG13(new Uint8Array(this.datagroups.DG13));
+                }
+
+                if (this.datagroups.DG14) {
+                    this.readerHelper.extractDataFromDG14(new Uint8Array(this.datagroups.DG14));
+                }
             }
         } catch (error) {
             if (error.toString().includes("USER_CANCELED")) {
@@ -319,5 +409,9 @@ export class AppComponent implements OnInit, OnDestroy {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    substring(text: string, start: number, end: number) {
+        return text.substring(start, end)
     }
 }

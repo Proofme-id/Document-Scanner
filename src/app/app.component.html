@@ -18,22 +18,42 @@
     </div>
 
     <div class="credentials-wrapper">
-        <div class="credentials">
-            <p>First names:</p> <p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
-            <p>Lastname:</p> <p>{{ mrzCredentials?.lastName }}</p>
-            <p>Birthdate:</p> <p>{{ mrzCredentials?.birthDate }}</p>
-            <p>Nationality:</p> <p>{{ mrzCredentials?.nationality }}</p>
-            <p>Gender:</p> <p>{{ mrzCredentials?.gender }}</p>
+        <div *ngIf="mrzCredentials?.documentType !== 'D'" class="credentials">
+            <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
+            <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
+            <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate }}</p>
+            <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
+            <p>Gender:</p><p>{{ mrzCredentials?.gender }}</p>
+
+            <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
+            <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate }}</p>
+            <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
+            <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
         </div>
 
-        <div class="credentials">
-            <p>Document number:</p> <p>{{ mrzCredentials?.documentNumber }}</p>
-            <p>Expiry date:</p> <p>{{ mrzCredentials?.expiryDate }}</p>
-            <p>Issuer:</p> <p>{{ mrzCredentials?.issuer }}</p>
-            <p>Document type:</p> <p>{{ mrzCredentials?.documentType }}</p>
+        <div *ngIf="mrzCredentials?.documentType === 'D'" class="credentials">
+            <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
+            <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
+            <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd.MM.yy" }}</p>
+            <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
+            <p>City:</p> <p>{{ mrzCredentials?.city }}</p>
+
+            <p></p><p></p>
+            <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
+            <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
+            <p>Issue date:</p><p>{{ mrzCredentials?.issueDate | date: "dd.MM.yy" }}</p>
+            <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd.MM.yy" }}</p>
+            <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
+            <p>BSN:</p> <p>{{ mrzCredentials?.personalNumber }}</p>
+            <p>Mrz:</p> <p>{{ mrzCredentials?.mrz }}</p>
+            <p>Signature:</p><img [src]="mrzCredentials?.signatureBase64" class="photo" alt="passport-photo-placeholder">
         </div>
 
-        <div class="credentials">
+        <div *ngFor="let vehicleCategory of mrzCredentials?.vehicleCategories" class="credentials">
+            <p class="vehicle-category">{{ vehicleCategory.category }}<img src="/assets/img/vehicles/{{ vehicleCategory.category }}.jpeg" /></p><p>{{ vehicleCategory.issueDate | date: "dd.MM.yy" }} {{ vehicleCategory.expiryDate | date: "dd.MM.yy" }}</p>
+        </div>
+
+        <div *ngIf="mrzCredentials?.documentType !== 'D'" class="credentials">
             <p>Birth date check digit:</p>
             <p *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === null || mrzCredentials?.birthDateCheckDigitCorrect === undefined"></p>
             <svg-icon *ngIf="mrzCredentials?.birthDateCheckDigitCorrect === true || mrzCredentials?.birthDateCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ mrzCredentials?.birthDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
@@ -56,7 +76,8 @@
             <div [style.width.%]="progress" class="progress"></div>
         </div>
         <button [disabled]="!nfcEnabled" (click)="stopNfc()">Stop NFC</button>
-       <button [disabled]="nfcEnabled" (click)="passphoto()">Scan photo</button>
+        <button [disabled]="nfcEnabled" (click)="passphoto()">Scan photo</button>
         <button [disabled]="nfcEnabled" (click)="document()">Scan document</button>
+        <button [disabled]="nfcEnabled" (click)="mrz(true)">Scan MRZ (D)</button>
     </div>
 </div>

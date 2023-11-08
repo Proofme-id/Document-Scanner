@@ -99,6 +99,7 @@
 
             :nth-child(even) {
                 text-align: right;
+                word-break: break-word;
             }
         }
     }
@@ -121,5 +122,15 @@
         width: 100%;
         justify-content: flex-end;
         align-self: center;
+    }
+
+    .vehicle-category {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 48px;
+            margin-left: 4px;
+        }
     }
 }
