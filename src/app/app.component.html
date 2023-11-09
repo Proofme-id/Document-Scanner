@@ -21,36 +21,45 @@
         <div *ngIf="mrzCredentials?.documentType !== 'D'" class="credentials">
             <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
             <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
-            <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate }}</p>
+            <ng-container *ngIf="!datagroups"><p>Birthdate:</p><p>{{ mrzCredentials?.birthDate }}</p></ng-container>
+            <ng-container *ngIf="datagroups"><p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd-MM-yyyy" }}</p></ng-container>
             <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
             <p>Gender:</p><p>{{ mrzCredentials?.gender }}</p>
 
             <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
-            <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate }}</p>
+            <ng-container *ngIf="!datagroups"><p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate }}</p></ng-container>
+            <ng-container *ngIf="datagroups"><p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p></ng-container>
             <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
             <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
         </div>
 
         <div *ngIf="mrzCredentials?.documentType === 'D'" class="credentials">
-            <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
-            <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
-            <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd.MM.yy" }}</p>
-            <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
-            <p>City:</p> <p>{{ mrzCredentials?.city }}</p>
-
-            <p></p><p></p>
-            <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
-            <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
-            <p>Issue date:</p><p>{{ mrzCredentials?.issueDate | date: "dd.MM.yy" }}</p>
-            <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd.MM.yy" }}</p>
-            <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
-            <p>BSN:</p> <p>{{ mrzCredentials?.personalNumber }}</p>
-            <p>Mrz:</p> <p>{{ mrzCredentials?.mrz }}</p>
-            <p>Signature:</p><img [src]="mrzCredentials?.signatureBase64" class="photo" alt="passport-photo-placeholder">
+            <ng-container *ngIf="!datagroups">
+                <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
+                <p>Document number:</p><p>{{ substring(mrzCredentials?.documentNumber, 5, 15) }}</p>
+                <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
+            </ng-container>
+            <ng-container *ngIf="datagroups">
+                <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
+                <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
+                <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd-MM-yyyy" }}</p>
+                <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
+                <p>City:</p> <p>{{ mrzCredentials?.city }}</p>
+    
+                <p></p><p></p>
+                <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
+                <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
+                <p>Issue date:</p><p>{{ mrzCredentials?.issueDate | date: "dd-MM-yyyy" }}</p>
+                <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p>
+                <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
+                <p>BSN:</p> <p>{{ mrzCredentials?.personalNumber }}</p>
+                <p>Mrz:</p> <p>{{ mrzCredentials?.mrz }}</p>
+                <p>Signature:</p><img [src]="mrzCredentials?.signatureBase64" class="photo" alt="passport-photo-placeholder">
+            </ng-container>
         </div>
 
         <div *ngFor="let vehicleCategory of mrzCredentials?.vehicleCategories" class="credentials">
-            <p class="vehicle-category">{{ vehicleCategory.category }}<img src="/assets/img/vehicles/{{ vehicleCategory.category }}.jpeg" /></p><p>{{ vehicleCategory.issueDate | date: "dd.MM.yy" }} {{ vehicleCategory.expiryDate | date: "dd.MM.yy" }}</p>
+            <p class="vehicle-category">{{ vehicleCategory.category }}<img src="/assets/img/vehicles/{{ vehicleCategory.category }}.jpeg" /></p><p>{{ vehicleCategory.issueDate | date: "dd-MM-yyyy" }} <br> {{ vehicleCategory.expiryDate | date: "dd-MM-yyyy" }}</p>
         </div>
 
         <div *ngIf="mrzCredentials?.documentType !== 'D'" class="credentials">
@@ -70,7 +79,7 @@
 
     <div class="button-wrapper">
         <button [disabled]="nfcEnabled" (click)="mrz()">Scan MRZ</button>
-        <button *ngIf="!nfcEnabled" (click)="nfc()">Scan NFC</button>
+        <button *ngIf="!nfcEnabled" [disabled]="datagroups" (click)="nfc()">Scan NFC</button>
         <div *ngIf="nfcEnabled" class="progress-bar">
             Scanning..
             <div [style.width.%]="progress" class="progress"></div>
