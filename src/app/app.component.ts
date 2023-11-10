@@ -316,10 +316,11 @@ export class AppComponent implements OnInit, OnDestroy {
      * @param event
      */
     onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
-        const nfcStep = event.step;
-        const nfcTotalSteps = 7;
+        console.log("onPassportNfcProgress:", event);
+        const currentStep = event.currentStep;
+        const totalSteps = event.totalSteps;
         this.ngZone.run(() => {
-            this.progress = parseInt(((nfcStep / nfcTotalSteps) * 100).toFixed(0));
+            this.progress = parseInt(((currentStep / totalSteps) * 100).toFixed(0));
         });
     }
 
@@ -331,9 +332,20 @@ export class AppComponent implements OnInit, OnDestroy {
         console.error("onPassportReadError event:", event);
         // this.nfcEnabled = false;
         // When the MRZ is faulty
-        if (event.exception?.includes("onAccessDeniedException")) {
-            console.error("Incorrect MRZ credentials for NFC chip");
-            this.showToast("Incorrect MRZ credentials for NFC chip");
+        let swHex = null;
+        if (event.sw) {
+            swHex = `0x${parseInt(event.sw, 10).toString(16).toUpperCase()}`
+        }
+        console.log("swHex:", swHex);
+        if (swHex) {
+            // RAPDU = 6982 (SW = 0x6982: SECURITY STATUS NOT SATISFIED) = 27010
+            // RAPDU = 6A86 (SW = 0x6A86: INCORRECT P1P2) = 27270
+            if (swHex === "0x6982" || swHex === "0x6A86") {
+                console.error("Incorrect MRZ credentials for NFC chip");
+                this.showToast("Incorrect MRZ credentials for NFC chip");
+            } else {
+                this.showToast("Connection lost");
+            }
         } else {
             this.showToast("Connection lost");
         }
