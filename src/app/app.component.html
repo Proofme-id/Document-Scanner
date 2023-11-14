@@ -54,7 +54,7 @@
                 <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
                 <p>BSN:</p> <p>{{ mrzCredentials?.personalNumber }}</p>
                 <p>Mrz:</p> <p>{{ mrzCredentials?.mrz }}</p>
-                <p>Signature:</p><img [src]="mrzCredentials?.signatureBase64" class="photo" alt="passport-photo-placeholder">
+                <p>Signature:</p><img [src]="mrzCredentials?.signatureBase64" class="photo signature-photo" alt="passport-photo-placeholder">
             </ng-container>
         </div>
 

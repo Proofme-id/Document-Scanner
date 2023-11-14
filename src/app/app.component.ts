@@ -120,7 +120,8 @@ export class AppComponent implements OnInit, OnDestroy {
                 EDataGroup.DG6,
                 EDataGroup.DG11,
                 EDataGroup.DG12,
-                EDataGroup.DG13
+                EDataGroup.DG13,
+                EDataGroup.DG14
             ];
 
             let dataGroups: EDataGroup[] = null
@@ -144,7 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
             if (this.datagroups) {
                 delete this.datagroups.success;
 
-                if (this.datagroups.DG1) {
+                if (this.datagroups.DG1?.length > 0) {
                     const dg1Data = this.readerHelper.extractDG1Data(new Uint8Array(this.datagroups.DG1), isDriverLicense);
                     if (isDriverLicense) {
                         console.log("Basic information:", dg1Data.fields);
@@ -176,35 +177,35 @@ export class AppComponent implements OnInit, OnDestroy {
                         this.mrzCredentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false);
                     }
                 }
-                if (this.datagroups.DG2) {
+                if (this.datagroups.DG2?.length > 0) {
                     this.readPassphotoFromDatagroup(isDriverLicense, this.datagroups.DG2)
                 }
 
-                if (this.datagroups.DG5) {
+                if (this.datagroups.DG5?.length > 0) {
                     const signatureBase64 = this.readerHelper.extractImageFromDG7(new Uint8Array(this.datagroups.DG5), isDriverLicense);
                     console.log("AppComponent - signatureBase64:", signatureBase64);
                     this.mrzCredentials.signatureBase64 = signatureBase64
                 }
 
-                if (this.datagroups.DG6) {
+                if (this.datagroups.DG6?.length > 0) {
                     this.readPassphotoFromDatagroup(isDriverLicense, this.datagroups.DG6)
                 }
 
-                if (this.datagroups.DG11) {
+                if (this.datagroups.DG11?.length > 0) {
                     const dg11Data = this.readerHelper.extractDataFromDG11(new Uint8Array(this.datagroups.DG11));
                     this.mrzCredentials.personalNumber = dg11Data.fields.personalNumber;
                 }
 
-                if (this.datagroups.DG12) {
+                if (this.datagroups.DG12?.length > 0) {
                     const dg12Data = this.readerHelper.extractDataFromDG12(new Uint8Array(this.datagroups.DG12));
                     this.mrzCredentials.mrz = dg12Data.fields.mrz
                 }
 
-                if (this.datagroups.DG13) {
+                if (this.datagroups.DG13?.length > 0) {
                     this.readerHelper.extractDataFromDG13(new Uint8Array(this.datagroups.DG13));
                 }
 
-                if (this.datagroups.DG14) {
+                if (this.datagroups.DG14?.length > 0) {
                     this.readerHelper.extractDataFromDG14(new Uint8Array(this.datagroups.DG14));
                 }
 
@@ -218,7 +219,10 @@ export class AppComponent implements OnInit, OnDestroy {
             } else if (error.toString().includes("SYSTEM_RESOURCE_UNAVAILABLE")) {
                 console.error("System resource unavailable");
                 this.showToast("System resource unavailable");
-            } else {
+            } else if (error.toString().includes("INVALID_DOCUMENT")) {
+                console.error(error);
+                this.showToast(error.toString());
+            }  else {
                 console.error(error);
             }
         }
