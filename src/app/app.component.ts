@@ -217,10 +217,7 @@ export class AppComponent implements OnInit, OnDestroy {
             } else if (error.toString().includes("SYSTEM_RESOURCE_UNAVAILABLE")) {
                 console.error("System resource unavailable");
                 this.showToast("System resource unavailable");
-            } else if (error.toString().includes("INVALID_DOCUMENT")) {
-                console.error(error);
-                this.showToast(error.toString());
-            }  else {
+            } else {
                 console.error(error);
             }
         }
