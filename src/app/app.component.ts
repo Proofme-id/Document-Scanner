@@ -119,9 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 EDataGroup.DG5,
                 EDataGroup.DG6,
                 EDataGroup.DG11,
-                EDataGroup.DG12,
-                EDataGroup.DG13,
-                EDataGroup.DG14
+                EDataGroup.DG12
             ];
 
             let dataGroups: EDataGroup[] = null
