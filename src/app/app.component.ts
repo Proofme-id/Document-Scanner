@@ -240,7 +240,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.images = this.images.filter(x => x.type !== EImageType.UNVERIFIED_FACE);
                 this.images.push({
                     base64Source: photoScannerResult.face,
-                    type: EImageType.UNVERIFIED_FACE  
+                    type: EImageType.UNVERIFIED_FACE
                 });
             }
         } catch (error) {
@@ -264,6 +264,18 @@ export class AppComponent implements OnInit, OnDestroy {
                     rotate: "Please rotate the document",
                     tryAgain: "Try again",
                     success: "Success"
+                },
+                config: {
+                    mrz: {
+                        detect: true,
+                        required: true,
+                        srcImage: true
+                    },
+                    face: {
+                        detect: true,
+                        required: true,
+                        srcImage: true
+                    }
                 }
             });
 
@@ -273,21 +285,21 @@ export class AppComponent implements OnInit, OnDestroy {
                 if (documentInfo.face) {
                     this.images.push({
                         base64Source: documentInfo.face,
-                        type: EImageType.UNVERIFIED_FACE  
+                        type: EImageType.UNVERIFIED_FACE
                     });
                 }
 
                 if (documentInfo.frontPhoto) {
                     this.images.push({
                         base64Source: documentInfo.frontPhoto,
-                        type: EImageType.FRONT  
+                        type: EImageType.FRONT
                     });
                 }
 
                 if (documentInfo.backPhoto) {
                     this.images.push({
                         base64Source: documentInfo.backPhoto,
-                        type: EImageType.BACK  
+                        type: EImageType.BACK
                     });
                 }
             }
