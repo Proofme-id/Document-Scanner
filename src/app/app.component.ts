@@ -131,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 try {
                     const imageObject = await JP2Decoder.convertJP2toJPEG({ image: base64jp2 });
                     this.images = this.images.filter(x => x.type !== EImageType.VERIFIED_FACE);
-                    this.images.unshift({ 
+                    this.images.unshift({
                         base64Source: imageObject.image,
                         type: EImageType.VERIFIED_FACE
                     });
@@ -173,7 +173,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.images = this.images.filter(x => x.type !== EImageType.UNVERIFIED_FACE);
                 this.images.push({
                     base64Source: photoScannerResult.face,
-                    type: EImageType.UNVERIFIED_FACE  
+                    type: EImageType.UNVERIFIED_FACE
                 });
             }
         } catch (error) {
@@ -206,21 +206,21 @@ export class AppComponent implements OnInit, OnDestroy {
                 if (documentInfo.face) {
                     this.images.push({
                         base64Source: documentInfo.face,
-                        type: EImageType.UNVERIFIED_FACE  
+                        type: EImageType.UNVERIFIED_FACE
                     });
                 }
 
                 if (documentInfo.frontPhoto) {
                     this.images.push({
                         base64Source: documentInfo.frontPhoto,
-                        type: EImageType.FRONT  
+                        type: EImageType.FRONT
                     });
                 }
 
                 if (documentInfo.backPhoto) {
                     this.images.push({
                         base64Source: documentInfo.backPhoto,
-                        type: EImageType.BACK  
+                        type: EImageType.BACK
                     });
                 }
             }
@@ -262,7 +262,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.error("onPassportReadError event:", event);
         // this.nfcEnabled = false;
         // When the MRZ is faulty
-        if (event.exception?.includes("onPACEException") && event.message?.includes("SW = 0x6300: Unknown")) {
+        if (event.exception?.includes("onFailedBacException")) {
             console.error("Incorrect MRZ credentials for NFC chip");
             this.showToast("Incorrect MRZ credentials for NFC chip");
         } else {
