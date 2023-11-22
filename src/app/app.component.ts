@@ -258,8 +258,8 @@ export class AppComponent implements OnInit, OnDestroy {
             this.resetCredentials();
             const documentInfo = await EpassReader.scanDocument({
                 translations: {
-                    frontScan: "Scan front",
-                    backScan: "Scan back",
+                    firstResultScan: "Scan front",
+                    secondResultScan: "Scan back",
                     processing: "Processing...",
                     rotate: "Please rotate the document",
                     tryAgain: "Try again",
@@ -275,7 +275,8 @@ export class AppComponent implements OnInit, OnDestroy {
                         detect: true,
                         required: true,
                         srcImage: true
-                    }
+                    },
+                    maxRetries: 3
                 }
             });
 
