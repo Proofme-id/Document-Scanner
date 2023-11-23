@@ -21,14 +21,12 @@
         <div *ngIf="mrzCredentials?.documentType !== 'D'" class="credentials">
             <p>First names:</p><p>{{ mrzCredentials?.firstNames?.split(",").join(" ") }}</p>
             <p>Lastname:</p><p>{{ mrzCredentials?.lastName }}</p>
-            <ng-container *ngIf="!datagroups"><p>Birthdate:</p><p>{{ mrzCredentials?.birthDate }}</p></ng-container>
-            <ng-container *ngIf="datagroups"><p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd-MM-yyyy" }}</p></ng-container>
+            <p>Birthdate:</p><p>{{ mrzCredentials?.birthDate | date: "dd-MM-yyyy" }}</p>
             <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
             <p>Gender:</p><p>{{ mrzCredentials?.gender }}</p>
 
             <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
-            <ng-container *ngIf="!datagroups"><p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate }}</p></ng-container>
-            <ng-container *ngIf="datagroups"><p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p></ng-container>
+            <p>Expiry date:</p><p>{{ mrzCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p>
             <p>Issuer:</p><p>{{ mrzCredentials?.issuer }}</p>
             <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
         </div>
@@ -36,7 +34,7 @@
         <div *ngIf="mrzCredentials?.documentType === 'D'" class="credentials">
             <ng-container *ngIf="!datagroups">
                 <p>Document type:</p><p>{{ mrzCredentials?.documentType }}</p>
-                <p>Document number:</p><p>{{ substring(mrzCredentials?.documentNumber, 5, 15) }}</p>
+                <p>Document number:</p><p>{{ mrzCredentials?.documentNumber }}</p>
                 <p>Nationality:</p><p>{{ mrzCredentials?.nationality }}</p>
             </ng-container>
             <ng-container *ngIf="datagroups">

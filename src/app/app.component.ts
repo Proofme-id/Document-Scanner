@@ -9,7 +9,7 @@ import { IImage } from "./interfaces/image.interface";
 import { EImageType } from "./enums/imageType.enum";
 import { Toast } from '@capacitor/toast';
 import {
-    IMrzCredentials,
+    IDocumentCredentials,
     INfcResult,
     IPassportNfcProgressErrorEvent,
     IPassportNfcProgressEvent,
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
     onPassportReadErrorReference = this.onPassportReadError.bind(this);
     onPassportReadNfcProgressReference = this.onPassportNfcProgress.bind(this);
 
-    mrzCredentials: IMrzCredentials;
+    mrzCredentials: IDocumentCredentials;
     nfcEnabled = false;
     progress = 0;
     datagroups: INfcResult;
@@ -109,33 +109,26 @@ export class AppComponent implements OnInit, OnDestroy {
             this.addNfcListeners();
             let isDriverLicense = this.mrzCredentials.documentType === "D";
 
-            const passportIdCardDatagroups = [
-                EDataGroup.DG1,
-                EDataGroup.DG2
-            ]
-
-            const driverLicenseDatagroups = [
-                EDataGroup.DG1,
-                EDataGroup.DG5,
-                EDataGroup.DG6,
-                EDataGroup.DG11,
-                EDataGroup.DG12
-            ];
-
-            let dataGroups: EDataGroup[] = null
-
-            if (isDriverLicense) {
-                dataGroups = driverLicenseDatagroups;
-            } else {
-                dataGroups = passportIdCardDatagroups
-            }
-
             const scanOptions: IScanOptions = {
-                documentType: this.mrzCredentials.documentType,
-                documentNumber: this.mrzCredentials.documentNumber,
-                birthDate: this.mrzCredentials.birthDateDigits,
-                expiryDate: this.mrzCredentials.expiryDateDigits,
-                dataGroups: dataGroups
+                documentType: this.mrzCredentials.documentType
+            }
+            if (this.mrzCredentials.documentType === "D") {
+                scanOptions.driverMrzKey = this.mrzCredentials.driverMrzKey;
+                scanOptions.dataGroups = [
+                    EDataGroup.DG1,
+                    EDataGroup.DG5,
+                    EDataGroup.DG6,
+                    EDataGroup.DG11,
+                    EDataGroup.DG12
+                ]
+            } else {
+                scanOptions.documentNumber = this.mrzCredentials.documentNumber;
+                scanOptions.birthDate = this.mrzCredentials.birthDateDigits;
+                scanOptions.expiryDate = this.mrzCredentials.expiryDateDigits;
+                scanOptions.dataGroups = [
+                    EDataGroup.DG1,
+                    EDataGroup.DG2
+                ]
             }
             this.datagroups = await EpassReader.scanNfc(scanOptions);
             console.log("Datagroups:", this.datagroups);
@@ -268,12 +261,12 @@ export class AppComponent implements OnInit, OnDestroy {
                 config: {
                     mrz: {
                         detect: true,
-                        required: true,
+                        required: false,
                         srcImage: true
                     },
                     face: {
                         detect: true,
-                        required: true,
+                        required: false,
                         srcImage: true
                     },
                     maxRetries: 3
