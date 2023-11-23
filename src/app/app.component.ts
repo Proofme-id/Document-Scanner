@@ -1,5 +1,4 @@
 import { Component, HostListener, NgZone, OnDestroy, OnInit } from "@angular/core";
-import { PluginListenerHandle } from "@capacitor/core";
 import { Keyboard } from "@capacitor/keyboard";
 import { SplashScreen } from "@capacitor/splash-screen";
 import { TextZoom } from "@capacitor/text-zoom";
@@ -17,10 +16,6 @@ export class AppComponent implements OnInit, OnDestroy {
     onResize(width: number): void {
         this.determineFontSize(width);
     }
-
-    addKeyBoardListener: PluginListenerHandle;
-    hideKeyboardListener: PluginListenerHandle;
-    showKeyboard: boolean;
 
     constructor(
         private platform: Platform,

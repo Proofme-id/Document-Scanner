@@ -21,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainPage } from './pages/main/main.page';
 import { CommonModule } from '@angular/common';
 import { DriverCredentialComponent } from './components/driver-credentials/driver-credentials.component';
-import { CredentialPhotoComponent } from './components/credential-photo.component.ts/credential-photo.component';
+import { PhotoCredentialComponent } from './components/photo-credential.component.ts/photo-credential.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +31,7 @@ import { CredentialPhotoComponent } from './components/credential-photo.componen
         ProofmeToggleComponent,
         EpassCredentialComponent,
         DriverCredentialComponent,
-        CredentialPhotoComponent,
+        PhotoCredentialComponent,
 
         // Modals
         SettingsModal,
