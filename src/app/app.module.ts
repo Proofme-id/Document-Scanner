@@ -1,3 +1,4 @@
+import { EpassCredentialComponent } from './components/epass-credentials/epass-credentials.component';
 import { SdkProvider } from './providers/sdk.provider';
 import { ProofmeToggleComponent } from './components/proofme-toggle/proofme-toggle.component';
 import { SettingsModal } from './modals/settings/settings.modal';
@@ -19,6 +20,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppRoutingModule } from './app-routing.module';
 import { MainPage } from './pages/main/main.page';
 import { CommonModule } from '@angular/common';
+import { DriverCredentialComponent } from './components/driver-credentials/driver-credentials.component';
+import { CredentialPhotoComponent } from './components/credential-photo.component.ts/credential-photo.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +29,9 @@ import { CommonModule } from '@angular/common';
         CarouselComponent,
         HeaderComponent,
         ProofmeToggleComponent,
+        EpassCredentialComponent,
+        DriverCredentialComponent,
+        CredentialPhotoComponent,
 
         // Modals
         SettingsModal,

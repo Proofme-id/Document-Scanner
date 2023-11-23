@@ -6,90 +6,9 @@
         Back
     </div>
 
-    <div *ngIf="sdk.mrzCredentials" class="body">
+    <div *ngIf="sdk.credentials" class="body">
         <div class="card credentials-wrapper">
-            <div class="img-wrapper">
-                <img *ngIf="sdk.images.length === 0" src="/assets/img/passport.png" class="photo" alt="passport-photo-placeholder">
-                <carousel *ngIf="sdk.images.length > 0" [images]="sdk.images" (indexChanged)="imageIndex = $event"></carousel>
-                <h4 class="verified" [ngClass]="sdk.verified ? 'green' : 'gray'">
-                    <svg-icon [ngClass]="sdk.verified ? 'green' : 'gray'" src="/assets/svg/{{ sdk.verified ? 'verified' : 'unverified' }}.svg"></svg-icon>
-                    {{ sdk.verified ? "Verified" : "Unverified" }}
-                </h4>
-            </div>
-
-            <div class="credentials-wrapper">
-                <div class="credentials">
-                    <div class="credential">
-                        <p>First names:</p>
-                        <p>{{ (sdk.nfcCredentials?.firstNames || sdk.mrzCredentials?.firstNames)?.split(",").join(" ") }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Lastname:</p>
-                        <p>{{ sdk.nfcCredentials?.lastName || sdk.mrzCredentials?.lastName }}</p>
-                    </div>
-                    <div *ngIf="!sdk.nfcCredentials?.birthDate && sdk.mrzCredentials?.birthDate" class="credential">
-                        <p>Birthdate:</p>
-                        <p>{{ sdk.mrzCredentials?.birthDate }}</p>
-                    </div>
-                    <div *ngIf="sdk.nfcCredentials?.birthDate" class="credential">
-                        <p>Birthdate:</p>
-                        <p>{{ sdk.nfcCredentials?.birthDate | date: "dd-MM-yyyy" }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Nationality:</p>
-                        <p>{{ sdk.nfcCredentials?.nationality || sdk.mrzCredentials?.nationality }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Gender:</p>
-                        <p>{{ sdk.nfcCredentials?.gender || sdk.mrzCredentials?.gender }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Document number:</p><p>{{ sdk.nfcCredentials?.documentNumber || sdk.mrzCredentials?.documentNumber }}</p>
-                    </div>
-                    <div *ngIf="!sdk.nfcCredentials?.expiryDate && sdk.mrzCredentials?.expiryDate" class="credential">
-                        <p>Expiry date:</p><p>{{  sdk.mrzCredentials?.expiryDate }}</p>
-                    </div>
-                    <div *ngIf="sdk.nfcCredentials?.expiryDate" class="credential">
-                        <p>Expiry date:</p>
-                        <p>{{ sdk.nfcCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Issuer:</p>
-                        <p>{{ sdk.nfcCredentials?.issuer || sdk.mrzCredentials?.issuer }}</p>
-                    </div>
-                    <div class="credential">
-                        <p>Document type:</p>
-                        <p>{{ sdk.nfcCredentials?.documentType || sdk.mrzCredentials?.documentType }}</p>
-                    </div>
-
-                    <div class="credential">
-                        <p>Birth date check digit:</p>
-
-                        <div>
-                            <p *ngIf="sdk.mrzCredentials?.birthDateCheckDigitCorrect === null || sdk.mrzCredentials?.birthDateCheckDigitCorrect === undefined"></p>
-                            <svg-icon *ngIf="sdk.mrzCredentials?.birthDateCheckDigitCorrect === true || sdk.mrzCredentials?.birthDateCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ sdk.mrzCredentials?.birthDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
-                        </div>
-                    </div>
-
-                    <div class="credential">
-                        <p>Document number check digit:</p>
-
-                        <div>
-                            <p *ngIf="sdk.mrzCredentials?.documentNumberCheckDigitCorrect === null || sdk.mrzCredentials?.documentNumberCheckDigitCorrect === undefined"></p>
-                            <svg-icon *ngIf="sdk.mrzCredentials?.documentNumberCheckDigitCorrect === true || sdk.mrzCredentials?.documentNumberCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ sdk.mrzCredentials?.documentNumberCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
-                        </div>
-                    </div>
-
-                    <div class="credential">
-                        <p>Expiry date check digit:</p>
-
-                        <div>
-                            <p *ngIf="sdk.mrzCredentials?.expiryDateCheckDigitCorrect === null || sdk.mrzCredentials?.expiryDateCheckDigitCorrect === undefined"></p>
-                            <svg-icon *ngIf="sdk.mrzCredentials?.expiryDateCheckDigitCorrect === true || sdk.mrzCredentials?.expiryDateCheckDigitCorrect === false" class="result-icon" src="/assets/svg/{{ sdk.mrzCredentials?.expiryDateCheckDigitCorrect ? 'success' : 'error' }}.svg"></svg-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <epass-credentials [credentials_]="sdk.credentials"></epass-credentials>
 
             <div class="button-wrapper">
                 <button *ngIf="!sdk.verified" (click)="detectFace()" [disabled]="sdk.nfcEnabled" class="solid blue">Detect Face</button>
@@ -105,7 +24,7 @@
         </div>
     </div>
 
-    <div *ngIf="!sdk.mrzCredentials" class="body">
+    <div *ngIf="!sdk.credentials" class="body">
         <div class="text">
             <span class="title">Scanning a Passport or ID card</span>
             <span class="subtitle">Click the button below to scan a MRZ and follow the instructions on your screen.</span>

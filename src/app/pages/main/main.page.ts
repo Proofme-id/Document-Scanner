@@ -18,28 +18,12 @@ export class MainPage implements OnInit {
     sdk = this.sdkProvider;
 
     constructor(
-        private platform: Platform,
         private sdkProvider: SdkProvider,
         private router: Router
     ) { }
 
     async ngOnInit(): Promise<void> {
         StatusBar.setStyle({ style: Style.Dark });
-        this.addSafeAreaVariables();
-    }
-
-    async addSafeAreaVariables(): Promise<void> {
-        try {
-            if (this.platform.is("android")) {
-                const safeAreaTop = `${(await SafeArea.getStatusBarHeight()).statusBarHeight}px`;
-                document.documentElement.style.setProperty(
-                    "--safe-area-inset-top",
-                    safeAreaTop
-                );
-            }
-        } catch (error) {
-            console.error("Safe area error:", error);
-        }
     }
 
     clickedFlow(flow: string): void {

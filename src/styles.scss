@@ -357,30 +357,6 @@ input[type="text"] {
     }
 }
 
-.img-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: rem(8px);
-
-    h4 {
-        margin: 0;
-    }
-
-    img {
-        max-height: rem(152px);
-        max-width: rem(114px);
-    }
-
-    .img-roulette {
-        display: flex;
-        gap: rem(24px);
-        overflow-x: scroll;
-    }
-}
-
 .button-wrapper {
     display: flex;
     flex-direction: column;

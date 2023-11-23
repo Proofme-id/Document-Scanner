@@ -29,7 +29,7 @@ export class SdkProvider {
     readerHelper = new ReaderHelper();
     images: IImage[] = [];
     verified: boolean;
-    mrzCredentials: IMrzCredentials;
+    credentials: IMrzCredentials;
     settingsDataGroups: EDataGroup[] = [];
     detectDocumentConfig = {
         mrz: {
@@ -43,7 +43,6 @@ export class SdkProvider {
             srcImage: true
         }
     };
-    nfcCredentials: IMrzCredentials = <IMrzCredentials>{};
 
     constructor(
         private ngZone: NgZone
@@ -78,9 +77,9 @@ export class SdkProvider {
 
         try {
             this.resetCredentials();
-            this.mrzCredentials = await EpassReader.scanMrz({ driverLicense });
+            this.credentials = await EpassReader.scanMrz({ driverLicense });
 
-            console.log("MRZ credentials:", this.mrzCredentials);
+            console.log("MRZ credentials:", this.credentials);
         } catch (error) {
             console.error(error);
             if (error.toString().includes("CAMERA_PERMISSION_DENIED")) {
@@ -93,16 +92,15 @@ export class SdkProvider {
 
     resetCredentials(): void {
         this.retrievedDataGroups = null;
-        this.mrzCredentials = null;
+        this.credentials = null;
         this.verified = false;
         this.images = [];
-        this.nfcCredentials = <IMrzCredentials>{}
     }
 
     async detectFace(): Promise<void> {
         if (!this.initialized) {
             return await this.showToast("SDK not initialized");
-        } else if (!this.mrzCredentials) {
+        } else if (!this.credentials) {
             return await this.showToast("Scan MRZ first");
         }
 
@@ -217,7 +215,7 @@ export class SdkProvider {
     async readNfc(): Promise<void> {
         if (!this.initialized) {
             return await this.showToast("SDK not initialized");
-        } else if (!this.mrzCredentials) {
+        } else if (!this.credentials) {
             return await this.showToast("Scan MRZ first");
         }
 
@@ -226,13 +224,13 @@ export class SdkProvider {
             this.retrievedDataGroups = null;
             this.nfcEnabled = true;
             this.addNfcListeners();
-            let isDriverLicense = this.mrzCredentials.documentType === "D";
+            let isDriverLicense = this.credentials.documentType === "D";
 
             const scanOptions: IScanOptions = {
-                documentType: this.mrzCredentials.documentType,
-                documentNumber: this.mrzCredentials.documentNumber,
-                birthDate: this.mrzCredentials.birthDateDigits,
-                expiryDate: this.mrzCredentials.expiryDateDigits,
+                documentType: this.credentials.documentType,
+                documentNumber: this.credentials.documentNumber,
+                birthDate: this.credentials.birthDateDigits,
+                expiryDate: this.credentials.expiryDateDigits,
                 dataGroups: this.settingsDataGroups
             }
             this.retrievedDataGroups = await EpassReader.scanNfc(scanOptions);
@@ -246,31 +244,31 @@ export class SdkProvider {
                     if (isDriverLicense) {
                         console.log("Basic information:", dg1Data.fields);
 
-                        this.nfcCredentials.documentNumber = dg1Data.fields["documentNumber"];
-                        this.nfcCredentials.gender = null;
-                        this.nfcCredentials.documentType = dg1Data.fields["documentType"];
-                        this.nfcCredentials.firstNames = dg1Data.fields["secondaryIdentifier"];
-                        this.nfcCredentials.lastName = dg1Data.fields["primaryIdentifier"];
-                        this.nfcCredentials.nationality = dg1Data.fields["nationality"];
-                        this.nfcCredentials.issuer = dg1Data.fields["localAuthority"];
-                        this.nfcCredentials.birthDate = dg1Data.fields["birthDate"];
-                        this.nfcCredentials.expiryDate = dg1Data.fields["expiryDate"];
+                        this.credentials.documentNumber = dg1Data.fields["documentNumber"];
+                        this.credentials.gender = null;
+                        this.credentials.documentType = dg1Data.fields["documentType"];
+                        this.credentials.firstNames = dg1Data.fields["secondaryIdentifier"];
+                        this.credentials.lastName = dg1Data.fields["primaryIdentifier"];
+                        this.credentials.nationality = dg1Data.fields["nationality"];
+                        this.credentials.issuer = dg1Data.fields["localAuthority"];
+                        this.credentials.birthDate = dg1Data.fields["birthDate"];
+                        this.credentials.expiryDate = dg1Data.fields["expiryDate"];
 
-                        this.nfcCredentials.city = dg1Data.fields["city"];
-                        this.nfcCredentials.issueDate = dg1Data.fields["issueDate"];
-                        this.nfcCredentials.vehicleCategories = dg1Data.fields.vehicleCategories as IVehicleCategory[];
+                        this.credentials.city = dg1Data.fields["city"];
+                        this.credentials.issueDate = dg1Data.fields["issueDate"];
+                        this.credentials.vehicleCategories = dg1Data.fields.vehicleCategories as IVehicleCategory[];
                     } else {
                         console.log("Basic information:", dg1Data.fields);
 
-                        this.nfcCredentials.documentNumber = dg1Data.fields["documentNumber"];
-                        this.nfcCredentials.gender = dg1Data.fields["sex"].toUpperCase();
-                        this.nfcCredentials.documentType = dg1Data.fields["documentCode"];
-                        this.nfcCredentials.firstNames = dg1Data.fields["firstName"];
-                        this.nfcCredentials.lastName = dg1Data.fields["lastName"];
-                        this.nfcCredentials.nationality = dg1Data.fields["nationality"];
-                        this.nfcCredentials.issuer = dg1Data.fields["issuingState"];
-                        this.nfcCredentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true);
-                        this.nfcCredentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false);
+                        this.credentials.documentNumber = dg1Data.fields["documentNumber"];
+                        this.credentials.gender = dg1Data.fields["sex"].toUpperCase();
+                        this.credentials.documentType = dg1Data.fields["documentCode"];
+                        this.credentials.firstNames = dg1Data.fields["firstName"];
+                        this.credentials.lastName = dg1Data.fields["lastName"];
+                        this.credentials.nationality = dg1Data.fields["nationality"];
+                        this.credentials.issuer = dg1Data.fields["issuingState"];
+                        this.credentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true);
+                        this.credentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false);
                     }
                 }
                 if (this.retrievedDataGroups.DG2?.data.length > 0) {
@@ -280,7 +278,7 @@ export class SdkProvider {
                 if (this.retrievedDataGroups.DG5?.data.length > 0) {
                     const signatureBase64 = this.readerHelper.extractImageFromDG7(new Uint8Array(this.retrievedDataGroups.DG5.data), isDriverLicense);
                     console.log("AppComponent - signatureBase64:", signatureBase64);
-                    this.nfcCredentials.signatureBase64 = signatureBase64
+                    this.credentials.signatureBase64 = signatureBase64
                 }
 
                 if (this.retrievedDataGroups.DG6?.data.length > 0) {
@@ -289,12 +287,12 @@ export class SdkProvider {
 
                 if (this.retrievedDataGroups.DG11?.data.length > 0) {
                     const dg11Data = this.readerHelper.extractDataFromDG11(new Uint8Array(this.retrievedDataGroups.DG11.data));
-                    this.nfcCredentials.personalNumber = dg11Data.fields.personalNumber;
+                    this.credentials.personalNumber = dg11Data.fields.personalNumber;
                 }
 
                 if (this.retrievedDataGroups.DG12?.data.length > 0) {
                     const dg12Data = this.readerHelper.extractDataFromDG12(new Uint8Array(this.retrievedDataGroups.DG12.data));
-                    this.nfcCredentials.mrz = dg12Data.fields.mrz
+                    this.credentials.mrz = dg12Data.fields.mrz
                 }
 
                 if (this.retrievedDataGroups.DG13?.data.length > 0) {
@@ -305,7 +303,7 @@ export class SdkProvider {
                     this.readerHelper.extractDataFromDG14(new Uint8Array(this.retrievedDataGroups.DG14.data));
                 }
 
-                console.log("Result:", this.nfcCredentials);
+                console.log("Result:", this.credentials);
                 this.verified = true;
             }
         } catch (error) {
@@ -365,7 +363,7 @@ export class SdkProvider {
             });
 
             if (documentInfo) {
-                this.mrzCredentials = documentInfo.mrz;
+                this.credentials = documentInfo.mrz;
 
                 if (documentInfo.face) {
                     this.images.push({

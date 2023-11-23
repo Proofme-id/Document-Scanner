@@ -39,7 +39,7 @@ export class EpassPage implements OnInit {
     async scanMrz(): Promise<void> {
         await this.sdkProvider.openMrzScanner();
 
-        if (this.sdk.mrzCredentials) {
+        if (this.sdk.credentials) {
             this.headerType = EHeaderType.RETURN;
         }
     }

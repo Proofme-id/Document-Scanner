@@ -5,6 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { firstValueFrom } from "rxjs";
 import { EHeaderType } from 'src/app/enums/headerType.enum';
+import { EPopperColors } from 'src/app/enums/popperColors.enum';
 
 @Component({
     selector: "app-header",
@@ -26,11 +27,11 @@ export class HeaderComponent {
 
     getStatusColor(): string {
         if (this.sdkProvider.sdkStatus === ESdkStatus.ACTIVE) {
-            return "green";
+            return EPopperColors.GREEN;
         } else if (this.sdkProvider.sdkStatus === ESdkStatus.REVOKED) {
-            return "red";
+            return EPopperColors.RED;
         } else {
-            return "gray";
+            return EPopperColors.GRAY;
         }
     }
 

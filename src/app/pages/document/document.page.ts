@@ -38,7 +38,7 @@ export class DocumentPage {
 
     async detectDocument(): Promise<void> {
         await this.sdkProvider.detectDocument();
-        if (this.sdk.mrzCredentials || this.sdk.images.length > 0) {
+        if (this.sdk.credentials || this.sdk.images.length > 0) {
             this.headerType = EHeaderType.RETURN;
         }
     }
@@ -49,9 +49,5 @@ export class DocumentPage {
 
     async stopReadNfc(): Promise<void> {
         await this.sdkProvider.stopReadNfc();
-    }
-
-    substring(text: string, start: number, end: number) {
-        return text.substring(start, end)
     }
 }
