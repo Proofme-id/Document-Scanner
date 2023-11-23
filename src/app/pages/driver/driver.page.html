@@ -1,0 +1,138 @@
+<div class="page">
+    <app-header [type_]="headerType" (clickedSettings)="showSettings = true"></app-header>
+    <div (click)="clickedBack()" class="back">
+        <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+        Back
+    </div>
+
+    <div *ngIf="sdk.mrzCredentials" class="body">
+        <div class="card credentials-wrapper">
+            <div class="img-wrapper">
+                <img *ngIf="sdk.images.length === 0" src="/assets/img/passport.png" class="photo" alt="passport-photo-placeholder">
+                <carousel *ngIf="sdk.images.length > 0" [images]="sdk.images" (indexChanged)="imageIndex = $event"></carousel>
+                <h4 class="verified" [ngClass]="sdk.verified ? 'green' : 'gray'">
+                    <svg-icon [ngClass]="sdk.verified ? 'green' : 'gray'" src="/assets/svg/{{ sdk.verified ? 'verified' : 'unverified' }}.svg"></svg-icon>
+                    {{ sdk.verified ? "Verified" : "Unverified" }}
+                </h4>
+            </div>
+
+            <div class="credentials-wrapper">
+                <div *ngIf="sdk.mrzCredentials?.documentType === 'D'" class="credentials">
+                    <ng-container *ngIf="!sdk.retrievedDataGroups">
+                        <div class="credential">
+                            <p>Document type:</p>
+                            <p>{{ sdk.mrzCredentials?.documentType }}</p>
+                        </div>
+                        <div class="credential">
+                            <p>Document number:</p>
+                            <p>{{ substring(sdk.mrzCredentials?.documentNumber, 5, 15) }}</p>
+                        </div>
+                        <div class="credential">
+                            <p>Nationality:</p>
+                            <p>{{ sdk.mrzCredentials?.nationality }}</p>
+                        </div>
+                    </ng-container>
+
+
+                    <ng-container *ngIf="sdk.retrievedDataGroups">
+                        <div *ngIf="sdk.nfcCredentials?.lastName" class="credential">
+                            <p>Lastname:</p>
+                            <p>{{ sdk.nfcCredentials?.lastName }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.firstNames" class="credential">
+                            <p>First names:</p>
+                            <p>{{ sdk.nfcCredentials?.firstNames?.split(",").join(" ") }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.birthDate" class="credential">
+                            <p>Birthdate:</p>
+                            <p>{{ sdk.nfcCredentials?.birthDate | date: "dd-MM-yyyy" }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.nationality || sdk.mrzCredentials?.nationality" class="credential">
+                            <p>Nationality:</p>
+                            <p>{{ sdk.nfcCredentials?.nationality || sdk.mrzCredentials?.nationality }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.city" class="credential">
+                            <p>City:</p>
+                            <p>{{ sdk.nfcCredentials?.city }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.documentType || sdk.mrzCredentials?.documentType" class="credential">
+                            <p>Document type:</p>
+                            <p>{{ sdk.nfcCredentials?.documentType || sdk.mrzCredentials?.documentType }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.documentNumber || sdk.mrzCredentials?.documentNumber" class="credential">
+                            <p>Document number:</p>
+                            <p>{{ sdk.nfcCredentials?.documentNumber || sdk.mrzCredentials?.documentNumber }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.issueDate" class="credential">
+                            <p>Issue date:</p>
+                            <p>{{ sdk.nfcCredentials?.issueDate | date: "dd-MM-yyyy" }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.expiryDate" class="credential">
+                            <p>Expiry date:</p>
+                            <p>{{ sdk.nfcCredentials?.expiryDate | date: "dd-MM-yyyy" }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.issuer" class="credential">
+                            <p>Issuer:</p>
+                            <p>{{ sdk.nfcCredentials?.issuer }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.personalNumber" class="credential">
+                            <p>BSN:</p>
+                            <p>{{ sdk.nfcCredentials?.personalNumber }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.mrz" class="credential">
+                            <p>Mrz:</p>
+                            <p>{{ sdk.nfcCredentials?.mrz }}</p>
+                        </div>
+                        <div *ngIf="sdk.nfcCredentials?.signatureBase64" class="credential">
+                            <p>Signature:</p>
+                            <img [src]="sdk.nfcCredentials?.signatureBase64" class="photo signature-photo" alt="passport-photo-placeholder">
+                        </div>
+                    </ng-container>
+                </div>
+
+                <div *ngIf="sdk.nfcCredentials?.vehicleCategories" class="credentials">
+                    <div class="titles">
+                        <p>Category</p>
+
+                        <div class="dates">
+                            <p>From</p>
+                            <p>Until</p>
+                        </div>
+                    </div>
+                    <div *ngFor="let vehicleCategory of sdk.nfcCredentials.vehicleCategories"  class="credentials categories">
+                        <p class="vehicle-category">{{ vehicleCategory.category }} - <svg-icon src="/assets/svg/vehicles/{{ vehicleCategory.category }}.svg"></svg-icon></p>
+                        <div class="dates">
+                            <p>{{ vehicleCategory.issueDate | date: "dd-MM-yyyy" }}</p>
+                            <p>{{ vehicleCategory.expiryDate | date: "dd-MM-yyyy" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-wrapper">
+                <div *ngIf="!sdk.verified" class="nfc-button">
+                    <button *ngIf="!sdk.nfcEnabled" (click)="readNfc()" class="solid blue">Read NFC</button>
+                    <div *ngIf="sdk.nfcEnabled && sdk.settingsDataGroups.length > 0" class="blue progress-bar">
+                        <div class="text">Scanning..</div>
+                        <div [style.width.%]="sdk.progress" class="progress"></div>
+                    </div>
+                    <svg-icon *ngIf="sdk.nfcEnabled" (click)="stopReadNfc()" src="/assets/svg/close.svg" class="stop-nfc"></svg-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!sdk.mrzCredentials" class="body">
+        <div class="text">
+            <span class="title">Scanning a Drivers license</span>
+            <span class="subtitle">Click the button below to scan a MRZ and follow the instructions on your screen.</span>
+        </div>
+        <div class="buttons">
+            <button (click)="scanMrz()" class="blue solid">
+                Scan MRZ
+            </button>
+        </div>
+    </div>
+
+</div>
+<settings-modal *ngIf="showSettings" [type]="settingsType" (close)="showSettings = false"></settings-modal>

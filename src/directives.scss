@@ -1,0 +1,124 @@
+@use "sass-rem" as *;
+.popper-content {
+    display: none;
+}
+
+.popper {
+    position: absolute;
+    z-index: 10000;
+    background-color: var(--gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: rem(8px 12px);
+    border-radius: rem(4px);
+    border: rem(1px) solid;
+    color: #ffffff !important;
+    font-size: rem(14px);
+    transition: all 150ms ease-in-out;
+    opacity: 0;
+
+    &:has(.popper-content) {
+        .popper-content {
+            display: block;
+        }
+    }
+
+    .popper-arrow {
+        z-index: -1;
+        background-color: var(--gray);
+        position: absolute;
+        transform: rotate(45deg);
+        max-width: rem(48px);
+        max-height: rem(48px);
+    }
+
+    &.message {
+        padding: rem(6px 12px);
+        max-width: rem(360px);
+        border-radius: rem(12px);
+        word-break: break-word;
+        color: #8d8ca0;
+        box-shadow: rem(0 3px 6px) rgba(0, 0, 0, 0.16) !important;
+    }
+
+    &.full-opacity {
+        opacity: 1;
+    }
+
+    &.green {
+        background-color: var(--green);
+        border-color: var(--green) !important;
+
+        .popper-arrow {
+            background-color: var(--green) !important;
+        }
+    }
+
+    &.red {
+        background-color: var(--red);
+        border-color: var(--red) !important;
+
+        .popper-arrow {
+            background-color: var(--red) !important;
+        }
+    }
+
+    &.blue {
+        background-color: var(--blue);
+        border-color: var(--blue) !important;
+
+        .popper-arrow {
+            background-color: var(--blue) !important;
+        }
+    }
+
+    &.gray {
+        background-color: #8d8ca0;
+        border-color: #8d8ca0 !important;
+
+        .popper-arrow {
+            background-color: #8d8ca0 !important;
+        }
+    }
+
+    &.light-gray {
+        background-color: var(--light-gray);
+        border-color: var(--light-gray) !important;
+
+        .popper-arrow {
+            background-color: var(--light-gray) !important;
+        }
+    }
+
+    &.black {
+        background-color: var(--black);
+        border-color: var(--black) !important;
+
+        .popper-arrow {
+            background-color: var(--black) !important;
+        }
+    }
+
+    &.white {
+        background-color: white;
+        border-color: white !important;
+
+        .popper-arrow {
+            background-color: white !important;
+        }
+    }
+
+    &.small {
+        color: var(--blue);
+        background-color: #faf9fc;
+        border: rem(1px) solid #c8c7dc !important;
+        padding: rem(2px 10px) !important;
+        border-radius: rem(12px) !important;
+        font-size: rem(12px) !important;
+
+        &.red {
+            color: var(--red);
+        }
+    }
+}

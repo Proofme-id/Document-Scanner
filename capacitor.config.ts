@@ -6,6 +6,13 @@ const config: CapacitorConfig = {
     webDir: 'dist/document-scanner',
     server: {
         androidScheme: 'https'
+    },
+    plugins: {
+        SplashScreen: {
+            layoutName: "splash_screen",
+            launchAutoHide: false,
+            useDialog: true
+        }
     }
 };
 

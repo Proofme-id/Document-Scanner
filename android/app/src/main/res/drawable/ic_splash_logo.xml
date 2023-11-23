@@ -1,0 +1,10 @@
+<!-- This file is for splash screen on Android 11 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="155dp"
+    android:height="126dp"
+    android:viewportWidth="155"
+    android:viewportHeight="126">
+    <path
+        android:pathData="M77,126c6.64,0 11,-3.92 11,-11v-36h29c20.65,0 38,-17.63 38,-39v-1c0,-21.37 -17.35,-39 -38,-39L66,-0v58L40,58a17.91,17.91 0,0 1,-18 -18c0,-10.19 8.16,-19 18,-19L50,21v-21L36,-0C16.18,1.14 0,18.44 0,39v1c0,21.37 16.35,39 37,39L66,79v36c0,7.08 4.35,11 11,11m11,-105h27c9.84,0 18,8.81 18,19a17.91,17.91 0,0 1,-18 18L88,58Z"
+        android:fillColor="#1b89c4" />
+</vector>

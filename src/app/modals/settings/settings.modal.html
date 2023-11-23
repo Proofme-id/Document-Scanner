@@ -1,0 +1,117 @@
+<div class="modal">
+    <div class="blur"></div>
+    <div class="card">
+        <div class="text">
+            <div *ngIf="type === ESettingsType.EPASS" class="modal-title">
+                <div class="title blue">Passport / ID card settings</div>
+                <div class="subtitle">Configure which data you want to retrieve from your Passport or ID card.</div>
+            </div>
+
+            <div *ngIf="type === ESettingsType.DRIVER" class="modal-title">
+                <div class="title blue">Driver License Settings</div>
+                <div class="subtitle">Configure which data you want to retrieve from your Driver License.</div>
+            </div>
+
+            <div *ngIf="type === ESettingsType.DOCUMENT" class="modal-title">
+                <div class="title blue">Photo Document Detector Settings</div>
+                <div class="subtitle">Configure the settings for the detector here.</div>
+            </div>
+
+            <div *ngIf="type != ESettingsType.DOCUMENT" class="settings">
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Basic info and categories:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG1)" [checked]="dgGroupChecked(EDataGroup.DG1)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Extra info:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG11)" [checked]="dgGroupChecked(EDataGroup.DG11)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    MRZ:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG12)" [checked]="dgGroupChecked(EDataGroup.DG12)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.EPASS" class="setting">
+                    MRZ:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG1)" [checked]="dgGroupChecked(EDataGroup.DG1)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.EPASS" class="setting">
+                    Photo:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG2)" [checked]="dgGroupChecked(EDataGroup.DG2)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Photo:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG6)" [checked]="dgGroupChecked(EDataGroup.DG6)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.EPASS" class="setting">
+                    Signature:
+                    <!-- For now keep these disabled -->
+                    <proofme-toggle [disabled]="true" [checked]="dgGroupChecked(EDataGroup.DG7)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Signature:
+                    <proofme-toggle (click)="clickedSetting(EDataGroup.DG5)" [checked]="dgGroupChecked(EDataGroup.DG5)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.EPASS" class="setting">
+                    Security Info:
+                    <!-- For now keep these disabled -->
+                    <proofme-toggle [disabled]="true" [checked]="dgGroupChecked(EDataGroup.DG14)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.EPASS" class="setting">
+                    Public Key:
+                    <!-- For now keep these disabled -->
+                    <proofme-toggle [disabled]="true" [checked]="dgGroupChecked(EDataGroup.DG15)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Security Info:
+                    <!-- For now keep these disabled -->
+                    <proofme-toggle [disabled]="true" [checked]="dgGroupChecked(EDataGroup.DG14)"></proofme-toggle>
+                </div>
+                <div *ngIf="type === ESettingsType.DRIVER" class="setting">
+                    Public Key:
+                    <!-- For now keep these disabled -->
+                    <proofme-toggle  [disabled]="true" [checked]="dgGroupChecked(EDataGroup.DG13)"></proofme-toggle>
+                </div>
+            </div>
+            <div *ngIf="type === ESettingsType.DOCUMENT" class="settings">
+                <div class="title">MRZ:</div>
+                <div class="setting">
+                    Detect:
+                    <proofme-toggle (click)="setDocumentConfigProperty('mrz', 'detect')" [checked]="detectDocumentPropertyChecked('mrz', 'detect')"></proofme-toggle>
+                </div>
+                <div class="setting">
+                    Required:
+                    <proofme-toggle (click)="setDocumentConfigProperty('mrz', 'required')" [disabled]="!detectDocumentPropertyChecked('mrz', 'detect')" [checked]="detectDocumentPropertyChecked('mrz', 'required')"></proofme-toggle>
+                </div>
+                <div class="setting">
+                    Return source image:
+                    <proofme-toggle (click)="setDocumentConfigProperty('mrz', 'srcImage')" [disabled]="!detectDocumentPropertyChecked('mrz', 'detect')" [checked]="detectDocumentPropertyChecked('mrz', 'srcImage')"></proofme-toggle>
+                </div>
+
+                <div class="title">Face:</div>
+                <div class="setting">
+                    Detect:
+                    <proofme-toggle (click)="setDocumentConfigProperty('face', 'detect')" [checked]="detectDocumentPropertyChecked('face', 'detect')"></proofme-toggle>
+                </div>
+                <div class="setting">
+                    Required:
+                    <proofme-toggle (click)="setDocumentConfigProperty('face', 'required')" [disabled]="!detectDocumentPropertyChecked('face', 'detect')" [checked]="detectDocumentPropertyChecked('face', 'required')"></proofme-toggle>
+                </div>
+                <div class="setting">
+                    Return source image:
+                    <proofme-toggle (click)="setDocumentConfigProperty('face', 'srcImage')" [disabled]="!detectDocumentPropertyChecked('face', 'detect')" [checked]="detectDocumentPropertyChecked('face', 'srcImage')"></proofme-toggle>
+                </div>
+
+                <div class="title">Retries:</div>
+                <div class="setting">
+                    Maximum:
+                    <input type="text" placeholder="5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button (click)="closeMe()" class="blue close-button">
+        <svg-icon src="/assets/svg/cross.svg" class="close"></svg-icon>
+        Close
+    </button>
+</div>
