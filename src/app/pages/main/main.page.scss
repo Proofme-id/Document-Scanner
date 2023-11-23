@@ -1,0 +1,12 @@
+@use "sass-rem" as *;
+:host {
+    .body .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: rem(8px);
+
+        button {
+            justify-content: space-between;
+        }
+    }
+}

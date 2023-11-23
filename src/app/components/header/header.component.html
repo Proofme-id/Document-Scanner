@@ -1,0 +1,15 @@
+<div class="header">
+    <svg-icon src="/assets/svg/logo.svg" class="logo"></svg-icon>
+    <div *ngIf="type_ === EHeaderType.STATUS" [popperTrigger]="EPopperTrigger.CLICK" [popper]="getPopperText()" [popperClasses]="getStatusColor()" [popperFadeOutDelay]="2000" class="status">
+        Status:
+        <div [ngClass]="getStatusColor()" class="status-dot"></div>
+    </div>
+
+    <div *ngIf="type_ === EHeaderType.RETURN" (click)="goHome()" class="return">
+        <svg-icon src="/assets/svg/cross.svg" class="return-icon"></svg-icon>
+    </div>
+
+    <div *ngIf="type_ === EHeaderType.SETTINGS" (click)="clickedSettingsFunction()" class="settings">
+        <svg-icon src="/assets/svg/settings.svg" class="return-icon"></svg-icon>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="page">
+    <app-header [type_]="headerType"></app-header>
+    <div class="body">
+        <div class="text">
+            <span class="title">Document Scanner</span>
+            <span class="subtitle">Please choose your document flow.</span>
+        </div>
+        <div class="buttons">
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/epass')" class="blue">
+                Passport or ID card
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/driver')" class="blue">
+                Drivers License
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/document')" class="blue">
+                Photo Document Detector
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+        </div>
+    </div>
+</div>

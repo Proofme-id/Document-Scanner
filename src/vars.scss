@@ -1,0 +1,16 @@
+@use "sass-rem" as *;
+html {
+    --black: #28283c;
+    --gray: #8d8ca0;
+    --light-gray: #c8c7dc;
+    --blue: #1b89c4;
+    --light-blue: #51b3e6;
+    --red: #ff3333;
+    --green: #9cc66c;
+    --orange: #ff8933;
+    --header-height: 5rem;
+    --menu-width: 18.125rem;
+    --box-shadow: 0rem 0.3750rem 0.750rem rgb(0 0 0 / 16%);
+    --header-height: 3.375rem;
+    --header-height-plus-space: 4.375rem;
+}

@@ -1,0 +1,38 @@
+<div class="page">
+    <app-header [type_]="headerType" (clickedSettings)="showSettings = true"></app-header>
+    <div (click)="clickedBack()" class="back">
+        <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+        Back
+    </div>
+
+    <div *ngIf="sdk.credentials" class="body">
+        <div class="card credentials-wrapper">
+            <driver-credentials [credentials_]="sdk.credentials"></driver-credentials>
+
+            <div class="button-wrapper">
+                <div *ngIf="!sdk.verified" class="nfc-button">
+                    <button *ngIf="!sdk.nfcEnabled" (click)="readNfc()" class="solid blue">Read NFC</button>
+                    <div *ngIf="sdk.nfcEnabled && sdk.settingsDataGroups.length > 0" class="blue progress-bar">
+                        <div class="text">Scanning..</div>
+                        <div [style.width.%]="sdk.progress" class="progress"></div>
+                    </div>
+                    <svg-icon *ngIf="sdk.nfcEnabled" (click)="stopReadNfc()" src="/assets/svg/close.svg" class="stop-nfc"></svg-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!sdk.credentials" class="body">
+        <div class="text">
+            <span class="title">Scanning a Drivers license</span>
+            <span class="subtitle">Click the button below to scan a MRZ and follow the instructions on your screen.</span>
+        </div>
+        <div class="buttons">
+            <button (click)="scanMrz()" class="blue solid">
+                Scan MRZ
+            </button>
+        </div>
+    </div>
+
+</div>
+<settings-modal *ngIf="showSettings" [type]="settingsType" (close)="showSettings = false"></settings-modal>

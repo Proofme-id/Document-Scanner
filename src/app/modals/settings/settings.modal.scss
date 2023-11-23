@@ -1,0 +1,47 @@
+@use "sass-rem" as *;
+:host {
+    .settings {
+        display: flex;
+        flex-direction: column;
+        gap: rem(16px);
+        width: 100%;
+
+        .title {
+            font-weight: bold;
+            text-align: start;
+            font-size: rem(18px);
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .close-button {
+        z-index: 100;
+        position: absolute;
+        bottom: rem(54px);
+        border-radius: rem(22px);
+        padding: rem(10px 16px);
+        width: fit-content;
+
+        .close svg {
+            fill: var(--blue);
+        }
+    }
+
+    input[type="text"] {
+        max-width: rem(88px);
+    }
+
+    .modal-title {
+        width: 100%;
+        text-align: start;
+
+        .subtitle {
+            max-width: 100%;
+        }
+    }
+}

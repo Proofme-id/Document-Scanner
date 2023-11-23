@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="appColorPrimary">#1B89C4</color>
+    <color name="appColorPrimaryDark">#1B89C4</color>
+    <color name="appColorAccent">#1B89C4</color>
+    <color name="transparent">#00000000</color>
+    <color name="splashscreenBackground">#FFFFFF</color>
+    <!-- Android 11 -->
+    <color name="launcherBackground">#FFFFFF</color>
+</resources>

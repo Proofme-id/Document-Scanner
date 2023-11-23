@@ -1,3 +1,55 @@
+@use "sass-rem" as *;
+@import "/src/directives.scss";
+@import "/src/vars.scss";
+
+:root {
+    // Only for iOS try to set it immediately.
+    // Android will return 0 and we will set it inside the app.component.ts
+    --safe-area-inset-top: env(safe-area-inset-top);
+    --keyboard-height: env(keyboard-height);
+    --signatureColor: var(--blue);
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+router-outlet ~ * {
+    padding-top: var(--safe-area-inset-top) !important;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    &::part(scroll) {
+        overscroll-behavior: none;
+    }
+}
+
+// Solution for keyboard opening for now.
+// Could not find working way through android because of webview & fullscreen activity.
+// Feel free to improve.
+router-outlet.keyboard-opened ~ * {
+    transform: translateY(calc(var(--keyboard-height) * -1));
+    transition: all 100ms ease-in-out;
+}
+
+body {
+    margin: 0 !important;
+}
+
+.page {
+    overflow: scroll;
+    padding-top: var(--header-height);
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: url("/assets/img/background.jpg") no-repeat fixed;
+    background-size: cover;
+    background-position: right;
+}
+
 @font-face {
     font-family: "Nunito";
     font-weight: normal;
@@ -18,6 +70,393 @@
 
 * {
     font-family: "Nunito";
-    color: #28283C;
+    color: #28283c;
     box-sizing: border-box;
+}
+
+.title {
+    font-size: rem(24px);
+    color: var(--blue);
+    margin-bottom: rem(8px);
+}
+
+.subtitle {
+    font-size: rem(16px);
+    color: var(--black);
+}
+
+.body {
+    box-shadow: var(--box-shadow);
+    color: var(--black);
+    background-color: #fff;
+    position: absolute;
+    inset: auto 0 0 0;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: rem(24px);
+    padding: rem(24px 16px);
+    border-radius: rem(8px 8px) 0 0;
+    max-height: calc(100% - 4.375rem);
+}
+
+button,
+.btn,
+.progress-bar {
+    width: 100%;
+    display: flex;
+    padding: rem(8px 16px);
+    border-radius: rem(4px);
+    font-size: rem(16px);
+    height: rem(44px);
+    align-items: center;
+    background-color: #ffffff;
+    gap: rem(10px);
+    transition: all 0.1s ease-in-out;
+    display: flex;
+    justify-content: center;
+
+    &:focus-visible {
+        border-color: transparent !important;
+        outline: rem(1px) solid var(--blue);
+    }
+
+    &:disabled {
+        opacity: 0.5 !important;
+    }
+
+    &:not(:disabled):hover {
+        cursor: pointer;
+        box-shadow: rem(0 3px 6px) rgba(0, 0, 0, 0.16);
+    }
+
+    &.blue {
+        border: rem(1px) solid var(--blue);
+        color: var(--blue);
+
+        svg-icon {
+            fill: var(--blue);
+        }
+
+        &.solid,
+        &.hover-solid:not(:disabled):hover {
+            background-color: var(--blue);
+            color: #ffffff;
+
+            svg-icon {
+                fill: #ffffff !important;
+            }
+        }
+    }
+
+    &.red {
+        border: rem(1px) solid var(--red);
+        color: var(--red);
+
+        svg-icon {
+            fill: var(--red);
+        }
+
+        &.solid,
+        &.hover-solid:not(:disabled):hover {
+            background-color: var(--red);
+            color: #ffffff;
+
+            svg-icon {
+                fill: #ffffff !important;
+            }
+        }
+    }
+
+    &.orange {
+        border: rem(1px) solid var(--orange);
+        color: var(--orange);
+
+        svg-icon {
+            fill: var(--orange);
+        }
+
+        &.solid,
+        &.hover-solid:not(:disabled):hover {
+            background-color: var(--orange);
+            color: #ffffff;
+
+            svg-icon {
+                fill: #ffffff !important;
+            }
+        }
+    }
+
+    &.black {
+        border: rem(1px) solid var(--black);
+        color: var(--black);
+
+        svg-icon {
+            fill: var(--black);
+        }
+
+        &.solid,
+        &.hover-solid:not(:disabled):hover {
+            background-color: var(--black);
+            color: #ffffff;
+
+            svg-icon {
+                fill: #ffffff !important;
+            }
+        }
+    }
+}
+
+svg-icon {
+    display: flex;
+}
+
+.back {
+    margin-left: rem(16px);
+    margin-top: rem(20px);
+    color: white;
+    display: flex;
+    gap: rem(8px);
+    align-items: baseline;
+
+    .arrow svg {
+        fill: white;
+        rotate: 180deg;
+    }
+}
+
+.modal {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    .blur {
+        backdrop-filter: blur(7px);
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+
+        z-index: 99;
+    }
+
+    .card {
+        padding: rem(24px 16px);
+        border-radius: rem(8px);
+        box-shadow: var(--box-shadow);
+        background-color: white;
+        z-index: 100;
+        // 100% width - 16 * 2 margin for either side
+        width: calc(100% - 32px);
+
+        .title {
+            font-size: rem(18px);
+            color: var(--black);
+            padding: 0;
+            margin-bottom: rem(8px);
+
+            &.blue {
+                color: var(--blue);
+            }
+
+            &.red {
+                color: var(--red);
+            }
+        }
+
+        .subtitle {
+            font-size: rem(16px);
+            color: var(--black);
+            padding: 0;
+            margin-bottom: rem(48px);
+
+            &.blue {
+                color: var(--blue);
+            }
+
+            &.red {
+                color: var(--red);
+            }
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: rem(18px);
+
+            button {
+                width: 100%;
+                border-radius: rem(22px);
+                font-size: rem(18px);
+                padding: rem(12px) 0;
+            }
+        }
+    }
+}
+
+input[type="text"] {
+    border-radius: rem(8px);
+    border: rem(1px) solid var(--blue);
+    color: var(--black);
+    padding: rem(4px);
+    outline-color: var(--blue);
+}
+
+.verified {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+
+    .subtitle {
+        max-width: rem(266px);
+    }
+}
+
+.credentials-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: rem(12px);
+    margin-top: rem(8px);
+
+    .credentials {
+        display: flex;
+        flex-direction: column;
+        gap: rem(8px);
+
+        .credential {
+            display: flex;
+            justify-content: space-between;
+            p {
+                margin: 0;
+
+                & + p {
+                    color: var(--blue);
+                }
+            }
+        }
+
+        &.categories {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8px);
+}
+
+.result-icon {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-self: center;
+}
+
+.green {
+    color: var(--green);
+    fill: var(--green);
+}
+
+.red {
+    color: var(--red);
+    fill: var(--red);
+}
+
+.gray {
+    color: var(--gray);
+    fill: var(--gray);
+}
+
+.nfc-button {
+    &:has(.progress-bar) {
+        display: flex;
+        gap: rem(16px);
+        align-items: center;
+    }
+
+    .progress-bar {
+        color: #28283c;
+        background-color: transparent;
+        position: relative;
+
+        .text {
+            z-index: 1;
+        }
+
+        .progress {
+            transition: width 0.3s ease-in-out;
+            background-color: #1b89c4;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+        }
+    }
+
+    .stop-nfc {
+        margin-right: rem(16px);
+    }
+}
+
+.vehicle-category {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    margin: 0;
+
+    svg-icon svg {
+        max-width: rem(22px);
+        height: fit-content;
+    }
+
+    + .dates {
+        display: flex;
+        gap: rem(16px);
+        height: fit-content;
+
+        p {
+            margin: 0;
+            color: var(--blue)
+        }
+    }
+}
+
+.credentials .titles {
+    margin-top: rem(8px);
+    color: var(--black);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        margin: 0;
+    }
+
+    .dates {
+        display: flex;
+        width: 100%;
+        gap: rem(16px);
+        max-width: rem(196px);
+
+        p {
+            width: 100%;
+        }
+    }
 }
