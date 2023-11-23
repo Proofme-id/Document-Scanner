@@ -1,7 +1,7 @@
 import { Injectable, NgZone, OnInit } from "@angular/core";
 import { Toast } from "@capacitor/toast";
 import { Configuration, EpassReader, JP2Decoder, PassphotoScanner } from "@proofme-id/sdk/web/reader";
-import { IMrzCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions } from "@proofme-id/sdk/web/reader/interfaces";
+import { IDocumentCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions } from "@proofme-id/sdk/web/reader/interfaces";
 import { environment } from "src/environments/environment";
 import { EImageType } from "../enums/imageType.enum";
 import { ESdkStatus } from "../enums/sdkStatus.enum";
@@ -29,7 +29,7 @@ export class SdkProvider {
     readerHelper = new ReaderHelper();
     images: IImage[] = [];
     verified: boolean;
-    credentials: IMrzCredentials;
+    credentials: IDocumentCredentials;
     settingsDataGroups: EDataGroup[] = [];
     detectDocumentConfig = {
         mrz: {
@@ -227,12 +227,14 @@ export class SdkProvider {
             let isDriverLicense = this.credentials.documentType === "D";
 
             const scanOptions: IScanOptions = {
+                driverMrzKey: this.credentials.driverMrzKey,
                 documentType: this.credentials.documentType,
                 documentNumber: this.credentials.documentNumber,
                 birthDate: this.credentials.birthDateDigits,
                 expiryDate: this.credentials.expiryDateDigits,
                 dataGroups: this.settingsDataGroups
             }
+
             this.retrievedDataGroups = await EpassReader.scanNfc(scanOptions);
             console.log("Datagroups:", this.retrievedDataGroups);
 
@@ -352,8 +354,8 @@ export class SdkProvider {
             this.resetCredentials();
             const documentInfo = await EpassReader.scanDocument({
                 translations: {
-                    frontScan: "Scan front",
-                    backScan: "Scan back",
+                    firstResultScan: "Scan front",
+                    secondResultScan: "Scan back",
                     processing: "Processing...",
                     rotate: "Please rotate the document",
                     tryAgain: "Try again",

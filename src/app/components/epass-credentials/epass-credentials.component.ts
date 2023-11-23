@@ -1,5 +1,5 @@
 import { SdkProvider } from 'src/app/providers/sdk.provider';
-import { IMrzCredentials } from '@proofme-id/sdk/web/reader/interfaces';
+import { IDocumentCredentials } from '@proofme-id/sdk/web/reader/interfaces';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./epass-credentials.component.scss']
 })
 export class EpassCredentialComponent {
-    @Input() credentials_: IMrzCredentials;
+    @Input() credentials_: IDocumentCredentials;
     sdk = this.sdkProvider;
 
     constructor(

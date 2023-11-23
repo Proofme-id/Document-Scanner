@@ -27,7 +27,7 @@ export class MainPage implements OnInit {
     }
 
     clickedFlow(flow: string): void {
-        this.router.navigate([flow])
         this.sdkProvider.resetCredentials();
+        this.router.navigate([flow])
     }
 }
