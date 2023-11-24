@@ -6,6 +6,7 @@
     // Only for iOS try to set it immediately.
     // Android will return 0 and we will set it inside the app.component.ts
     --safe-area-inset-top: env(safe-area-inset-top);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
     --keyboard-height: env(keyboard-height);
     --signatureColor: var(--blue);
 }
@@ -16,6 +17,7 @@
 
 router-outlet ~ * {
     padding-top: var(--safe-area-inset-top) !important;
+    padding-bottom: var(--safe-area-inset-bottom) !important;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -422,8 +424,8 @@ input[type="text"] {
     margin: 0;
 
     svg-icon svg {
-        max-width: rem(22px);
-        height: fit-content;
+        width: rem(22px);
+        height: rem(22px);
     }
 
     + .dates {

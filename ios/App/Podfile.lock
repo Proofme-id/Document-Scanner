@@ -5,6 +5,16 @@ PODS:
   - Capacitor (5.2.3):
     - CapacitorCordova
   - CapacitorCordova (5.2.3)
+  - CapacitorKeyboard (5.0.2):
+    - Capacitor
+  - CapacitorPluginSafeArea (2.0.3):
+    - Capacitor
+  - CapacitorSplashScreen (5.0.2):
+    - Capacitor
+  - CapacitorStatusBar (5.0.2):
+    - Capacitor
+  - CapacitorTextZoom (5.0.2):
+    - Capacitor
   - CapacitorToast (5.0.6):
     - Capacitor
   - GoogleDataTransport (9.2.5):
@@ -103,6 +113,11 @@ DEPENDENCIES:
   - BlueRSA
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - CapacitorPluginSafeArea (from `../../node_modules/capacitor-plugin-safe-area`)
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapacitorTextZoom (from `../../node_modules/@capacitor/text-zoom`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - KituraContracts
   - ProofmeIdSdk (from `../../../Proofme-SDK`)
@@ -142,6 +157,16 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPluginSafeArea:
+    :path: "../../node_modules/capacitor-plugin-safe-area"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CapacitorStatusBar:
+    :path: "../../node_modules/@capacitor/status-bar"
+  CapacitorTextZoom:
+    :path: "../../node_modules/@capacitor/text-zoom"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   ProofmeIdSdk:
@@ -153,6 +178,11 @@ SPEC CHECKSUMS:
   BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
   Capacitor: 6f44cbc33839b8a4202b8eac97041fe584083417
   CapacitorCordova: 35def3ebfdef491f0a7b652816eb873ff4b20bbf
+  CapacitorKeyboard: e628d4e66d621c69e449945ebabded17c5b9c2e8
+  CapacitorPluginSafeArea: ca00edc6c1b6d799cc543b1c3bc681a56dfcb16f
+  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
+  CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
+  CapacitorTextZoom: 3600e003d8847b4588f500dae23d7962b4639c19
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -178,6 +208,6 @@ SPEC CHECKSUMS:
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
 
-PODFILE CHECKSUM: 04d5d8f6eb8eff448e3b8db51ac3a1b130711f4e
+PODFILE CHECKSUM: 4e7f1c9a39e02412ebe3507113465a70410c1894
 
 COCOAPODS: 1.12.1

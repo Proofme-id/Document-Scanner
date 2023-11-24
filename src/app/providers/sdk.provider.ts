@@ -1,7 +1,7 @@
 import { Injectable, NgZone, OnInit } from "@angular/core";
 import { Toast } from "@capacitor/toast";
 import { Configuration, EpassReader, JP2Decoder, PassphotoScanner } from "@proofme-id/sdk/web/reader";
-import { IDocumentCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions } from "@proofme-id/sdk/web/reader/interfaces";
+import { IDocumentCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions, IScanDocumentConfig } from "@proofme-id/sdk/web/reader/interfaces";
 import { environment } from "src/environments/environment";
 import { EImageType } from "../enums/imageType.enum";
 import { ESdkStatus } from "../enums/sdkStatus.enum";
@@ -31,7 +31,7 @@ export class SdkProvider {
     verified: boolean;
     credentials: IDocumentCredentials;
     settingsDataGroups: EDataGroup[] = [];
-    detectDocumentConfig = {
+    detectDocumentConfig: IScanDocumentConfig = {
         mrz: {
             detect: true,
             required: true,
@@ -41,7 +41,8 @@ export class SdkProvider {
             detect: true,
             required: true,
             srcImage: true
-        }
+        },
+        maxRetries: 0
     };
 
     constructor(
@@ -351,6 +352,7 @@ export class SdkProvider {
         }
 
         try {
+            console.log("this.detectDocumentConfig:", this.detectDocumentConfig);
             this.resetCredentials();
             const documentInfo = await EpassReader.scanDocument({
                 translations: {

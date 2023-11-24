@@ -30,19 +30,6 @@ export class DocumentPage {
             EDataGroup.DG1,
             EDataGroup.DG2
         ];
-
-        this.sdkProvider.detectDocumentConfig = {
-            mrz: {
-                detect: true,
-                required: true,
-                srcImage: true
-            },
-            face: {
-                detect: true,
-                required: true,
-                srcImage: true
-            }
-        }
     }
 
     clickedBack(): void {

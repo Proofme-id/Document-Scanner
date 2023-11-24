@@ -104,7 +104,7 @@
                 <div class="title">Retries:</div>
                 <div class="setting">
                     Maximum:
-                    <input type="text" placeholder="5">
+                    <input type="number" placeholder="3" [(ngModel)]="sdkProvider.detectDocumentConfig.maxRetries" />
                 </div>
             </div>
         </div>

@@ -1,6 +1,8 @@
 import { Component, HostListener, NgZone, OnDestroy, OnInit } from "@angular/core";
+import { PluginListenerHandle } from "@capacitor/core";
 import { Keyboard } from "@capacitor/keyboard";
 import { SplashScreen } from "@capacitor/splash-screen";
+import { StatusBar, Style } from "@capacitor/status-bar";
 import { TextZoom } from "@capacitor/text-zoom";
 import { Platform } from "@ionic/angular";
 import { SafeArea } from "capacitor-plugin-safe-area";
@@ -17,6 +19,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.determineFontSize(width);
     }
 
+    addKeyBoardListener: PluginListenerHandle;
+    hideKeyboardListener: PluginListenerHandle;
+    showKeyboard: boolean;
+
     constructor(
         private platform: Platform,
         private deviceDetectorService: DeviceDetectorService,
@@ -29,13 +35,14 @@ export class AppComponent implements OnInit, OnDestroy {
     async ngOnInit(): Promise<void> {
         TextZoom.set({ value: 1.0 });
         await this.platform.ready();
-
         this.addSafeAreaVariables();
-        setTimeout(() => {
-            SplashScreen.hide();
-        }, 250);
-
+        
         await this.setKeyboardListeners();
+
+        setTimeout(async () => {
+            await SplashScreen.hide();
+            StatusBar.setStyle({ style: Style.Light });
+        }, 250);
     }
 
     ngOnDestroy(): void {
@@ -114,10 +121,8 @@ export class AppComponent implements OnInit, OnDestroy {
         try {
             if (this.platform.is("android")) {
                 const safeAreaTop = `${(await SafeArea.getStatusBarHeight()).statusBarHeight}px`;
-                document.documentElement.style.setProperty(
-                    "--safe-area-inset-top",
-                    safeAreaTop
-                );
+                document.documentElement.style.setProperty("--safe-area-inset-top", safeAreaTop);
+                document.documentElement.style.setProperty("--safe-area-inset-bottom", safeAreaTop);
             }
         } catch (error) {
             console.error("Safe area error:", error);

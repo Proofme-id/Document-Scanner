@@ -19,7 +19,7 @@ export class SettingsModal {
     test = false;
 
     constructor(
-        private sdkProvider: SdkProvider
+        public sdkProvider: SdkProvider
     ) { }
 
     closeMe(): void {

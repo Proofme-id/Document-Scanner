@@ -22,6 +22,7 @@ import { MainPage } from './pages/main/main.page';
 import { CommonModule } from '@angular/common';
 import { DriverCredentialComponent } from './components/driver-credentials/driver-credentials.component';
 import { PhotoCredentialComponent } from './components/photo-credential.component.ts/photo-credential.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { PhotoCredentialComponent } from './components/photo-credential.componen
         PopperDirective,
     ],
     imports: [
+        FormsModule,
         BrowserModule,
         RouterModule,
         BrowserAnimationsModule,
