@@ -149,7 +149,7 @@ export class SdkProvider {
      * Gets called everytime the NFC progresses to the next step
      * @param event
      */
-     onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
+    onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
         console.log("onPassportNfcProgress:", event);
         const currentStep = event.currentStep;
         const totalSteps = event.totalSteps;
@@ -240,8 +240,6 @@ export class SdkProvider {
             console.log("Datagroups:", this.retrievedDataGroups);
 
             if (this.retrievedDataGroups) {
-                delete this.retrievedDataGroups.success;
-
                 if (this.retrievedDataGroups.DG1?.data.length > 0) {
                     const dg1Data = this.readerHelper.extractDG1Data(new Uint8Array(this.retrievedDataGroups.DG1.data), isDriverLicense);
                     if (isDriverLicense) {

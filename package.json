@@ -30,7 +30,7 @@
         "@capacitor/status-bar": "5.0.2",
         "@capacitor/splash-screen": "5.0.2",
         "@capacitor/keyboard": "5.0.2",
-        "@proofme-id/sdk": "../Proofme-SDK",
+        "@proofme-id/sdk": "0.9.22",
         "@ionic/angular": "7.0.7",
         "capacitor-plugin-safe-area": "2.0.3",
         "ngx-device-detector": "6.0.0",
