@@ -34,7 +34,7 @@ export class SdkProvider {
     detectDocumentConfig: IScanDocumentConfig = {
         mrz: {
             detect: true,
-            required: false,
+            required: true,
             srcImage: true
         },
         face: {
