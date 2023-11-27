@@ -52,7 +52,17 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     async setKeyboardListeners() {
-        this.addKeyBoardListener = await Keyboard.addListener('keyboardDidShow', info => {
+        let showAction = "keyboardDidShow";
+        let hideAction = "keyboardDidHide";
+
+        if (this.platform.is("ios")) {
+            showAction = "keyboardWillShow"
+            hideAction = "keyboardWillHide"
+        }
+
+        console.log("showAction:", showAction);
+        console.log("hideAction:", hideAction);
+        this.addKeyBoardListener = await Keyboard.addListener(showAction as any, info => {
             this.ngZone.run(() => {
                 this.showKeyboard = true;
             })
@@ -62,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
             );
         });
 
-        this.hideKeyboardListener = await Keyboard.addListener('keyboardDidHide', () => {
+        this.hideKeyboardListener = await Keyboard.addListener(hideAction as any, () => {
             this.ngZone.run(() => {
                 this.showKeyboard = false;
             })

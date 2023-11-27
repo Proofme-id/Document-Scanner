@@ -1,4 +1,4 @@
-import { Injectable, NgZone, OnInit } from "@angular/core";
+import { Injectable, NgZone } from "@angular/core";
 import { Toast } from "@capacitor/toast";
 import { Configuration, EpassReader, JP2Decoder, PassphotoScanner } from "@proofme-id/sdk/web/reader";
 import { IDocumentCredentials, INfcResult, IPassportNfcProgressErrorEvent, IPassportNfcProgressEvent, IScanOptions, IScanDocumentConfig } from "@proofme-id/sdk/web/reader/interfaces";
@@ -34,7 +34,7 @@ export class SdkProvider {
     detectDocumentConfig: IScanDocumentConfig = {
         mrz: {
             detect: true,
-            required: true,
+            required: false,
             srcImage: true
         },
         face: {
