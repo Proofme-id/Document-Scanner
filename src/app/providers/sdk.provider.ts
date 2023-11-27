@@ -225,7 +225,7 @@ export class SdkProvider {
             this.retrievedDataGroups = null;
             this.nfcEnabled = true;
             this.addNfcListeners();
-            let isDriverLicense = this.credentials.documentType === "D";
+            const isDriverLicense = this.credentials.documentType === "D";
 
             const scanOptions: IScanOptions = {
                 driverMrzKey: this.credentials.driverMrzKey,
