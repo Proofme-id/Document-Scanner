@@ -25,7 +25,12 @@ def capacitor_pods
   pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
   pod 'CapacitorToast', :path => '../../node_modules/@capacitor/toast'
+  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+  pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
+  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
   pod 'ProofmeIdSdk', :path => '../../node_modules/@proofme-id/sdk'
+  pod 'CapacitorPluginSafeArea', :path => '../../node_modules/capacitor-plugin-safe-area'
+  pod 'CapacitorTextZoom', :path => '../../node_modules/@capacitor/text-zoom'
 end
 
 target 'App' do

@@ -1,0 +1,65 @@
+@use "sass-rem" as *;
+:host {
+    z-index: 1;
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+
+    .header {
+        border-bottom-left-radius: rem(8px);
+        border-bottom-right-radius: rem(8px);
+        background-color: white;
+        height: var(--header-height);
+        box-shadow: var(--box-shadow);
+        padding: rem(14px 16px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .logo svg {
+            max-width: rem(138px);
+            max-height: rem(26px);
+        }
+
+        .status {
+            font-weight: bold;
+            color: var(--black);
+            display: flex;
+            gap: rem(8px);
+            font-size: rem(18px);
+            align-items: baseline;
+
+            .status-dot {
+                width: rem(12px);
+                height: rem(12px);
+                background-color: var(--gray);
+                border-radius: 50%;
+
+                &.green {
+                    background-color: var(--green);
+                }
+
+                &.red {
+                    background-color: var(--red);
+                }
+            }
+        }
+
+        .return .return-icon svg {
+            max-width: rem(14px);
+            max-height: rem(14px);
+            fill: var(--gray);
+        }
+
+        .settings .settings-icon svg {
+            max-width: rem(18px);
+            max-height: rem(16px);
+            fill: var(--gray);
+        }
+
+        .return, .settings, .status {
+            padding: rem(8px);
+            margin-right: rem(8px);
+        }
+    }
+}

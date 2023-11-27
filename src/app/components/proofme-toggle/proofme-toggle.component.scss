@@ -1,0 +1,104 @@
+@use "sass-rem" as *;
+:host {
+    $switchSize: 26px;
+    $switchBorder: #D1D7E3;
+    $switchBackground: #D1D7E3;
+    $switchDot: #FFF;
+    $switchActive: #1B89C4;
+    $switchBorderActive: #1B89C4;
+
+    .switch {
+        margin: 0;
+        cursor: pointer;
+        input {
+            display: none;
+
+            & + div {
+                width: rem($switchSize * 2);
+                height: rem($switchSize);
+                border: rem(1px) solid $switchBorder;
+                background: $switchBackground;
+                border-radius: rem(calc($switchSize / 2));
+                vertical-align: top;
+                position: relative;
+                display: inline-block;
+                user-select: none;
+                transition: all .4s ease;
+
+                &:before {
+                    content: '';
+                    float: left;
+                    width: rem($switchSize - 6);
+                    height: rem($switchSize - 6);
+                    background: $switchDot;
+                    pointer-events: none;
+                    margin-top: rem(2px);
+                    margin-left: rem(2px);
+                    border-radius: inherit;
+                    transition: all .4s ease 0s;
+                }
+
+                &:after {
+                    content: '';
+                    left: rem(-1px);
+                    top: rem(-1px);
+                    width: rem($switchSize);
+                    height: rem($switchSize);
+                    border: rem(3px solid) transparent;
+                    border-top-color: $switchBorderActive;
+                    border-radius: 50%;
+                    position: absolute;
+                    opacity: 0;
+                }
+            }
+            &:checked + div {
+                background: $switchActive;
+                border: rem(1px) solid $switchBorderActive;
+                &:before {
+                    transform: translate($switchSize, 0);
+                }
+            }
+        }
+        &.load {
+            input {
+                & + div {
+                    width: rem($switchSize);
+                    &:after {
+                        opacity: 1;
+                        animation: rotate .9s infinite linear;
+                        animation-delay: .2s;
+                    }
+                }
+            }
+        }
+
+        &.disabled {
+            opacity: .5;
+        }
+    }
+
+    @keyframes rotate {
+        0%,
+        15% {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(290deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    html {
+        box-sizing: border-box;
+    }
+
+    * {
+        box-sizing: inherit;
+        &:before,
+        &:after {
+            box-sizing: inherit;
+        }
+    }
+}

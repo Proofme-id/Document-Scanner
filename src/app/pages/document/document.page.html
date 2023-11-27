@@ -1,0 +1,38 @@
+<div class="page">
+    <app-header [type_]="headerType" (clickedSettings)="showSettings = true"></app-header>
+
+    <div *ngIf="headerType === EHeaderType.SETTINGS" (click)="clickedBack()" class="back">
+        <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+        Back
+    </div>
+
+    <div *ngIf="sdk.credentials || sdk.images.length > 0" class="body">
+        <div class="card credentials-wrapper">
+            <epass-credentials [credentials_]="sdk.credentials"></epass-credentials>
+
+            <div class="button-wrapper">
+                <div *ngIf="sdk.credentials && !sdk.verified" class="nfc-button">
+                    <button *ngIf="!sdk.nfcEnabled" (click)="readNfc()" class="solid blue">Read NFC</button>
+                    <div *ngIf="sdk.nfcEnabled" class="blue progress-bar">
+                        <div class="text">Scanning..</div>
+                        <div [style.width.%]="sdk.progress" class="progress"></div>
+                    </div>
+                    <svg-icon *ngIf="sdk.nfcEnabled" (click)="stopReadNfc()" src="/assets/svg/close.svg" class="stop-nfc"></svg-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!sdk.credentials && sdk.images.length === 0" class="body">
+        <div class="text">
+            <span class="title">Photo Document Detector</span>
+            <span class="subtitle">Click the button below and follow the instructions on your screen to detect document details from a photo.</span>
+        </div>
+        <div class="buttons">
+            <button (click)="detectDocument()" class="blue solid">
+                Detect Document Details
+            </button>
+        </div>
+    </div>
+</div>
+<settings-modal *ngIf="showSettings" [type]="settingsType" (close)="showSettings = false"></settings-modal>

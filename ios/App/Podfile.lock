@@ -5,6 +5,16 @@ PODS:
   - Capacitor (5.2.3):
     - CapacitorCordova
   - CapacitorCordova (5.2.3)
+  - CapacitorKeyboard (5.0.2):
+    - Capacitor
+  - CapacitorPluginSafeArea (2.0.3):
+    - Capacitor
+  - CapacitorSplashScreen (5.0.2):
+    - Capacitor
+  - CapacitorStatusBar (5.0.2):
+    - Capacitor
+  - CapacitorTextZoom (5.0.2):
+    - Capacitor
   - CapacitorToast (5.0.6):
     - Capacitor
   - GoogleDataTransport (9.2.5):
@@ -78,7 +88,7 @@ PODS:
   - nanopb/encode (2.30909.0)
   - OpenSSL-Universal (1.1.2100)
   - PromisesObjC (2.3.1)
-  - ProofmeIdSdk (0.9.21):
+  - ProofmeIdSdk (0.9.22):
     - Capacitor
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/TextRecognition
@@ -103,6 +113,11 @@ DEPENDENCIES:
   - BlueRSA
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - CapacitorPluginSafeArea (from `../../node_modules/capacitor-plugin-safe-area`)
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapacitorTextZoom (from `../../node_modules/@capacitor/text-zoom`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - KituraContracts
   - "ProofmeIdSdk (from `../../node_modules/@proofme-id/sdk`)"
@@ -142,6 +157,16 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPluginSafeArea:
+    :path: "../../node_modules/capacitor-plugin-safe-area"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CapacitorStatusBar:
+    :path: "../../node_modules/@capacitor/status-bar"
+  CapacitorTextZoom:
+    :path: "../../node_modules/@capacitor/text-zoom"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   ProofmeIdSdk:
@@ -153,6 +178,11 @@ SPEC CHECKSUMS:
   BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
   Capacitor: 6f44cbc33839b8a4202b8eac97041fe584083417
   CapacitorCordova: 35def3ebfdef491f0a7b652816eb873ff4b20bbf
+  CapacitorKeyboard: e628d4e66d621c69e449945ebabded17c5b9c2e8
+  CapacitorPluginSafeArea: ca00edc6c1b6d799cc543b1c3bc681a56dfcb16f
+  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
+  CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
+  CapacitorTextZoom: 3600e003d8847b4588f500dae23d7962b4639c19
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
@@ -173,11 +203,11 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OpenSSL-Universal: 96db2ea04174c0e3d50d93b74f0e198f980e2aa9
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  ProofmeIdSdk: f34c16242e5ae7bfcb12047316bcee230f97f191
+  ProofmeIdSdk: ebda0195b5debf39b6eef32b36859d9f5160c1d4
   QKMRZParser: 6b419b6f07d6bff6b50429b97de10846dc902c29
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
 
-PODFILE CHECKSUM: 637ff2c4b0bc84b826666a63c2d3386710c9e5fb
+PODFILE CHECKSUM: 517981f1cc44d3c97ff08c8e0264e5177ac449e2
 
 COCOAPODS: 1.12.1
