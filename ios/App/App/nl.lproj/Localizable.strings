@@ -9,3 +9,4 @@
 "nfc_unknown_error" = "Scannen mislukt";
 "nfc_general_error" = "Er is iets fout gegaan";
 "nfc_success" = "Gelukt!";
+"nfc_reconnecting" = "Verbinding verloren. Zoeken naar kaart... 🔎";

@@ -11,11 +11,10 @@ import { Utils } from '@proofme-id/sdk/web/reader/utils';
 import { ReaderHelper } from '@proofme-id/sdk/web/reader/helpers';
 import { IImage } from "../interfaces/image.interface";
 
-
 @Injectable()
 export class SdkProvider {
     readonly TOAST_DURATION_IN_MS = 3500;
-    iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
+    onPassportReadStartReference = this.onPassportReadStart.bind(this);
     onPassportReadErrorReference = this.onPassportReadError.bind(this);
     onPassportReadNfcProgressReference = this.onPassportNfcProgress.bind(this);
     initialized: boolean;
@@ -49,6 +48,10 @@ export class SdkProvider {
         private ngZone: NgZone
     ) {
         this.initializeSdk();
+    }
+
+    onPassportReadStart(): void {
+        console.log("onPassportReadStart");
     }
 
     async initializeSdk(): Promise<void> {
@@ -151,11 +154,7 @@ export class SdkProvider {
      */
     onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
         console.log("onPassportNfcProgress:", event);
-        const currentStep = event.currentStep;
-        const totalSteps = event.totalSteps;
-        this.ngZone.run(() => {
-            this.progress = parseInt(((currentStep / totalSteps) * 100).toFixed(0));
-        });
+        this.progress = event.progress
     }
 
     /**
@@ -187,28 +186,19 @@ export class SdkProvider {
         EpassReader.stopNfc();
     }
 
-    /**
-     * Gets called whenever the MRZ is invalid for specifically ios (android mrz error is handled inside onPassportReadError)
-     */
-    async iosMrzInvalidError(): Promise<void> {
-        console.error("Incorrect MRZ credentials for NFC chip");
-        this.showToast("Incorrect MRZ credentials for NFC chip");
-        this.stopReadNfc();
-    }
-
     async stopReadNfc(): Promise<void> {
         this.nfcEnabled = false;
         await EpassReader.stopNfc();
     }
 
     addNfcListeners(): void {
-        window.addEventListener("iosMrzInvalid", this.iosMrzInvalidReference);
+        window.addEventListener("onPassportReadStart", this.onPassportReadStartReference);
         window.addEventListener("onPassportReadError", this.onPassportReadErrorReference);
         window.addEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
     }
 
     removeNfcListeners(): void {
-        window.removeEventListener("iosMrzInvalid", this.iosMrzInvalidReference);
+        window.removeEventListener("onPassportReadStart", this.onPassportReadStartReference);
         window.removeEventListener("onPassportReadError", this.onPassportReadErrorReference);
         window.removeEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
     }

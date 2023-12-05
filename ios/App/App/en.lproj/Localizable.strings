@@ -9,3 +9,4 @@
 "nfc_unknown_error" = "Scanning failed";
 "nfc_general_error" = "Something went wrong";
 "nfc_success" = "Success!";
+"nfc_reconnecting" = "Connection lost. Searching for card... 🔎";
