@@ -15,7 +15,9 @@
                 <div *ngIf="!sdk.verified && sdk.settingsDataGroups.length > 0" class="nfc-button">
                     <button *ngIf="!sdk.nfcEnabled" (click)="readNfc()" class="solid blue">Read NFC</button>
                     <div *ngIf="sdk.nfcEnabled" class="blue progress-bar">
-                        <div class="text">Scanning..</div>
+                        <div *ngIf="sdk.progress == 0 && !sdk.nfcTagDetected" class="text">Waiting...</div>
+                        <div *ngIf="sdk.progress == 0 && sdk.nfcTagDetected" class="text">Authenticating...</div>
+                        <div *ngIf="sdk.progress > 0" class="text">Scanning...</div>
                         <div [style.width.%]="sdk.progress" class="progress"></div>
                     </div>
                     <svg-icon *ngIf="sdk.nfcEnabled" (click)="stopReadNfc()" src="/assets/svg/close.svg" class="stop-nfc"></svg-icon>

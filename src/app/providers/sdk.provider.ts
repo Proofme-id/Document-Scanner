@@ -23,6 +23,7 @@ export class SdkProvider {
     sdkStatus: ESdkStatus;
     progress: number;
     nfcEnabled: boolean;
+    nfcTagDetected: boolean;
     retrievedDataGroups: INfcResult;
     utils = new Utils();
     readerHelper = new ReaderHelper();
@@ -48,10 +49,25 @@ export class SdkProvider {
         private ngZone: NgZone
     ) {
         this.initializeSdk();
+        this.addNfcListeners();
     }
 
     onPassportReadStart(): void {
         console.log("onPassportReadStart");
+        this.ngZone.run(() => {
+            this.nfcEnabled = true;
+            this.nfcTagDetected = true;
+            console.log("NFC UI: ENABLED");
+        });
+    }
+
+    onPassportReadFinish(): void {
+        console.log("onPassportReadFinish");
+        this.ngZone.run(() => {
+            this.nfcEnabled = false;
+            this.nfcTagDetected = false;
+            console.log("NFC UI: DISABLED");
+        });
     }
 
     async initializeSdk(): Promise<void> {
@@ -163,7 +179,6 @@ export class SdkProvider {
      */
     onPassportReadError(event: IPassportNfcProgressErrorEvent): void {
         console.error("onPassportReadError event:", event);
-        // this.nfcEnabled = false;
         // When the MRZ is faulty
         let swHex = null;
         if (event.sw) {
@@ -183,11 +198,12 @@ export class SdkProvider {
             this.showToast("Connection lost");
         }
         this.nfcEnabled = false;
-        EpassReader.stopNfc();
+        this.nfcTagDetected = false;
     }
 
     async stopReadNfc(): Promise<void> {
         this.nfcEnabled = false;
+        this.nfcTagDetected = false;
         await EpassReader.stopNfc();
     }
 
@@ -195,12 +211,6 @@ export class SdkProvider {
         window.addEventListener("onPassportReadStart", this.onPassportReadStartReference);
         window.addEventListener("onPassportReadError", this.onPassportReadErrorReference);
         window.addEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
-    }
-
-    removeNfcListeners(): void {
-        window.removeEventListener("onPassportReadStart", this.onPassportReadStartReference);
-        window.removeEventListener("onPassportReadError", this.onPassportReadErrorReference);
-        window.removeEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
     }
 
     async readNfc(): Promise<void> {
@@ -213,8 +223,9 @@ export class SdkProvider {
         try {
             this.progress = 0;
             this.retrievedDataGroups = null;
+            this.nfcTagDetected = false
             this.nfcEnabled = true;
-            this.addNfcListeners();
+            // this.addNfcListeners();
             const isDriverLicense = this.credentials.documentType === "D";
 
             const scanOptions: IScanOptions = {
@@ -242,11 +253,11 @@ export class SdkProvider {
                         this.credentials.lastName = dg1Data.fields["primaryIdentifier"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
                         this.credentials.issuer = dg1Data.fields["localAuthority"];
-                        this.credentials.birthDate = dg1Data.fields["birthDate"];
-                        this.credentials.expiryDate = dg1Data.fields["expiryDate"];
+                        this.credentials.birthDate = dg1Data.fields["birthDate"].toISOString();
+                        this.credentials.expiryDate = dg1Data.fields["expiryDate"].toISOString();
 
                         this.credentials.city = dg1Data.fields["city"];
-                        this.credentials.issueDate = dg1Data.fields["issueDate"];
+                        this.credentials.issueDate = dg1Data.fields["issueDate"].toISOString();
                         this.credentials.vehicleCategories = dg1Data.fields.vehicleCategories as IVehicleCategory[];
                     } else {
                         console.log("Basic information:", dg1Data.fields);
@@ -258,8 +269,8 @@ export class SdkProvider {
                         this.credentials.lastName = dg1Data.fields["lastName"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
                         this.credentials.issuer = dg1Data.fields["issuingState"];
-                        this.credentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true);
-                        this.credentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false);
+                        this.credentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true).toISOString();
+                        this.credentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false).toISOString();
                     }
                 }
                 if (this.retrievedDataGroups.DG2?.data.length > 0) {
@@ -309,7 +320,7 @@ export class SdkProvider {
             }
         }
 
-        this.removeNfcListeners();
+        // this.removeNfcListeners();
         this.nfcEnabled = false;
     }
 
