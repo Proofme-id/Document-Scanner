@@ -10,6 +10,7 @@ import { EDataGroup } from '@proofme-id/sdk/web/reader/enums';
 import { Utils } from '@proofme-id/sdk/web/reader/utils';
 import { ReaderHelper } from '@proofme-id/sdk/web/reader/helpers';
 import { IImage } from "../interfaces/image.interface";
+import { EDocumentType } from "@proofme-id/sdk/web/enums/documentType.enum";
 
 @Injectable()
 export class SdkProvider {
@@ -226,7 +227,7 @@ export class SdkProvider {
             this.nfcTagDetected = false
             this.nfcEnabled = true;
             // this.addNfcListeners();
-            const isDriverLicense = this.credentials.documentType === "D";
+            const isDriverLicense = this.credentials.documentType === EDocumentType.DRIVER_LICENSE;
 
             const scanOptions: IScanOptions = {
                 driverMrzKey: this.credentials.driverMrzKey,
@@ -248,7 +249,7 @@ export class SdkProvider {
 
                         this.credentials.documentNumber = dg1Data.fields["documentNumber"];
                         this.credentials.gender = null;
-                        this.credentials.documentType = dg1Data.fields["documentType"];
+                        this.credentials.documentType = dg1Data.fields["documentType"] as EDocumentType;
                         this.credentials.firstNames = dg1Data.fields["secondaryIdentifier"];
                         this.credentials.lastName = dg1Data.fields["primaryIdentifier"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
@@ -264,7 +265,7 @@ export class SdkProvider {
 
                         this.credentials.documentNumber = dg1Data.fields["documentNumber"];
                         this.credentials.gender = dg1Data.fields["sex"].toUpperCase();
-                        this.credentials.documentType = dg1Data.fields["documentCode"];
+                        this.credentials.documentType = dg1Data.fields["documentCode"] as EDocumentType;
                         this.credentials.firstNames = dg1Data.fields["firstName"];
                         this.credentials.lastName = dg1Data.fields["lastName"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
@@ -360,7 +361,8 @@ export class SdkProvider {
                     processing: "Processing...",
                     rotate: "Please rotate the document",
                     tryAgain: "Try again",
-                    success: "Success"
+                    success: "Success",
+                    maxRetries: "Done"
                 },
                 config: this.detectDocumentConfig
             });
