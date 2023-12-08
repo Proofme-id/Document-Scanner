@@ -46,7 +46,6 @@ export class SdkProvider {
         maxRetries: 0
     };
 
-    
     constructor(
         private ngZone: NgZone
     ) {
