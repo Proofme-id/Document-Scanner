@@ -6,18 +6,16 @@ import io.didux.reader.source.Utils
 
 class MainActivity : BridgeActivity() {
 
-    val utils = Utils()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        utils.fullScreenTransparent(window)
+        Utils.fullScreenTransparent(window)
     }
 
     override fun onResume() {
         super.onResume()
 
-        utils.resumeFullScreenTransparent(window)
+        Utils.resumeFullScreenTransparent(window)
     }
 }
 

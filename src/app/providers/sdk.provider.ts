@@ -54,20 +54,16 @@ export class SdkProvider {
     }
 
     onPassportReadStart(): void {
-        console.log("onPassportReadStart");
         this.ngZone.run(() => {
             this.nfcEnabled = true;
             this.nfcTagDetected = true;
-            console.log("NFC UI: ENABLED");
         });
     }
 
     onPassportReadFinish(): void {
-        console.log("onPassportReadFinish");
         this.ngZone.run(() => {
             this.nfcEnabled = false;
             this.nfcTagDetected = false;
-            console.log("NFC UI: DISABLED");
         });
     }
 
@@ -164,7 +160,6 @@ export class SdkProvider {
         }
     }
 
-
     /**
      * Gets called everytime the NFC progresses to the next step
      * @param event
@@ -226,7 +221,6 @@ export class SdkProvider {
             this.retrievedDataGroups = null;
             this.nfcTagDetected = false
             this.nfcEnabled = true;
-            // this.addNfcListeners();
             const isDriverLicense = this.credentials.documentType === EDocumentType.DRIVER_LICENSE;
 
             const scanOptions: IScanOptions = {
@@ -306,6 +300,10 @@ export class SdkProvider {
                     this.readerHelper.extractDataFromDG14(new Uint8Array(this.retrievedDataGroups.DG14.data));
                 }
 
+                // if (this.retrievedDataGroups.DG15?.data.length > 0) {
+                //     this.readerHelper.extractDataFromDG15(new Uint8Array(this.retrievedDataGroups.DG15.data));
+                // }
+
                 console.log("Result:", this.credentials);
                 this.verified = true;
             }
@@ -321,12 +319,10 @@ export class SdkProvider {
             }
         }
 
-        // this.removeNfcListeners();
         this.nfcEnabled = false;
     }
 
     async readPassphotoFromDatagroup(isDriverLicense: boolean, dgNumber: number[]) {
-        console.log("readPassphotoFromDatagroup", isDriverLicense, dgNumber)
         const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(dgNumber), isDriverLicense);
         try {
             let image = base64jp2;
