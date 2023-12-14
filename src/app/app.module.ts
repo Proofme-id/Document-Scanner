@@ -8,7 +8,7 @@ import { EpassPage } from './pages/epass/epass.page';
 import { PopperDirective } from './directives/popper-directive';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { NgModule } from '@angular/core';
+import { ChangeDetectorRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { AppComponent } from './app.component';

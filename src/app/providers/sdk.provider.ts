@@ -10,12 +10,12 @@ import { EDataGroup } from '@proofme-id/sdk/web/reader/enums';
 import { Utils } from '@proofme-id/sdk/web/reader/utils';
 import { ReaderHelper } from '@proofme-id/sdk/web/reader/helpers';
 import { IImage } from "../interfaces/image.interface";
-
+import { EDocumentType } from "@proofme-id/sdk/web/enums/documentType.enum";
 
 @Injectable()
 export class SdkProvider {
     readonly TOAST_DURATION_IN_MS = 3500;
-    iosMrzInvalidReference = this.iosMrzInvalidError.bind(this);
+    onPassportReadStartReference = this.onPassportReadStart.bind(this);
     onPassportReadErrorReference = this.onPassportReadError.bind(this);
     onPassportReadNfcProgressReference = this.onPassportNfcProgress.bind(this);
     initialized: boolean;
@@ -24,6 +24,7 @@ export class SdkProvider {
     sdkStatus: ESdkStatus;
     progress: number;
     nfcEnabled: boolean;
+    nfcTagDetected: boolean;
     retrievedDataGroups: INfcResult;
     utils = new Utils();
     readerHelper = new ReaderHelper();
@@ -49,6 +50,21 @@ export class SdkProvider {
         private ngZone: NgZone
     ) {
         this.initializeSdk();
+        this.addNfcListeners();
+    }
+
+    onPassportReadStart(): void {
+        this.ngZone.run(() => {
+            this.nfcEnabled = true;
+            this.nfcTagDetected = true;
+        });
+    }
+
+    onPassportReadFinish(): void {
+        this.ngZone.run(() => {
+            this.nfcEnabled = false;
+            this.nfcTagDetected = false;
+        });
     }
 
     async initializeSdk(): Promise<void> {
@@ -144,18 +160,13 @@ export class SdkProvider {
         }
     }
 
-
     /**
      * Gets called everytime the NFC progresses to the next step
      * @param event
      */
     onPassportNfcProgress(event: IPassportNfcProgressEvent): void {
         console.log("onPassportNfcProgress:", event);
-        const currentStep = event.currentStep;
-        const totalSteps = event.totalSteps;
-        this.ngZone.run(() => {
-            this.progress = parseInt(((currentStep / totalSteps) * 100).toFixed(0));
-        });
+        this.progress = event.progress
     }
 
     /**
@@ -164,7 +175,6 @@ export class SdkProvider {
      */
     onPassportReadError(event: IPassportNfcProgressErrorEvent): void {
         console.error("onPassportReadError event:", event);
-        // this.nfcEnabled = false;
         // When the MRZ is faulty
         let swHex = null;
         if (event.sw) {
@@ -184,33 +194,19 @@ export class SdkProvider {
             this.showToast("Connection lost");
         }
         this.nfcEnabled = false;
-        EpassReader.stopNfc();
-    }
-
-    /**
-     * Gets called whenever the MRZ is invalid for specifically ios (android mrz error is handled inside onPassportReadError)
-     */
-    async iosMrzInvalidError(): Promise<void> {
-        console.error("Incorrect MRZ credentials for NFC chip");
-        this.showToast("Incorrect MRZ credentials for NFC chip");
-        this.stopReadNfc();
+        this.nfcTagDetected = false;
     }
 
     async stopReadNfc(): Promise<void> {
         this.nfcEnabled = false;
+        this.nfcTagDetected = false;
         await EpassReader.stopNfc();
     }
 
     addNfcListeners(): void {
-        window.addEventListener("iosMrzInvalid", this.iosMrzInvalidReference);
+        window.addEventListener("onPassportReadStart", this.onPassportReadStartReference);
         window.addEventListener("onPassportReadError", this.onPassportReadErrorReference);
         window.addEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
-    }
-
-    removeNfcListeners(): void {
-        window.removeEventListener("iosMrzInvalid", this.iosMrzInvalidReference);
-        window.removeEventListener("onPassportReadError", this.onPassportReadErrorReference);
-        window.removeEventListener("onPassportNfcProgress", this.onPassportReadNfcProgressReference);
     }
 
     async readNfc(): Promise<void> {
@@ -223,9 +219,9 @@ export class SdkProvider {
         try {
             this.progress = 0;
             this.retrievedDataGroups = null;
+            this.nfcTagDetected = false
             this.nfcEnabled = true;
-            this.addNfcListeners();
-            const isDriverLicense = this.credentials.documentType === "D";
+            const isDriverLicense = this.credentials.documentType === EDocumentType.DRIVER_LICENSE;
 
             const scanOptions: IScanOptions = {
                 driverMrzKey: this.credentials.driverMrzKey,
@@ -247,29 +243,29 @@ export class SdkProvider {
 
                         this.credentials.documentNumber = dg1Data.fields["documentNumber"];
                         this.credentials.gender = null;
-                        this.credentials.documentType = dg1Data.fields["documentType"];
+                        this.credentials.documentType = dg1Data.fields["documentType"] as EDocumentType;
                         this.credentials.firstNames = dg1Data.fields["secondaryIdentifier"];
                         this.credentials.lastName = dg1Data.fields["primaryIdentifier"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
                         this.credentials.issuer = dg1Data.fields["localAuthority"];
-                        this.credentials.birthDate = dg1Data.fields["birthDate"];
-                        this.credentials.expiryDate = dg1Data.fields["expiryDate"];
+                        this.credentials.birthDate = dg1Data.fields["birthDate"].toISOString();
+                        this.credentials.expiryDate = dg1Data.fields["expiryDate"].toISOString();
 
                         this.credentials.city = dg1Data.fields["city"];
-                        this.credentials.issueDate = dg1Data.fields["issueDate"];
+                        this.credentials.issueDate = dg1Data.fields["issueDate"].toISOString();
                         this.credentials.vehicleCategories = dg1Data.fields.vehicleCategories as IVehicleCategory[];
                     } else {
                         console.log("Basic information:", dg1Data.fields);
 
                         this.credentials.documentNumber = dg1Data.fields["documentNumber"];
                         this.credentials.gender = dg1Data.fields["sex"].toUpperCase();
-                        this.credentials.documentType = dg1Data.fields["documentCode"];
+                        this.credentials.documentType = dg1Data.fields["documentCode"] as EDocumentType;
                         this.credentials.firstNames = dg1Data.fields["firstName"];
                         this.credentials.lastName = dg1Data.fields["lastName"];
                         this.credentials.nationality = dg1Data.fields["nationality"];
                         this.credentials.issuer = dg1Data.fields["issuingState"];
-                        this.credentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true);
-                        this.credentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false);
+                        this.credentials.birthDate = this.utils.convertSixDigitStringDate(dg1Data.fields["birthDate"], true).toISOString();
+                        this.credentials.expiryDate = this.utils.convertSixDigitStringDate(dg1Data.fields["expirationDate"], false).toISOString();
                     }
                 }
                 if (this.retrievedDataGroups.DG2?.data.length > 0) {
@@ -304,6 +300,10 @@ export class SdkProvider {
                     this.readerHelper.extractDataFromDG14(new Uint8Array(this.retrievedDataGroups.DG14.data));
                 }
 
+                // if (this.retrievedDataGroups.DG15?.data.length > 0) {
+                //     this.readerHelper.extractDataFromDG15(new Uint8Array(this.retrievedDataGroups.DG15.data));
+                // }
+
                 console.log("Result:", this.credentials);
                 this.verified = true;
             }
@@ -319,12 +319,10 @@ export class SdkProvider {
             }
         }
 
-        this.removeNfcListeners();
         this.nfcEnabled = false;
     }
 
     async readPassphotoFromDatagroup(isDriverLicense: boolean, dgNumber: number[]) {
-        console.log("readPassphotoFromDatagroup", isDriverLicense, dgNumber)
         const base64jp2 = this.readerHelper.extractImageFromDG2(new Uint8Array(dgNumber), isDriverLicense);
         try {
             let image = base64jp2;
@@ -359,7 +357,8 @@ export class SdkProvider {
                     processing: "Processing...",
                     rotate: "Please rotate the document",
                     tryAgain: "Try again",
-                    success: "Success"
+                    success: "Success",
+                    maxRetries: "Done"
                 },
                 config: this.detectDocumentConfig
             });

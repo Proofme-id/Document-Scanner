@@ -1,6 +1,14 @@
+import groovy.json.JsonSlurper
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+
+def getPackageJsonVersion() {
+    def inputFile = new File("$rootDir/../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
 
 android {
     namespace "id.proofme.document.scanner"
@@ -9,8 +17,8 @@ android {
         applicationId "id.proofme.document.scanner"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "0.9.17"
+        versionCode 6
+        versionName getPackageJsonVersion()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -18,6 +26,7 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
         consumerProguardFiles 'proguard-rules.pro'
+        setProperty("archivesBaseName","document-scanner-v${versionName}")
     }
     buildTypes {
         release {
