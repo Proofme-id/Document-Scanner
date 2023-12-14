@@ -112,6 +112,7 @@
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "App" */;
 			buildPhases = (
 				BD2BF23ADE78B72F7060D468 /* [CP] Check Pods Manifest.lock */,
+				63C5D1E92B2B44830039F495 /* Sync package.json version */,
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
@@ -194,6 +195,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-App/Pods-App-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		63C5D1E92B2B44830039F495 /* Sync package.json version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Sync package.json version";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script orecho \"Starting to sync package.json version\"\n\nSOURCE_PLIST_PATH=\"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nBUILD_PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nPACKAGE_JSON_PATH=\"${PROJECT_DIR}/../../package.json\"\n\necho \"Project Plist file path $INFOPLIST_PATH\"\necho \"Product Plist file path $BUILD_PLIST_PATH\"\necho \"package.json path $PACKAGE_JSON_PATH\"\n\n# extract version information from package.json ()\nPACKAGE_VERSION=$(cat \"$PACKAGE_JSON_PATH\" | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\\\",]//g' | tr -d '[[:space:]]')\n\n# Update Source & Built plist files with new values\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${PACKAGE_VERSION}\" \"${SOURCE_PLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${PACKAGE_VERSION}\" \"${BUILD_PLIST_PATH}\"\n\n# git add source Info.plist to save changes\ngit add \"${SOURCE_PLIST_PATH}\"\n";
 		};
 		BD2BF23ADE78B72F7060D468 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
