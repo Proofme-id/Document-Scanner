@@ -28,9 +28,7 @@ export class EpassPage implements OnInit {
     ngOnInit(): void {
         this.sdkProvider.settingsDataGroups = [
             EDataGroup.DG1,
-            EDataGroup.DG2,
-            EDataGroup.DG14,
-            EDataGroup.DG15
+            EDataGroup.DG2
         ]
     }
 
