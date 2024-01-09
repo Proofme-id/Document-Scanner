@@ -2,18 +2,18 @@ PODS:
   - BlueCryptor (1.0.32)
   - BlueECC (1.2.5)
   - BlueRSA (1.0.200)
-  - Capacitor (5.2.3):
+  - Capacitor (5.6.0):
     - CapacitorCordova
-  - CapacitorCordova (5.2.3)
-  - CapacitorKeyboard (5.0.2):
+  - CapacitorCordova (5.6.0)
+  - CapacitorKeyboard (5.0.7):
     - Capacitor
-  - CapacitorPluginSafeArea (2.0.3):
+  - CapacitorPluginSafeArea (2.0.6):
     - Capacitor
-  - CapacitorSplashScreen (5.0.2):
+  - CapacitorSplashScreen (5.0.6):
     - Capacitor
-  - CapacitorStatusBar (5.0.2):
+  - CapacitorStatusBar (5.0.6):
     - Capacitor
-  - CapacitorTextZoom (5.0.2):
+  - CapacitorTextZoom (5.0.6):
     - Capacitor
   - CapacitorToast (5.0.6):
     - Capacitor
@@ -184,13 +184,13 @@ SPEC CHECKSUMS:
   BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
   BlueECC: 0d18e93347d3ec6d41416de21c1ffa4d4cd3c2cc
   BlueRSA: dfeef51db96bcc4edec654956c1581adbda4e6a3
-  Capacitor: 6f44cbc33839b8a4202b8eac97041fe584083417
-  CapacitorCordova: 35def3ebfdef491f0a7b652816eb873ff4b20bbf
-  CapacitorKeyboard: e628d4e66d621c69e449945ebabded17c5b9c2e8
-  CapacitorPluginSafeArea: ca00edc6c1b6d799cc543b1c3bc681a56dfcb16f
-  CapacitorSplashScreen: bd2a056394ba0b8807e7bb3e746424f67c426e03
-  CapacitorStatusBar: 48f2899f6846cc7d8431b251ebfc58e1c10e3d58
-  CapacitorTextZoom: 3600e003d8847b4588f500dae23d7962b4639c19
+  Capacitor: ebfc16cdb8116d04c101686b080342872da42d43
+  CapacitorCordova: 931b48fcdbc9bc985fc2f16cec9f77c794a27729
+  CapacitorKeyboard: ce5e01064cf57a2c05b32565310713b7fe6cc6f9
+  CapacitorPluginSafeArea: d55e4d4e70c98f611240f11dd80561438d0d70cb
+  CapacitorSplashScreen: 5fa2ab5e46cf5cc530cf16a51c80c7a986579ccd
+  CapacitorStatusBar: 565c0a1ebd79bb40d797606a8992b4a105885309
+  CapacitorTextZoom: bd623313a291bc1f38cdc01bd94c39b2b48d794a
   CapacitorToast: bb0d79b78d9c27c0199b57f735dd50b8fc363489
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
