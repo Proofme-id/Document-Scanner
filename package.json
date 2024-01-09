@@ -1,6 +1,6 @@
 {
     "name": "document-scanner",
-    "version": "0.9.24",
+    "version": "0.9.25",
     "scripts": {
         "build": "ng build -c=development",
         "build:prod": "ng build -c=production",
