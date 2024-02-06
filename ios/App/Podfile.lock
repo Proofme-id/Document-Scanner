@@ -127,7 +127,7 @@ DEPENDENCIES:
   - "CapacitorTextZoom (from `../../node_modules/@capacitor/text-zoom`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - KituraContracts
-  - "ProofmeIdSdk (from `../../node_modules/@proofme-id/sdk`)"
+  - ProofmeIdSdk (from `../../../Proofme-SDK`)
   - QKMRZParser
   - SwiftyRSA
 
@@ -178,7 +178,7 @@ EXTERNAL SOURCES:
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   ProofmeIdSdk:
-    :path: "../../node_modules/@proofme-id/sdk"
+    :path: "../../../Proofme-SDK"
 
 SPEC CHECKSUMS:
   BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
@@ -212,11 +212,11 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: 6e1ae0555546e604dbc632a2b9a24a9c46c41ef6
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  ProofmeIdSdk: 7aa9e452f5a848f2fae635e5c8e454036b90208a
+  ProofmeIdSdk: dc77a9a53833283781cc030f7d1c4435181b699a
   QKMRZParser: 6b419b6f07d6bff6b50429b97de10846dc902c29
   SwiftJWT: 88c412708f58c169d431d344c87bc79a87c830ae
   SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
 
-PODFILE CHECKSUM: 517981f1cc44d3c97ff08c8e0264e5177ac449e2
+PODFILE CHECKSUM: 4e7f1c9a39e02412ebe3507113465a70410c1894
 
 COCOAPODS: 1.12.1

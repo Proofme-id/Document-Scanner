@@ -314,6 +314,9 @@ export class SdkProvider {
             } else if (error.toString().includes("SYSTEM_RESOURCE_UNAVAILABLE")) {
                 console.error("System resource unavailable");
                 this.showToast("System resource unavailable");
+            } else if (error.toString().includes("SESSION_TIMEOUT")) {
+                console.error("Session timeout... Took too long");
+                this.showToast("Session timeout... Took too long");
             } else {
                 console.error(error);
             }
