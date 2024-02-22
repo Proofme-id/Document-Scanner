@@ -73,6 +73,7 @@
                 </div>
             </div>
             <div *ngIf="type === ESettingsType.DOCUMENT" class="settings">
+                <!-- MRZ -->
                 <div class="title">MRZ:</div>
                 <div class="setting">
                     Detect:
@@ -82,11 +83,19 @@
                     Required:
                     <proofme-toggle (click)="setDocumentConfigProperty('mrz', 'required')" [disabled]="!detectDocumentPropertyChecked('mrz', 'detect')" [checked]="detectDocumentPropertyChecked('mrz', 'required')"></proofme-toggle>
                 </div>
+
+                <!-- Personal Number -->
+                <div class="title">Personal Number:</div>
                 <div class="setting">
-                    Return source image:
-                    <proofme-toggle (click)="setDocumentConfigProperty('mrz', 'srcImage')" [disabled]="!detectDocumentPropertyChecked('mrz', 'detect')" [checked]="detectDocumentPropertyChecked('mrz', 'srcImage')"></proofme-toggle>
+                    Detect:
+                    <proofme-toggle (click)="setDocumentConfigProperty('personalNumber', 'detect')" [checked]="detectDocumentPropertyChecked('personalNumber', 'detect')"></proofme-toggle>
+                </div>
+                <div class="setting">
+                    Required:
+                    <proofme-toggle (click)="setDocumentConfigProperty('personalNumber', 'required')" [disabled]="!detectDocumentPropertyChecked('personalNumber', 'detect')" [checked]="detectDocumentPropertyChecked('personalNumber', 'required')"></proofme-toggle>
                 </div>
 
+                <!-- Face -->
                 <div class="title">Face:</div>
                 <div class="setting">
                     Detect:
@@ -96,11 +105,21 @@
                     Required:
                     <proofme-toggle (click)="setDocumentConfigProperty('face', 'required')" [disabled]="!detectDocumentPropertyChecked('face', 'detect')" [checked]="detectDocumentPropertyChecked('face', 'required')"></proofme-toggle>
                 </div>
+
+                <!-- Front image -->
+                <div class="title">Front image:</div>
                 <div class="setting">
-                    Return source image:
-                    <proofme-toggle (click)="setDocumentConfigProperty('face', 'srcImage')" [disabled]="!detectDocumentPropertyChecked('face', 'detect')" [checked]="detectDocumentPropertyChecked('face', 'srcImage')"></proofme-toggle>
+                    Return front image:
+                    <proofme-toggle (click)="setSourcePhoto('frontPhoto')" [checked]="sdkProvider.detectDocumentConfig.frontPhoto"></proofme-toggle>
+                </div>
+                <!-- Back image -->
+                <div class="title">Back image:</div>
+                <div class="setting">
+                    Return back image:
+                    <proofme-toggle (click)="setSourcePhoto('backPhoto')" [checked]="sdkProvider.detectDocumentConfig.backPhoto"></proofme-toggle>
                 </div>
 
+                <!-- Max retries -->
                 <div class="title">Retries:</div>
                 <div class="setting">
                     Maximum:

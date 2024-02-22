@@ -1,0 +1,27 @@
+<div class="page">
+    <app-header [type_]="headerType"></app-header>
+    <div (click)="clickedBack()" class="back">
+        <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+        Back
+    </div>
+    <div class="body">
+        <div class="text">
+            <span class="title">Document Scanner</span>
+            <span class="subtitle">Please choose your document type.</span>
+        </div>
+        <div class="buttons">
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow(EDocumentType.ID_CARD)" class="blue">
+                ID card
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow(EDocumentType.PASSPORT)" class="blue">
+                Passport
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE || detectionType === EDetectionType.MANUAL" (click)="clickedFlow(EDocumentType.DRIVER_LICENSE)" class="blue">
+                Drivers License
+                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
+            </button>
+        </div>
+    </div>
+</div>

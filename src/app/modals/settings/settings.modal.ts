@@ -47,9 +47,12 @@ export class SettingsModal {
         if (subProperty === "detect" && this.sdkProvider.detectDocumentConfig[property].detect) {
             this.sdkProvider.detectDocumentConfig[property].detect = false
             this.sdkProvider.detectDocumentConfig[property].required = false
-            this.sdkProvider.detectDocumentConfig[property].srcImage = false
         } else if (subProperty === "detect" || this.sdkProvider.detectDocumentConfig[property].detect) {
             this.sdkProvider.detectDocumentConfig[property][subProperty] = !this.sdkProvider.detectDocumentConfig[property][subProperty]
         }
+    }
+
+    setSourcePhoto(type: string): void {
+        this.sdkProvider.detectDocumentConfig[type] = !this.sdkProvider.detectDocumentConfig[type]
     }
 }

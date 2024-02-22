@@ -5,6 +5,8 @@
         flex-direction: column;
         gap: rem(16px);
         width: 100%;
+        max-height: 50vh;
+        overflow: scroll;
 
         .title {
             font-weight: bold;

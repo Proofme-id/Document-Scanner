@@ -33,16 +33,21 @@ export class SdkProvider {
     credentials: IDocumentCredentials;
     settingsDataGroups: EDataGroup[] = [];
     detectDocumentConfig: IScanDocumentConfig = {
+        documentType: null,
         mrz: {
             detect: true,
-            required: true,
-            srcImage: true
+            required: true
         },
         face: {
             detect: true,
-            required: true,
-            srcImage: true
+            required: true
         },
+        personalNumber: {
+            detect: true,
+            required: true
+        },
+        frontPhoto: true,
+        backPhoto: true,
         maxRetries: 0
     };
 
@@ -368,6 +373,7 @@ export class SdkProvider {
 
             if (documentInfo) {
                 this.credentials = documentInfo.mrz;
+                this.credentials.personalNumberQrCode = documentInfo.personalNumberQrCode;
 
                 if (documentInfo.face) {
                     this.images.push({

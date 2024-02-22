@@ -1,10 +1,12 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { EDataGroup } from '@proofme-id/sdk/web/reader/enums';
 import { EHeaderType } from 'src/app/enums/headerType.enum';
 import { ESettingsType } from 'src/app/enums/settingsType.enum';
 import { SdkProvider } from 'src/app/providers/sdk.provider';
 import { EImageType } from 'src/app/enums/imageType.enum';
+import { EDetectionType } from "src/app/enums/detectionType.enum";
+import { EDocumentType } from "@proofme-id/sdk/web/enums/documentType.enum";
 
 @Component({
     selector: 'driver',
@@ -19,11 +21,20 @@ export class DriverPage implements OnInit {
     sdk = this.sdkProvider;
     showSettings = false;
     imageIndex: number;
+    detectionType: EDetectionType;
+    documentType: EDocumentType;
+
 
     constructor(
         private sdkProvider: SdkProvider,
-        private router: Router
-    ) { }
+        private router: Router,
+        private route: ActivatedRoute
+    ) { 
+        this.route.queryParams.subscribe((queryParams) => {
+            this.detectionType = queryParams["detectionType"];
+            this.documentType = queryParams["documentType"];
+        });
+    }
 
     ngOnInit(): void {
         this.sdkProvider.settingsDataGroups = [
@@ -36,7 +47,12 @@ export class DriverPage implements OnInit {
     }
 
     clickedBack(): void {
-        this.router.navigate(["home"]);
+        this.router.navigate(["document-selector"], {
+            queryParams: {
+                detectionType: this.detectionType,
+                documentType: this.documentType
+            }
+        });
     }
 
     async scanMrz(): Promise<void> {

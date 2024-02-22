@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { DriverCredentialComponent } from './components/driver-credentials/driver-credentials.component';
 import { PhotoCredentialComponent } from './components/photo-credential.component.ts/photo-credential.component';
 import { FormsModule } from "@angular/forms";
+import { DocumentSelectorPage } from "./pages/document-selector/document-selector.page";
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { FormsModule } from "@angular/forms";
         EpassPage,
         DriverPage,
         DocumentPage,
+        DocumentSelectorPage,
 
         // Directives
         PopperDirective,

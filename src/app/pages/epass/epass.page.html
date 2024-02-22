@@ -28,7 +28,8 @@
 
     <div *ngIf="!sdk.credentials" class="body">
         <div class="text">
-            <span class="title">Scanning a Passport or ID card</span>
+            <span *ngIf="documentType === EDocumentType.ID_CARD" class="title">Scanning an ID card</span>
+            <span *ngIf="documentType === EDocumentType.PASSPORT" class="title">Scanning a passport</span>
             <span class="subtitle">Click the button below to scan a MRZ and follow the instructions on your screen.</span>
         </div>
         <div class="buttons">

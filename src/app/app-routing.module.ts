@@ -4,6 +4,7 @@ import { DocumentPage } from './pages/document/document.page';
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { MainPage } from "./pages/main/main.page";
+import { DocumentSelectorPage } from "./pages/document-selector/document-selector.page";
 
 const routes: Routes = [
     {
@@ -31,6 +32,11 @@ const routes: Routes = [
         component: DocumentPage,
         data: { animation: "left" }
     },
+    {
+        path: "document-selector",
+        component: DocumentSelectorPage,
+        data: { animation: "left" }
+    }
 ];
 
 @NgModule({

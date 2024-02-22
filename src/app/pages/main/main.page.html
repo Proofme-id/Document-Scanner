@@ -6,16 +6,12 @@
             <span class="subtitle">Please choose your document flow.</span>
         </div>
         <div class="buttons">
-            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/epass')" class="blue">
-                Passport or ID card
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedType(EDetectionType.MANUAL)" class="blue">
+                Manual document detection
                 <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
             </button>
-            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/driver')" class="blue">
-                Drivers License
-                <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
-            </button>
-            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedFlow('/document')" class="blue">
-                Photo Document Detector
+            <button [disabled]="sdk.sdkStatus != ESdkStatus.ACTIVE" (click)="clickedType(EDetectionType.AUTOMATIC)" class="blue">
+                Automatic document detector
                 <svg-icon src="/assets/svg/arrow.svg" class="arrow"></svg-icon>
             </button>
         </div>
