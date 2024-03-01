@@ -1,7 +1,6 @@
 "nfc_start_message" = "Leg je telefoon op je identiteitsbewijs";
 "nfc_stop_nfc_message" = "Scannen van NFC geannulleerd...";
 "nfc_authenticating" = "Chip gevonden, authenticeren...";
-"nfc_reading" = "Lezen...";
 "nfc_invalid_tag" = "Deze chip wordt niet ondersteund";
 "nfc_multiple_tags_found" = "Meerdere chips gevonden";
 "nfc_connection_lost" = "Verbinding verloren";

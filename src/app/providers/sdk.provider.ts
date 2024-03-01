@@ -373,7 +373,7 @@ export class SdkProvider {
 
             if (documentInfo) {
                 this.credentials = documentInfo.mrz;
-                this.credentials.personalNumberQrCode = documentInfo.personalNumberQrCode;
+                this.credentials.personalNumberQrCode = documentInfo?.personalNumberQrCode;
 
                 if (documentInfo.face) {
                     this.images.push({
