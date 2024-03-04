@@ -99,7 +99,13 @@ export class SdkProvider {
 
         try {
             this.resetCredentials();
-            this.credentials = await EpassReader.scanMrz({ driverLicense });
+            console.log("openMrzScanner documentType:", this.detectDocumentConfig.documentType);
+            this.credentials = await EpassReader.scanMrz({ 
+                driverLicense, 
+                config: {
+                    documentType: this.detectDocumentConfig.documentType
+                }
+            });
 
             console.log("MRZ credentials:", this.credentials);
         } catch (error) {
@@ -370,10 +376,12 @@ export class SdkProvider {
                 },
                 config: this.detectDocumentConfig
             });
-
+            console.log("documentInfo:", documentInfo);
             if (documentInfo) {
                 this.credentials = documentInfo.mrz;
-                this.credentials.personalNumberQrCode = documentInfo?.personalNumberQrCode;
+                if (this.credentials) {
+                    this.credentials.personalNumberQrCode = documentInfo?.personalNumberQrCode;
+                }
 
                 if (documentInfo.face) {
                     this.images.push({
