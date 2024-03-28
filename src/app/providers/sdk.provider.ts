@@ -99,6 +99,7 @@ export class SdkProvider {
 
         try {
             this.resetCredentials();
+
             console.log("openMrzScanner documentType:", this.detectDocumentConfig.documentType);
             this.credentials = await EpassReader.scanMrz({ 
                 driverLicense, 
@@ -133,6 +134,12 @@ export class SdkProvider {
         }
 
         try {
+            // const photoScannerResult = await PassphotoScanner.scan({
+            //     translations: {
+            //         surname: "Achternaam",
+            //         givenNames: "Voornaam"
+            //     }
+            // });
             const photoScannerResult = await PassphotoScanner.scan();
             console.log("photoScannerResult:", photoScannerResult);
             if (photoScannerResult?.face) {
@@ -364,6 +371,7 @@ export class SdkProvider {
         try {
             console.log("this.detectDocumentConfig:", this.detectDocumentConfig);
             this.resetCredentials();
+
             const documentInfo = await EpassReader.scanDocument({
                 translations: {
                     firstResultScan: "Scan front",
