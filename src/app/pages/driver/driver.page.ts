@@ -1,12 +1,12 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EDocumentType } from "@proofme-id/sdk/web/enums/documentType.enum";
 import { EDataGroup } from '@proofme-id/sdk/web/reader/enums';
+import { EDetectionType } from "src/app/enums/detectionType.enum";
 import { EHeaderType } from 'src/app/enums/headerType.enum';
+import { EImageType } from 'src/app/enums/imageType.enum';
 import { ESettingsType } from 'src/app/enums/settingsType.enum';
 import { SdkProvider } from 'src/app/providers/sdk.provider';
-import { EImageType } from 'src/app/enums/imageType.enum';
-import { EDetectionType } from "src/app/enums/detectionType.enum";
-import { EDocumentType } from "@proofme-id/sdk/web/enums/documentType.enum";
 
 @Component({
     selector: 'driver',
@@ -29,7 +29,7 @@ export class DriverPage implements OnInit {
         private sdkProvider: SdkProvider,
         private router: Router,
         private route: ActivatedRoute
-    ) { 
+    ) {
         this.route.queryParams.subscribe((queryParams) => {
             this.detectionType = queryParams["detectionType"];
             this.documentType = queryParams["documentType"];
@@ -56,7 +56,8 @@ export class DriverPage implements OnInit {
     }
 
     async scanMrz(): Promise<void> {
-        await this.sdkProvider.openMrzScanner(true);
+        this.sdkProvider.detectDocumentConfig.documentType = EDocumentType.DRIVER_LICENSE;
+        await this.sdkProvider.openMrzScanner();
 
         if (this.sdk.credentials) {
             this.headerType = EHeaderType.RETURN;

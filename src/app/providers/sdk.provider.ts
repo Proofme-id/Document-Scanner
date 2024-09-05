@@ -92,7 +92,7 @@ export class SdkProvider {
         }
     }
 
-    async openMrzScanner(driverLicense?: boolean): Promise<void> {
+    async openMrzScanner(): Promise<void> {
         if (!this.initialized) {
             return await this.showToast("SDK not initialized");
         }
@@ -101,8 +101,7 @@ export class SdkProvider {
             this.resetCredentials();
 
             console.log("openMrzScanner documentType:", this.detectDocumentConfig.documentType);
-            this.credentials = await EpassReader.scanMrz({ 
-                driverLicense, 
+            this.credentials = await EpassReader.scanMrz({
                 config: {
                     documentType: this.detectDocumentConfig.documentType
                 }
@@ -134,12 +133,6 @@ export class SdkProvider {
         }
 
         try {
-            // const photoScannerResult = await PassphotoScanner.scan({
-            //     translations: {
-            //         surname: "Achternaam",
-            //         givenNames: "Voornaam"
-            //     }
-            // });
             const photoScannerResult = await PassphotoScanner.scan();
             console.log("photoScannerResult:", photoScannerResult);
             if (photoScannerResult?.face) {
