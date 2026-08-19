@@ -32,7 +32,7 @@
         "@capacitor/text-zoom": "5.0.6",
         "@capacitor/toast": "5.0.6",
         "@ionic/angular": "7.6.3",
-        "@proofme-id/sdk": "1.7.0",
+        "@proofme-id/sdk": "1.7.1-rc7",
         "angular-svg-icon": "17.0.0",
         "capacitor-plugin-safe-area": "2.0.6",
         "ngx-device-detector": "7.0.0",
